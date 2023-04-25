@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d412101ac104ec8a48dfe5ec56652c, type: 3}
+  m_Name: Game Info SO
+  m_EditorClassIdentifier: 
+  DummyData: '?'
+  Value:
+    GamePath: 
+    UsesLocalization: 0
+    GameID: 3D Rendering & AR View
+    repoPath: https://github.com/viitoradmin/3d-rendering-ar-view-unity.git
+    Scenes:
+    - Scenes/main.unity
+    PhotonID: 
+    AgoraID: 
+    ProjectSettings:
+      ColorSpace: 0
+      Tags: []
+      Layers: []
+      Physics:
+        Physics2DSettings:
+          Gravity: {x: 0, y: -9.81}
+          VelocityIterations: 8
+          PositionIterations: 3
+          VelocityThreshold: 1
+          MaxLinearCorrection: 0.2
+          MaxAngularCorrection: 8
+          MaxTranslationSpeed: 100
+          MaxRotationSpeed: 360
+          BaumgarteScale: 0.2
+          BaumgarteTOIScale: 0.75
+          TimeToSleep: 0.5
+          LinearSleepTolerance: 0.01
+          AngularSleepTolerance: 2
+          DefaultContactOffset: 0.01
+          SimulationMode: 0
+          QueriesHitTriggers: 1
+          QueriesStartInColliders: 1
+          CallbacksOnDisable: 1
+          ReuseCollisionCallbacks: 1
+          AutoSyncTransforms: 0
+        Physics3DSettings:
+          Gravity: {x: 0, y: -9.81, z: 0}
+          BounceThreshold: 2
+          SleepThreshold: 0.005
+          DefaultContactOffset: 0.01
+          DefaultSolverIterations: 6
+          DefaultSolverVelocityIterations: 1
+          QueriesHitBackfaces: 0
+          QueriesHitTriggers: 1
+          AutoSimulation: 1
+          AutoSyncTransforms: 0
+          ReuseCollisionCallbacks: 1
+        CollisionOverrides2D: []
+        CollisionOverrides3D: []
+    Properties:
+      Title: 3D Rendering & AR View
+      CompanyName: ViitorCloud
+      BundleId: com.scan.view
+      Version: 1.0.0
+      VersionCode: 1
+      Icon: {fileID: 0}
+      SplashScreenLogo: {fileID: 0}
+      SplashScreenLogoBG: {fileID: 0}
+      SpashBGBlur: 1
+      Portrait: 1
+      PortraitUpsideDown: 1
+      LandscapeLeft: 0
+      LandscapeRight: 0
+    Packages:
+      AR: 0
+      VR: 0
+      URP: 0
+      HDRP: 0
+      Addressables: 0
+      rendringPipelineAsset: {fileID: 0}
