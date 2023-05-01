@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
-
 
 public class Rotate3dGameObject : MonoBehaviour {
     private NewInput touchControls;
+    public float rotatespeed = 10f;
+    private float _startingPosition;
 
     private void Awake() {
         touchControls = new NewInput();
@@ -16,19 +15,19 @@ public class Rotate3dGameObject : MonoBehaviour {
         touchControls.Enable();
         EnhancedTouch.TouchSimulation.Enable();
 
-        EnhancedTouch.Touch.onFingerDown += FingerDown;
+        //EnhancedTouch.Touch.onFingerDown += FingerDown;
     }
 
     private void OnDisable() {
         touchControls.Disable();
         EnhancedTouch.TouchSimulation.Disable();
 
-        EnhancedTouch.Touch.onFingerDown -= FingerDown;
+        //EnhancedTouch.Touch.onFingerDown -= FingerDown;
     }
 
-    private void FingerDown(EnhancedTouch.Finger finger) {
+    //private void FingerDown(EnhancedTouch.Finger finger) {
 
-    }
+    //}
 
     private void Start() {
         touchControls.Touch.TouchPress.started += ctx => StartTouch(ctx);
@@ -36,15 +35,36 @@ public class Rotate3dGameObject : MonoBehaviour {
     }
 
     private void Update() {
-        //Debug.Log(UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches);
-        foreach (UnityEngine.InputSystem.EnhancedTouch.Touch touch in UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches) {
-            //Debug.Log(touch.phase == UnityEngine.InputSystem.TouchPhase.Began);
-            if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
-                Debug.Log("TouchPhase.Began");
+        //foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {          
+        //    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
+        //        _startingPosition = touch.screenPosition.x;
+        //        Debug.Log("TouchPhase.Began");
+        //    } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
+        //        //transform.Rotate(0f, touch.delta.x * 0.5f, 0f);
+        //        if (_startingPosition > touch.screenPosition.x) {
+        //            transform.Rotate(Vector3.up, -rotatespeed * Time.deltaTime);
+        //        } else if (_startingPosition < touch.screenPosition.x) {
+        //            transform.Rotate(Vector3.up, rotatespeed * Time.deltaTime);
+        //        }
+        //        Debug.Log("TouchPhase.Moved");
+        //    } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Ended) {
+        //        Debug.Log("TouchPhase.Ended");
+        //    } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Stationary) {
+        //        _startingPosition = touch.screenPosition.x;
+        //        Debug.Log("TouchPhase.Stationary");
+        //    }
+        //}
+
+        foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
+            if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {              
+                //Debug.Log("TouchPhase.Began");
             } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                Debug.Log("TouchPhase.Moved");
+                transform.Rotate(0f, touch.delta.x * 0.5f, 0f);               
+                //Debug.Log("TouchPhase.Moved");
             } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Ended) {
                 Debug.Log("TouchPhase.Ended");
+            } else if (touch.phase == UnityEngine.InputSystem.TouchPhase.Stationary) {               
+                //Debug.Log("TouchPhase.Stationary");
             }
         }
     }
@@ -56,5 +76,9 @@ public class Rotate3dGameObject : MonoBehaviour {
 
     private void EndTouch(InputAction.CallbackContext context) {
         Debug.Log("Touch ended");
+    }
+
+    public void ResetRotation() {
+        transform.rotation= Quaternion.identity;
     }
 }
