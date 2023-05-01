@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 
 public class Rotate3dGameObject : MonoBehaviour {
-    private NewInput touchControls;
+    private InputSystemManager touchControls;
 
     private void Awake() {
-        touchControls = new NewInput();
+        touchControls = new InputSystemManager();
     }
 
     private void OnEnable() {

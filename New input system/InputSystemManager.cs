@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @NewInput : IInputActionCollection2, IDisposable
+public partial class InputSystemManager : IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @NewInput()
+    public InputSystemManager()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""New Input"",
@@ -163,8 +163,8 @@ public partial class @NewInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Touch_TouchPosition;
     public struct TouchActions
     {
-        private @NewInput m_Wrapper;
-        public TouchActions(@NewInput wrapper) { m_Wrapper = wrapper; }
+        private InputSystemManager m_Wrapper;
+        public TouchActions(InputSystemManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @TouchInput => m_Wrapper.m_Touch_TouchInput;
         public InputAction @TouchPress => m_Wrapper.m_Touch_TouchPress;
         public InputAction @TouchPosition => m_Wrapper.m_Touch_TouchPosition;
