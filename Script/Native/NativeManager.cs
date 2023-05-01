@@ -1,20 +1,22 @@
 using UnityEngine;
+namespace ViitorCloud.ARModelViewer {
 
-public class NativeManager : MonoBehaviour {
-    private void Start() {
-        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-        jo.Call("CallMethodToGetURL");
-    }
+    public class NativeManager : MonoBehaviour {
+        private void Start() {
+            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            jo.Call("CallMethodToGetURL");
+        }
 
-    private void OnBackToNativeClicked() {
-        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-        jo.Call("onBackPressed");
-    }
+        private void OnBackToNativeClicked() {
+            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            jo.Call("onBackPressed");
+        }
 
-    public void GetModelDownloadLink(string url) {
-        GameManager.instance.AfterGetURL(url);
+        public void GetModelDownloadLink(string url) {
+            GameManager.instance.AfterGetURL(url);
+        }
     }
 }
 
