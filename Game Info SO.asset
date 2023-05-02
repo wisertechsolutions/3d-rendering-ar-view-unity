@@ -19,7 +19,7 @@ MonoBehaviour:
     GameID: 3D Rendering & AR View
     repoPath: https://github.com/viitoradmin/3d-rendering-ar-view-unity.git
     Scenes:
-    - Scenes/main.unity
+    - Scenes/Main.unity
     PhotonID: 
     AgoraID: 
     ProjectSettings:
@@ -73,7 +73,7 @@ MonoBehaviour:
       SplashScreenLogoBG: {fileID: 0}
       SpashBGBlur: 1
       Portrait: 1
-      PortraitUpsideDown: 1
+      PortraitUpsideDown: 0
       LandscapeLeft: 0
       LandscapeRight: 0
     Packages:
