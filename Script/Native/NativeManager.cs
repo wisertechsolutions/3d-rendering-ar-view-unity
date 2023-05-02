@@ -2,11 +2,13 @@ using UnityEngine;
 namespace ViitorCloud.ARModelViewer {
 
     public class NativeManager : MonoBehaviour {
-        private void Start() {
-            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-            jo.Call("CallMethodToGetURL");
-        }
+//        private void Start() {
+//#if UNITY_ANDROID && !UNITY_EDITOR
+//            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+//            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+//            jo.Call("CallMethodToGetURL");
+//#endif
+//        }
 
         private void OnBackToNativeClicked() {
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");

@@ -1,3 +1,4 @@
+using System.Security.Policy;
 using UnityEngine;
 using ViitorCloud.ModelViewer;
 
@@ -16,6 +17,8 @@ namespace ViitorCloud.ARModelViewer {
 
         private void OnEnable() {
             uIManager.onModelDownloaded += Get3dObject;
+            string url = "https://archive.org/download/paravti/paroot.glb";
+            GameManager.instance.AfterGetURL(url);
         }
 
         private void OnDisable() {
@@ -26,6 +29,7 @@ namespace ViitorCloud.ARModelViewer {
             GameObject obj = Instantiate(model);
             obj.transform.SetPositionAndRotation(nonARParent.position, nonARParent.rotation);
             obj.transform.parent = nonARParent;
+            obj.transform.localScale = Vector3.one;
             loader.SetActive(false);
         }
 
