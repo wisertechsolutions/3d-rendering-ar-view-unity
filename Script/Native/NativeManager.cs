@@ -29,3 +29,4 @@ namespace ViitorCloud.ARModelViewer {
 ///https://answers.unity.com/questions/780406/androidunity-launching-activity-from-unity-activit.html
 ///https://medium.com/@davidbeloosesky/embedded-unity-within-android-app-7061f4f473a
 ///https://www.youtube.com/watch?v=sf54tOAkmzU // perfect video
+///https://medium.com/xrpractices/embedding-unity-app-inside-native-android-application-c7b82245f8af
