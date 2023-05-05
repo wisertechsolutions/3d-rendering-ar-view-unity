@@ -9,7 +9,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private float minSize;
         [SerializeField] private float maxSize;
         [SerializeField] private Vector3 originalSize;
-        [SerializeField] private GameObject getChild;
+        private GameObject getChild;
 
         private void Awake() {
             originalSize = transform.localScale;
@@ -49,10 +49,11 @@ namespace ViitorCloud.ARModelViewer {
             transform.rotation = Quaternion.identity;
             transform.localScale = originalSize;
 
-            ResetPositionAndChildAlignment();           
+            //ResetPositionAndChildAlignment();           
         }   
         
-        private void ResetPositionAndChildAlignment() {
+        public void ResetPositionAndChildAlignment() {
+            getChild = transform.GetChild(0).gameObject;
             Bounds bounds1 = GetCombinedBounds(getChild);
             getChild.transform.parent = null;
             float difference = transform.position.y - bounds1.min.y;

@@ -33,16 +33,14 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
-            //if (finger.index != 0 || isDone) {
-            if (finger.index != 0 ) {
+            if (finger.index != 0 || isDone) {
                     return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
                 foreach (ARRaycastHit hit in hits) {
                     Pose pose = hit.pose;
-                    //GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
-                    GameManager.instance.uIManager.ModelParent.SetPositionAndRotation(pose.position, pose.rotation);
+                    GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
                     isDone = true;
                 }
             }
@@ -57,6 +55,11 @@ namespace ViitorCloud.ARModelViewer {
             m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
             m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
             m_aRDefaultPlane.SetActive(!m_aRDefaultPlane.activeInHierarchy);
+        }
+
+        public void PlaceARObjectAgain() {
+            isDone = false;
+            GameManager.instance.aRParent.transform.position = new Vector3(1000,1000,1000);
         }
     }
 }
