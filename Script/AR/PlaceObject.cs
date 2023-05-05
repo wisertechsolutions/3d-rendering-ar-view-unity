@@ -33,8 +33,9 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
-            if (finger.index != 0 || isDone) {
-                return;
+            //if (finger.index != 0 || isDone) {
+            if (finger.index != 0 ) {
+                    return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {

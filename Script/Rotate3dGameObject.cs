@@ -9,22 +9,23 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private float minSize;
         [SerializeField] private float maxSize;
         [SerializeField] private Vector3 originalSize;
+        [SerializeField] private GameObject getChild;
 
         private void Awake() {
             originalSize = transform.localScale;
-        }      
+        }
 
         private void Update() {
             if (EnhancedTouch.Touch.activeFingers.Count == 1) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
                         transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
-                    } 
+                    }
                 }
             }
 
             if (EnhancedTouch.Touch.activeFingers.Count == 2) {
-                if (transform.localScale.x > minSize && transform.localScale.x < maxSize) {  
+                if (transform.localScale.x > minSize && transform.localScale.x < maxSize) {
                     foreach (var (t1, t2) in from EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches let t1 = EnhancedTouch.Touch.activeTouches[0] let t2 = EnhancedTouch.Touch.activeTouches[1] select (t1, t2)) {
 
                         if (t1.phase == UnityEngine.InputSystem.TouchPhase.Began || t2.phase == UnityEngine.InputSystem.TouchPhase.Began) {
@@ -42,11 +43,38 @@ namespace ViitorCloud.ARModelViewer {
                     }
                 }
             }
-        }   
+        }
 
         public void ResetRotation() {
             transform.rotation = Quaternion.identity;
             transform.localScale = originalSize;
+
+            ResetPositionAndChildAlignment();           
+        }   
+        
+        private void ResetPositionAndChildAlignment() {
+            Bounds bounds1 = GetCombinedBounds(getChild);
+            getChild.transform.parent = null;
+            float difference = transform.position.y - bounds1.min.y;
+            getChild.transform.position = new Vector3(getChild.transform.position.x, transform.position.y + difference, getChild.transform.position.z);
+            getChild.transform.parent = transform;
         }
-    }
+
+        private Bounds GetCombinedBounds(GameObject parent) {
+            Bounds combinedBounds = new Bounds();
+
+            //grab all child renderers
+            Renderer[] renderers = GetComponentsInChildren<Renderer>(GetComponent<Renderer>());
+
+            //grow combined bounds with every children renderer
+            foreach (Renderer rendererChild in renderers) {
+                if (combinedBounds.size == Vector3.zero) {
+                    combinedBounds = rendererChild.bounds;
+                }
+                combinedBounds.Encapsulate(rendererChild.bounds);
+            }
+            //at this point combinedBounds should be size of renderer and all its renderers children
+            return combinedBounds;
+        }
+    }    
 }

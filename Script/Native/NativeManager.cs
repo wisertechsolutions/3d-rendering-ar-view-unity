@@ -17,7 +17,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void GetModelDownloadLink(string url) {
-            GameManager.instance.AfterGetURL(url);
+            //GameManager.instance.AfterGetURL(url);
         }
     }
 }
