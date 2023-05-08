@@ -149,16 +149,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 13849789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e884f3b1b679f44887b77a9db7c987e, type: 3}
+  m_Script: {fileID: 11500000, guid: 90145c69a09e28e4c9016c4994aa689e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_OBJImporter: {fileID: 70295430}
-  m_GLTFImporter: {fileID: 70295429}
   zippath_InputField: {fileID: 0}
   canvasPanel: {fileID: 0}
   loadingText: {fileID: 0}
   ModelParent: {fileID: 2051507674}
   isLoadingAsset: 0
+  m_LastLoadedGLTFObject: {fileID: 0}
 --- !u!4 &13849791
 Transform:
   m_ObjectHideFlags: 0
@@ -320,7 +320,6 @@ GameObject:
   m_Component:
   - component: {fileID: 70295428}
   - component: {fileID: 70295430}
-  - component: {fileID: 70295429}
   m_Layer: 0
   m_Name: Importer
   m_TagString: Untagged
@@ -343,22 +342,6 @@ Transform:
   m_Father: {fileID: 13849791}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &70295429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70295427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e746b28a675f9b48a79c32086eb4b56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  matrial: {fileID: 0}
-  m_LastLoadedObject: {fileID: 0}
-  m_VertexCount: 0
-  m_TriangleCount: 0
 --- !u!114 &70295430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +351,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 70295427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367ad1be3ca585e4e99a871486618c33, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a5f09349d809bb41946771f26e0f099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_LastLoadedObject: {fileID: 0}
@@ -2268,6 +2251,7 @@ MonoBehaviour:
   minSize: 0.1
   maxSize: 1
   originalSize: {x: 0.52, y: 0.52, z: 0.52}
+  ifAR: 0
 --- !u!4 &1813209769
 Transform:
   m_ObjectHideFlags: 0
@@ -2407,6 +2391,7 @@ MonoBehaviour:
   minSize: 0.05
   maxSize: 0.5
   originalSize: {x: 0.26, y: 0.26, z: 0.26}
+  ifAR: 1
 --- !u!1 &2124424566
 GameObject:
   m_ObjectHideFlags: 0

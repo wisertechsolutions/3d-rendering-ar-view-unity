@@ -26,13 +26,13 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             //string url = "https://archive.org/download/paravti/paroot.glb";
-            string url = "https://archive.org/download/paravti/ardhnarishwar.glb";
-            //string url = "https://archive.org/download/paravti/paravti.glb";
+            //string url = "https://archive.org/download/paravti/ardhnarishwar.glb";
+            string url = "https://archive.org/download/paravti/paravti.glb";
             //string url = "https://archive.org/download/paravti/parrotlady.glb";
             //string url = "https://archive.org/download/dowry_chest/asian_pirate_ship.glb";
             //string url = "https://archive.org/download/dowry_chest/dowry_chest.glb";
             //string url = "https://3d-model-construction.s3.ap-south-1.amazonaws.com/4b6f1d6ce2a511fa3c16f93f4916f2b49583e2744a49bea46bdbb49234e1afdf.zip";
-            GameManager.instance.AfterGetURL(url);            
+            GameManager.instance.AfterGetURL(url);        
         }
 
         public void TouchOnOffClicked() {

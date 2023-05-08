@@ -9,58 +9,19 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private float minSize;
         [SerializeField] private float maxSize;
         [SerializeField] private Vector3 originalSize;
-        private GameObject getChild;
-
-        private float rotatespeed = 0.5f;
-        private float _startingPositionX;
-        private float _startingPositionY;
+        [SerializeField] private bool ifAR;
+        private GameObject getChild;       
 
         private void Awake() {
             originalSize = transform.localScale;
         }
 
         private void Update() {
-            if (!GameManager.instance.touchStart) {
-                return;
-            }
-
-            if (EnhancedTouch.Touch.activeFingers.Count == 1) {
-                foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
-                    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
-                        _startingPositionX = touch.delta.x;
-                        _startingPositionY = touch.delta.y;
-                    }                    
-
+            if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
+                foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) { 
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                        // transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);                    }
-
-                        if (_startingPositionX > touch.delta.x) {
-                            transform.RotateAroundLocal(Vector3.up, rotatespeed * Time.deltaTime);
-                        } else if (_startingPositionX < touch.delta.x) {
-                            transform.RotateAroundLocal(Vector3.up, -rotatespeed * Time.deltaTime);
-                        }
-
-                        //float Rotation;
-                        //if (transform.eulerAngles.x <= 180f) {
-                        //    Rotation = transform.eulerAngles.x;
-                        //} else {
-                        //    Rotation = transform.eulerAngles.x - 360f;
-                        //}
-
-                        //if (Rotation < 85f && Rotation > -85f) {
-                        if (_startingPositionY > touch.delta.y) {
-                            transform.RotateAroundLocal(Vector3.left, rotatespeed * Time.deltaTime);
-                        } else if (_startingPositionY < touch.delta.y) {
-                            transform.RotateAroundLocal(Vector3.left, -rotatespeed * Time.deltaTime);
-                        }
-                        //} else {
-                        //    if(Rotation >= 85f) {
-                        //        transform.eulerAngles = new Vector3(85f, transform.eulerAngles.y, transform.eulerAngles.z);
-                        //    }
-                        //    else if (Rotation <= -85f) {
-                        //        transform.eulerAngles = new Vector3(-85f, transform.eulerAngles.y, transform.eulerAngles.z);
-                        //    }
-                        //}
+                        //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
+                        transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
                     }
                 }
             }
