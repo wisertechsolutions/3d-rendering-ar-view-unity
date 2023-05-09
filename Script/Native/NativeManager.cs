@@ -2,11 +2,13 @@ using UnityEngine;
 namespace ViitorCloud.ARModelViewer {
 
     public class NativeManager : MonoBehaviour {
-        private void Start() {
-            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-            jo.Call("CallMethodToGetURL");
-        }
+//        private void Start() {
+//#if UNITY_ANDROID && !UNITY_EDITOR
+//            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+//            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+//            jo.Call("CallMethodToGetURL");
+//#endif
+//        }
 
         private void OnBackToNativeClicked() {
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -15,7 +17,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void GetModelDownloadLink(string url) {
-            GameManager.instance.AfterGetURL(url);
+            //GameManager.instance.AfterGetURL(url);
         }
     }
 }
@@ -27,3 +29,4 @@ namespace ViitorCloud.ARModelViewer {
 ///https://answers.unity.com/questions/780406/androidunity-launching-activity-from-unity-activit.html
 ///https://medium.com/@davidbeloosesky/embedded-unity-within-android-app-7061f4f473a
 ///https://www.youtube.com/watch?v=sf54tOAkmzU // perfect video
+///https://medium.com/xrpractices/embedding-unity-app-inside-native-android-application-c7b82245f8af

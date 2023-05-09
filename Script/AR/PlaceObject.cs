@@ -8,55 +8,63 @@ namespace ViitorCloud.ARModelViewer {
 
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
-        //[SerializeField] private GameObject prefab;
         [SerializeField] private ARCameraManager arCameraManager;
         [SerializeField] private Camera m_Camera;
-        [SerializeField] private GameObject m_3dModel;
-        private ARRaycastManager arRaycastManager;
-        private ARPlaneManager arPlaneManager;
-        private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-        private bool isDone;
+        [SerializeField] private GameObject m_3dModelNonAR;
+        [SerializeField] private GameObject m_3dModelAR;
+        [SerializeField] private GameObject m_aRSessionOrigin;
+        [SerializeField] private GameObject m_aRDefaultPlane;
+        [SerializeField] private ARRaycastManager arRaycastManager;
+        [SerializeField] private ARPlaneManager arPlaneManager;
+        [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+        [SerializeField] private bool isDone;
 
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
-            arPlaneManager = GetComponent<ARPlaneManager>();
+            arPlaneManager = GetComponent<ARPlaneManager>();           
         }
-
+       
         private void OnEnable() {
-            EnhancedTouch.TouchSimulation.Enable();
-            EnhancedTouch.EnhancedTouchSupport.Enable();
-
             EnhancedTouch.Touch.onFingerDown += FingerDown;
         }
 
         private void OnDisable() {
-            EnhancedTouch.TouchSimulation.Disable();
-            EnhancedTouch.EnhancedTouchSupport.Disable();
-
             EnhancedTouch.Touch.onFingerDown -= FingerDown;
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
             if (finger.index != 0 || isDone) {
-                return;
+                    return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
-                foreach (ARRaycastHit hit in hits) {
-                    Pose pose = hit.pose;
-                    //GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
-                    GameManager.instance.uIManager.ModelParent.SetPositionAndRotation(pose.position, pose.rotation);
-                    isDone = true;
+                bool isOverUI = MouseOverUILayerObject.IsPointerOverUIObject();
+                Debug.Log($"isOverUI {isOverUI}");
+                if (!isOverUI) {
+                    foreach (ARRaycastHit hit in hits) {
+                        Pose pose = hit.pose;
+                        GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
+                        isDone = true;
+                    }
                 }
             }
         }
 
         public void ARCameraOnOff() {
+            GameManager.instance.arMode = !GameManager.instance.arMode;
             arCameraManager.enabled = !arCameraManager.enabled;
             arRaycastManager.enabled = !arRaycastManager.enabled;
             arPlaneManager.enabled = !arPlaneManager.enabled;
             m_Camera.enabled = !m_Camera.enabled;
-            m_3dModel.SetActive(!m_3dModel.activeInHierarchy);
+            m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
+            m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
+            m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
+            m_aRDefaultPlane.SetActive(!m_aRDefaultPlane.activeInHierarchy);
+        }
+
+        public void PlaceARObjectAgain() {
+            isDone = false;
+            GameManager.instance.aRParent.transform.position = new Vector3(1000,1000,1000);
         }
     }
 }
