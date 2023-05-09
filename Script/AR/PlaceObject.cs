@@ -38,15 +38,20 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
-                foreach (ARRaycastHit hit in hits) {
-                    Pose pose = hit.pose;
-                    GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
-                    isDone = true;
+                bool isOverUI = MouseOverUILayerObject.IsPointerOverUIObject();
+                Debug.Log($"isOverUI {isOverUI}");
+                if (!isOverUI) {
+                    foreach (ARRaycastHit hit in hits) {
+                        Pose pose = hit.pose;
+                        GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
+                        isDone = true;
+                    }
                 }
             }
         }
 
         public void ARCameraOnOff() {
+            GameManager.instance.arMode = !GameManager.instance.arMode;
             arCameraManager.enabled = !arCameraManager.enabled;
             arRaycastManager.enabled = !arRaycastManager.enabled;
             arPlaneManager.enabled = !arPlaneManager.enabled;

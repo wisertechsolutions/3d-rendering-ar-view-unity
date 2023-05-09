@@ -2,7 +2,7 @@ using UnityEngine;
 #if UNITY_ANDROID
 using UnityEngine.Android;
 #elif UNITY_IOS
- using UnityEngine.iOS;
+using UnityEngine.iOS;
 #endif
 
 namespace ViitorCloud.ARModelViewer {

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 13849791}
   - component: {fileID: 13849790}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: Model downlaod Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,12 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OBJImporter: {fileID: 70295430}
+  m_GLTFImporter: {fileID: 70295431}
   zippath_InputField: {fileID: 0}
   canvasPanel: {fileID: 0}
   loadingText: {fileID: 0}
   ModelParent: {fileID: 2051507674}
   isLoadingAsset: 0
-  m_LastLoadedGLTFObject: {fileID: 0}
 --- !u!4 &13849791
 Transform:
   m_ObjectHideFlags: 0
@@ -320,6 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 70295428}
   - component: {fileID: 70295430}
+  - component: {fileID: 70295431}
   m_Layer: 0
   m_Name: Importer
   m_TagString: Untagged
@@ -358,6 +359,19 @@ MonoBehaviour:
   m_VertexCount: 0
   m_TriangleCount: 0
   matrial: {fileID: 0}
+--- !u!114 &70295431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70295427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0992bf3497f09744daacefa45e6729bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LastLoadedObject: {fileID: 0}
 --- !u!1 &250974809
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &360360807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +764,7 @@ RectTransform:
   m_GameObject: {fileID: 561620245}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 580201005}
@@ -1154,7 +1168,7 @@ RectTransform:
   m_GameObject: {fileID: 616863935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 250974810}
@@ -1299,6 +1313,50 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &997488655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 997488656}
+  - component: {fileID: 997488657}
+  m_Layer: 0
+  m_Name: PermissionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &997488656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997488655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1210770316}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997488657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997488655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf99f319051abb41b72b8dee0c826dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006597057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1613,7 @@ Camera:
   m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1636,10 +1694,13 @@ MonoBehaviour:
   nativeManager: {fileID: 1730613627}
   placeObject: {fileID: 1412776406}
   loader: {fileID: 616863935}
+  btnArOnOff: {fileID: 372279165}
+  btnSpawnAR: {fileID: 580858631}
+  txtLoading: {fileID: 1645864379}
   nonARParent: {fileID: 1813209768}
   aRParent: {fileID: 2051507675}
-  txtLoading: {fileID: 1645864379}
   touchStart: 0
+  arMode: 1
 --- !u!4 &1210770316
 Transform:
   m_ObjectHideFlags: 0
@@ -1654,6 +1715,7 @@ Transform:
   m_Children:
   - {fileID: 13849791}
   - {fileID: 1730613626}
+  - {fileID: 997488656}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
