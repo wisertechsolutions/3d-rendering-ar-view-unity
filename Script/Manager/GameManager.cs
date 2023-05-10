@@ -13,12 +13,13 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private PlaceObject placeObject;
         [SerializeField] private GameObject loader;
         [SerializeField] private GameObject btnArOnOff;
-        [SerializeField] private GameObject btnSpawnAR;
+        public GameObject btnSpawnAR;
         [SerializeField] private TMP_Text txtLoading;
         public Rotate3dGameObject nonARParent;
         public Rotate3dGameObject aRParent;
         public bool touchStart;
-        public bool arMode = true;
+        public bool arMode;
+        public GameObject btnTouchOnOff;
 
         private void Awake() {
             instance = this;
@@ -72,7 +73,7 @@ namespace ViitorCloud.ARModelViewer {
         private void OnApplicationFocus(bool focus) {
             if (focus) {
                 btnArOnOff.SetActive(PermissionManager.instance.IsCameraPermissionhied());
-                btnSpawnAR.SetActive(PermissionManager.instance.IsCameraPermissionhied());
+                //btnSpawnAR.SetActive(PermissionManager.instance.IsCameraPermissionhied());
             }
         }
 

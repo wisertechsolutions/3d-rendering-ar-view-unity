@@ -17,13 +17,35 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-        [SerializeField] private bool isDone;
+        public bool isDone {
+            get {
+                return m_isDone;
+            }
+            set {
+                m_isDone = value;
+                CheckIsArModelPlaced();
+            }
+        }
+
+        private void CheckIsArModelPlaced() {
+            if (GameManager.instance.arMode) {
+                GameManager.instance.btnTouchOnOff.SetActive(m_isDone);
+                GameManager.instance.btnSpawnAR.SetActive(m_isDone);
+            } else {
+                GameManager.instance.btnTouchOnOff.SetActive(true);
+                GameManager.instance.btnSpawnAR.SetActive(false);
+            }
+        }
+
+        [SerializeField]
+        private bool m_isDone;
 
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
-            arPlaneManager = GetComponent<ARPlaneManager>();           
+            arPlaneManager = GetComponent<ARPlaneManager>();
+            ARCameraOnOff();
         }
-       
+
         private void OnEnable() {
             EnhancedTouch.Touch.onFingerDown += FingerDown;
         }
@@ -34,7 +56,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void FingerDown(EnhancedTouch.Finger finger) {
             if (finger.index != 0 || isDone) {
-                    return;
+                return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
@@ -44,6 +66,7 @@ namespace ViitorCloud.ARModelViewer {
                     foreach (ARRaycastHit hit in hits) {
                         Pose pose = hit.pose;
                         GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
+                        GameManager.instance.aRParent.originalRotation = pose.rotation;
                         isDone = true;
                     }
                 }
@@ -60,11 +83,12 @@ namespace ViitorCloud.ARModelViewer {
             m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
             m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
             m_aRDefaultPlane.SetActive(!m_aRDefaultPlane.activeInHierarchy);
+            CheckIsArModelPlaced();
         }
 
         public void PlaceARObjectAgain() {
             isDone = false;
-            GameManager.instance.aRParent.transform.position = new Vector3(1000,1000,1000);
+            GameManager.instance.aRParent.transform.position = new Vector3(1000, 1000, 1000);
         }
     }
 }
