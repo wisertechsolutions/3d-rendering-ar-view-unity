@@ -13,7 +13,6 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject m_3dModelNonAR;
         [SerializeField] private GameObject m_3dModelAR;
         [SerializeField] private GameObject m_aRSessionOrigin;
-        [SerializeField] private GameObject m_aRDefaultPlane;
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -82,7 +81,6 @@ namespace ViitorCloud.ARModelViewer {
             m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
             m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
             m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
-            m_aRDefaultPlane.SetActive(!m_aRDefaultPlane.activeInHierarchy);
             CheckIsArModelPlaced();
         }
 
