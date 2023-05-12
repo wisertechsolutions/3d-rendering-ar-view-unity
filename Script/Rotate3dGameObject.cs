@@ -55,11 +55,14 @@ namespace ViitorCloud.ARModelViewer {
 
         public void ResetPositionAndChildAlignment() {
             objChild = transform.GetChild(0).gameObject;
-            Bounds bounds1 = GetCombinedBounds(objChild);
+            Bounds bounds = GetCombinedBounds(objChild);
             objChild.transform.parent = null;
-            float difference = transform.position.y - bounds1.min.y;
+            float difference = transform.position.y - bounds.min.y;
             objChild.transform.position = new Vector3(objChild.transform.position.x, transform.position.y + difference, objChild.transform.position.z);
             objChild.transform.parent = transform;
+
+            //float size = (4 / bounds.size.y) * originalSize.x;
+            //transform.localScale = new Vector3(size, size, size);   
         }
 
         private Bounds GetCombinedBounds(GameObject parent) {

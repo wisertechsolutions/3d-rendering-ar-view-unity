@@ -35,7 +35,7 @@ namespace ViitorCloud.ARModelViewer {
             //string url = "https://archive.org/download/paravti/parrotlady.glb";
             //string url = "https://archive.org/download/dowry_chest/asian_pirate_ship.glb";
             //string url = "https://archive.org/download/dowry_chest/dowry_chest.glb";
-            //string url = "https://3d-model-construction.s3.ap-south-1.amazonaws.com/4b6f1d6ce2a511fa3c16f93f4916f2b49583e2744a49bea46bdbb49234e1afdf.zip";
+            //string url = "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
             GameManager.instance.AfterGetURL(url);
         }
 
