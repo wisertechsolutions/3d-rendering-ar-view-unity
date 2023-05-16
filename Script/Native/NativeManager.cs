@@ -16,8 +16,9 @@ namespace ViitorCloud.ARModelViewer {
             jo.Call("onBackPressed");
         }
 
-        public void GetModelDownloadLink(string url) {
-            //GameManager.instance.AfterGetURL(url);
+        public void GetModelDownloadLink(string url, bool isAR) {
+            GameManager.instance.AfterGetURL(url);
+            // Send data to PlaceObject.cs method ARCameraOnOff();
         }
     }
 }

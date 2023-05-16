@@ -13,13 +13,25 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private PlaceObject placeObject;
         [SerializeField] private GameObject loader;
         [SerializeField] private GameObject btnArOnOff;
-        public GameObject btnSpawnAR;
         [SerializeField] private TMP_Text txtLoading;
+        public GameObject btnSpawnAR;
         public Rotate3dGameObject nonARParent;
         public Rotate3dGameObject aRParent;
         public bool touchStart;
         public bool arMode;
         public GameObject btnTouchOnOff;
+        public enum URL_type { Obj, Gltf };
+        public URL_type uRL_Type;
+
+        private string Url {
+            get {
+                if (uRL_Type == URL_type.Obj) {
+                    return "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
+                } else {
+                    return "https://archive.org/download/paravti/paravti.glb";
+                }
+            }
+        } 
 
         private void Awake() {
             instance = this;
@@ -28,15 +40,8 @@ namespace ViitorCloud.ARModelViewer {
             StartCoroutine(CheckAvailability());
         }
 
-        private void Start() {
-            //string url = "https://archive.org/download/paravti/paroot.glb";
-            //string url = "https://archive.org/download/paravti/ardhnarishwar.glb";
-            string url = "https://archive.org/download/paravti/paravti.glb";
-            //string url = "https://archive.org/download/paravti/parrotlady.glb";
-            //string url = "https://archive.org/download/dowry_chest/asian_pirate_ship.glb";
-            //string url = "https://archive.org/download/dowry_chest/dowry_chest.glb";
-            //string url = "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
-            GameManager.instance.AfterGetURL(url);
+        private void Start() {            
+            GameManager.instance.AfterGetURL(Url);
         }
 
         public void TouchOnOffClicked() {
@@ -73,7 +78,6 @@ namespace ViitorCloud.ARModelViewer {
         private void OnApplicationFocus(bool focus) {
             if (focus) {
                 btnArOnOff.SetActive(PermissionManager.instance.IsCameraPermissionhied());
-                //btnSpawnAR.SetActive(PermissionManager.instance.IsCameraPermissionhied());
             }
         }
 

@@ -452,7 +452,7 @@ MonoBehaviour:
   m_LastLoadedObject: {fileID: 0}
   m_VertexCount: 0
   m_TriangleCount: 0
-  matrial: {fileID: 0}
+  matrial: {fileID: 4800000, guid: 5fb536a8dd7b63d438e9c2f7f95324e2, type: 3}
 --- !u!114 &70295431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &360360807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,7 +1014,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 580201005}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1240,8 +1240,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 883827130}
   - {fileID: 561620246}
+  - {fileID: 883827130}
   - {fileID: 1833263348}
   - {fileID: 616863936}
   m_Father: {fileID: 0}
@@ -1497,7 +1497,7 @@ RectTransform:
   m_Children:
   - {fileID: 372279166}
   m_Father: {fileID: 580201005}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1924,13 +1924,14 @@ MonoBehaviour:
   placeObject: {fileID: 1412776406}
   loader: {fileID: 616863935}
   btnArOnOff: {fileID: 372279165}
-  btnSpawnAR: {fileID: 580858631}
   txtLoading: {fileID: 1645864379}
+  btnSpawnAR: {fileID: 580858631}
   nonARParent: {fileID: 1813209768}
   aRParent: {fileID: 2051507675}
   touchStart: 0
   arMode: 1
   btnTouchOnOff: {fileID: 561620245}
+  uRL_Type: 0
 --- !u!4 &1210770316
 Transform:
   m_ObjectHideFlags: 0
@@ -2548,7 +2549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813209767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.714, z: -3.33}
+  m_LocalPosition: {x: 0, y: -1.34, z: -3.33}
   m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
   m_ConstrainProportionsScale: 0
   m_Children: []

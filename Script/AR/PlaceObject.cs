@@ -25,19 +25,8 @@ namespace ViitorCloud.ARModelViewer {
                 CheckIsArModelPlaced();
             }
         }
-
-        private void CheckIsArModelPlaced() {
-            if (GameManager.instance.arMode) {
-                GameManager.instance.btnTouchOnOff.SetActive(m_isDone);
-                GameManager.instance.btnSpawnAR.SetActive(m_isDone);
-            } else {
-                GameManager.instance.btnTouchOnOff.SetActive(true);
-                GameManager.instance.btnSpawnAR.SetActive(false);
-            }
-        }
-
         [SerializeField]
-        private bool m_isDone;
+        private bool m_isDone;               
 
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
@@ -51,6 +40,16 @@ namespace ViitorCloud.ARModelViewer {
 
         private void OnDisable() {
             EnhancedTouch.Touch.onFingerDown -= FingerDown;
+        }
+
+        private void CheckIsArModelPlaced() {
+            if (GameManager.instance.arMode) {
+                GameManager.instance.btnTouchOnOff.SetActive(m_isDone);
+                GameManager.instance.btnSpawnAR.SetActive(m_isDone);
+            } else {
+                GameManager.instance.btnTouchOnOff.SetActive(true);
+                GameManager.instance.btnSpawnAR.SetActive(false);
+            }
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
