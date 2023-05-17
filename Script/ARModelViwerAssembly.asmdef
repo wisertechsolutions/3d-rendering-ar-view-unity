@@ -5,9 +5,10 @@
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:a9420e37d7990b54abdef6688edbe313",
         "GUID:92703082f92b41ba80f0d6912de66115",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:774f0e7b520e24644b448f5ac7fa5d94",
-        "GUID:16b9863426bc1934589d09a98f572f22"
+        "GUID:16b9863426bc1934589d09a98f572f22",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:231dc8ba323b0f942bb572eddb480938"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

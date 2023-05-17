@@ -32,6 +32,7 @@ namespace ViitorCloud.ARModelViewer {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
             ARCameraOnOff();
+            //arPlaneManager.SetTrackablesActive(true);
         }
 
         private void OnEnable() {
@@ -68,6 +69,12 @@ namespace ViitorCloud.ARModelViewer {
                         isDone = true;
                     }
                 }
+            }
+        }
+
+        void CheckForTrackables() {
+            if(arPlaneManager.trackables.count > 0) {
+                GameManager.instance.panelScanFloor.SetActive(false);
             }
         }
 

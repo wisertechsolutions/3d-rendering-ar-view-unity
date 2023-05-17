@@ -22,11 +22,13 @@ namespace ViitorCloud.ARModelViewer {
         public GameObject btnTouchOnOff;
         public enum URL_type { Obj, Gltf };
         public URL_type uRL_Type;
+        public GameObject panelScanFloor;
 
         private string Url {
             get {
                 if (uRL_Type == URL_type.Obj) {
-                    return "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
+                    //return "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
+                    return "https://wazir-ai.s3.us-east-2.amazonaws.com/fb7a8a82058518326afe01d34139beca358f8fd075895130306fac36bf84b8bb+(1).zip";
                 } else {
                     return "https://archive.org/download/paravti/paravti.glb";
                 }
