@@ -23,6 +23,7 @@ namespace ViitorCloud.ARModelViewer {
         public enum URL_type { Obj, Gltf };
         public URL_type uRL_Type;
         public GameObject panelScanFloor;
+        public GameObject panelZoomInOut;
 
         private string Url {
             get {

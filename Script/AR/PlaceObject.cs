@@ -5,7 +5,6 @@ using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace ViitorCloud.ARModelViewer {
-
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
         [SerializeField] private ARCameraManager arCameraManager;
@@ -16,7 +15,8 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
-        public bool isDone {
+        [SerializeField] private bool zoomAnimationDone;
+        public bool IsDone {
             get {
                 return m_isDone;
             }
@@ -26,27 +26,28 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
         [SerializeField]
-        private bool m_isDone;               
+        private bool m_isDone;
 
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
             ARCameraOnOff();
-            //arPlaneManager.SetTrackablesActive(true);
         }
 
         private void OnEnable() {
             EnhancedTouch.Touch.onFingerDown += FingerDown;
+            InvokeRepeating(nameof(CheckForTrackables), 0f, 1f);
         }
 
         private void OnDisable() {
             EnhancedTouch.Touch.onFingerDown -= FingerDown;
+            CancelInvoke(nameof(CheckForTrackables));
         }
 
         private void CheckIsArModelPlaced() {
             if (GameManager.instance.arMode) {
-                GameManager.instance.btnTouchOnOff.SetActive(m_isDone);
-                GameManager.instance.btnSpawnAR.SetActive(m_isDone);
+                GameManager.instance.btnTouchOnOff.SetActive(IsDone);
+                GameManager.instance.btnSpawnAR.SetActive(IsDone);
             } else {
                 GameManager.instance.btnTouchOnOff.SetActive(true);
                 GameManager.instance.btnSpawnAR.SetActive(false);
@@ -54,28 +55,27 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
-            if (finger.index != 0 || isDone) {
+            if (finger.index != 0 || IsDone) {
                 return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
-                bool isOverUI = MouseOverUILayerObject.IsPointerOverUIObject();
-                Debug.Log($"isOverUI {isOverUI}");
-                if (!isOverUI) {
+                if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                     foreach (ARRaycastHit hit in hits) {
-                        Pose pose = hit.pose;
-                        GameManager.instance.aRParent.transform.SetPositionAndRotation(pose.position, pose.rotation);
-                        GameManager.instance.aRParent.originalRotation = pose.rotation;
-                        isDone = true;
+                        GameManager.instance.aRParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
+                        GameManager.instance.aRParent.originalRotation = hit.pose.rotation;
+                        IsDone = true;
+                        if (!zoomAnimationDone) {
+                            GameManager.instance.panelZoomInOut.SetActive(true);
+                            zoomAnimationDone = true;
+                        }
                     }
                 }
             }
         }
 
         void CheckForTrackables() {
-            if(arPlaneManager.trackables.count > 0) {
-                GameManager.instance.panelScanFloor.SetActive(false);
-            }
+            GameManager.instance.panelScanFloor.SetActive(!(arPlaneManager.trackables.count > 0));
         }
 
         public void ARCameraOnOff() {
@@ -91,8 +91,8 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void PlaceARObjectAgain() {
-            isDone = false;
-            GameManager.instance.aRParent.transform.position = new Vector3(1000, 1000, 1000);
+            IsDone = false;
+            GameManager.instance.aRParent.transform.position = new Vector3(Constant.aRPosition, Constant.aRPosition, Constant.aRPosition);
         }
     }
 }

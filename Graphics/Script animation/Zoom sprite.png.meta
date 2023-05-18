@@ -140,7 +140,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: object_0
+      name: Zoom sprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3000
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f3171c8ee0fb124fa93414f1396beab
+      internalID: 1612229895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Zoom sprite_1
       rect:
         serializedVersion: 2
         x: 600
@@ -154,14 +175,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d215e4fa6fb304742b69f8737279f95e
-      internalID: -974510422
+      spriteID: b483e28b947dccf45bca8289571538a6
+      internalID: -2094978998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_1
+      name: Zoom sprite_2
       rect:
         serializedVersion: 2
         x: 1200
@@ -175,14 +196,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 691b880eae473bf449b94cefd8e02e79
-      internalID: -1689177539
+      spriteID: 7667bb50be75dc64e908f9e1fb5ebb24
+      internalID: 78112649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_2
+      name: Zoom sprite_3
       rect:
         serializedVersion: 2
         x: 1800
@@ -196,14 +217,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 411489838b4ac8d4e8062457ade92269
-      internalID: 1635888320
+      spriteID: 5a0fdf7363d643948bac80fd6559e061
+      internalID: -1022769823
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_3
+      name: Zoom sprite_4
       rect:
         serializedVersion: 2
         x: 2400
@@ -217,14 +238,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5a526543c5bbb64bac5ff8c3411af47
-      internalID: 1007503869
+      spriteID: a7e6634820e05d5468744bd39f67444a
+      internalID: 1375537031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_4
+      name: Zoom sprite_5
       rect:
         serializedVersion: 2
         x: 3000
@@ -238,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fbf96bbe30113a43bae2e518f06ac0c
-      internalID: -1254267640
+      spriteID: 0b09d8db00e4a614eb508e750577e8db
+      internalID: 800237670
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_5
+      name: Zoom sprite_6
       rect:
         serializedVersion: 2
         x: 3600
@@ -259,14 +280,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 950983a8100044f4b9b058f7419a45ac
-      internalID: -1886507145
+      spriteID: 23762ca4d328e7b47b0e3ab64dc320e2
+      internalID: 1477649816
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_6
+      name: Zoom sprite_7
       rect:
         serializedVersion: 2
         x: 4200
@@ -280,14 +301,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1aeffe861d7e35458cc951cac3e19fe
-      internalID: -1780941413
+      spriteID: 61a486d55f3521e4eb0cf8e3171a5083
+      internalID: 900197996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_7
+      name: Zoom sprite_8
       rect:
         serializedVersion: 2
         x: 4800
@@ -301,14 +322,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41984ee194ae4e146b955da1d2cc0bf9
-      internalID: -337591810
+      spriteID: eb4d8de40ebee3b428e9526b3e2ff9f9
+      internalID: -64798849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_8
+      name: Zoom sprite_9
       rect:
         serializedVersion: 2
         x: 5400
@@ -322,35 +343,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d34d94784dcf1cb4cb5f04f4d912e94f
-      internalID: 1738658764
+      spriteID: cbb1bb978aa8d97499517f27c9b8f500
+      internalID: -1195674891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_9
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 3000
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a520c22fe4fce634897bd92394c11d75
-      internalID: 2097482605
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_10
+      name: Zoom sprite_10
       rect:
         serializedVersion: 2
         x: 0
@@ -364,14 +364,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9fe851aa6e21554ba1cb2736a1beab9
-      internalID: 1010442612
+      spriteID: 5fa68f81a2f2c8642ab7fd1558abfb35
+      internalID: -29837796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_11
+      name: Zoom sprite_11
       rect:
         serializedVersion: 2
         x: 600
@@ -385,14 +385,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 321482f7e6b4aaf4abaea378db5b5e03
-      internalID: -2040413090
+      spriteID: 0f413f739471b544ba336690534fb495
+      internalID: 1668180611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_12
+      name: Zoom sprite_12
       rect:
         serializedVersion: 2
         x: 1200
@@ -406,14 +406,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ff8fbacec31bd047b700589e160bd60
-      internalID: 1773127978
+      spriteID: da53c8e5130eaaf47a28f4d1c83d4a17
+      internalID: -821741889
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_13
+      name: Zoom sprite_13
       rect:
         serializedVersion: 2
         x: 1800
@@ -427,14 +427,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20a1606716d41344bb713299ad0addb2
-      internalID: -583117842
+      spriteID: e23d0c664579c1c41a276daf7ef87701
+      internalID: -1824535528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_14
+      name: Zoom sprite_14
       rect:
         serializedVersion: 2
         x: 2400
@@ -448,14 +448,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f1b56fdbe73aa540a80e1501036d294
-      internalID: -1198400181
+      spriteID: bf8cb6aef43d0954d905f28963d1019e
+      internalID: 2175487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_15
+      name: Zoom sprite_15
       rect:
         serializedVersion: 2
         x: 3000
@@ -469,14 +469,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8242e3bcf025ba544a1c4a4d8f570d71
-      internalID: -522705397
+      spriteID: ca6955e132afa3c4ea0a3d43138040ff
+      internalID: 1274664616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_16
+      name: Zoom sprite_16
       rect:
         serializedVersion: 2
         x: 3600
@@ -490,14 +490,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eac7c031cfe1e1b4eb1974c4f1378d83
-      internalID: 2062592499
+      spriteID: 3255376b1f796e841afbf93566798f4d
+      internalID: 755093749
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_17
+      name: Zoom sprite_17
       rect:
         serializedVersion: 2
         x: 4200
@@ -511,14 +511,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8573e89ed8fcf7144b3f040d81f87312
-      internalID: -711401447
+      spriteID: 99f37b10b4c16804d90a5fee6abd93be
+      internalID: -1799023607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_18
+      name: Zoom sprite_18
       rect:
         serializedVersion: 2
         x: 4800
@@ -532,14 +532,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e511c02233b5ab47abf72f307664620
-      internalID: 488966617
+      spriteID: a856e4b58b20b324499eb799fdf6ad2e
+      internalID: 1130763121
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_19
+      name: Zoom sprite_19
       rect:
         serializedVersion: 2
         x: 5400
@@ -553,35 +553,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b83fcb9df04eb241aabaf0ae7727a07
-      internalID: -1463992807
+      spriteID: 27b177998d670a1409b5e7c1741a1754
+      internalID: -163431051
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_20
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 2400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f86e96758430e244b97999c8e384c07
-      internalID: 1192767273
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_21
+      name: Zoom sprite_20
       rect:
         serializedVersion: 2
         x: 0
@@ -595,14 +574,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d51ffd090e1628546a21020aaa1e85a3
-      internalID: 885120493
+      spriteID: 2165daf528cfcb34ab535b5d0552eaf7
+      internalID: 280610586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_22
+      name: Zoom sprite_21
       rect:
         serializedVersion: 2
         x: 600
@@ -616,14 +595,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab45da5241c3f8947ba520c9cf1cb530
-      internalID: -769980231
+      spriteID: 21e00dea969ab6b409b9847e4ca9c6f9
+      internalID: 364882191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_23
+      name: Zoom sprite_22
       rect:
         serializedVersion: 2
         x: 1200
@@ -637,14 +616,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06651e0a50672af4db75abf6ffa86179
-      internalID: 216972051
+      spriteID: d1401f1dbfd32a7419c25fd7afd44a88
+      internalID: 1445325429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_24
+      name: Zoom sprite_23
       rect:
         serializedVersion: 2
         x: 1800
@@ -658,14 +637,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45e166fb21ec9c140ba39ef8da788503
-      internalID: 1200947643
+      spriteID: 2d79205b1add177449a1de003c73616e
+      internalID: -179632228
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_25
+      name: Zoom sprite_24
       rect:
         serializedVersion: 2
         x: 2400
@@ -679,14 +658,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: caba17dad482bc64bbeee4755ef89523
-      internalID: -379872597
+      spriteID: d314b6df24f6ade47963116079cf6356
+      internalID: 63190527
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_26
+      name: Zoom sprite_25
       rect:
         serializedVersion: 2
         x: 3000
@@ -700,14 +679,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c51e9d6f143fc740a55118a50764219
-      internalID: -1142327702
+      spriteID: 6134cc7ef0bc1074ea3263043088e200
+      internalID: 1803774932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_27
+      name: Zoom sprite_26
       rect:
         serializedVersion: 2
         x: 3600
@@ -721,14 +700,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40257cfab4d756b4ca0cebd020173caa
-      internalID: -1576899247
+      spriteID: 001eced9b3619584fb1376dadef085ae
+      internalID: 102979373
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_28
+      name: Zoom sprite_27
       rect:
         serializedVersion: 2
         x: 4200
@@ -742,14 +721,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3aba176fd3c608341ae9f330060a4795
-      internalID: -1304052457
+      spriteID: 893f17ececa2a0f419b4bef168226f43
+      internalID: -359399515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_29
+      name: Zoom sprite_28
       rect:
         serializedVersion: 2
         x: 4800
@@ -763,14 +742,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33690c70c8aecca4f8387aa44831525f
-      internalID: -1796343532
+      spriteID: e1601a36772550043a82a036036555a0
+      internalID: -2082184266
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_30
+      name: Zoom sprite_29
       rect:
         serializedVersion: 2
         x: 5400
@@ -784,35 +763,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49495f067c4993b4f948a12d28c0e9d9
-      internalID: 1300243098
+      spriteID: 4ea079eac0dd1ce47b405a0acdc2e9ca
+      internalID: -1061124961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_31
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 1800
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 57b1a3a1f4d99c448bade5cf22c4b830
-      internalID: 467727396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_32
+      name: Zoom sprite_30
       rect:
         serializedVersion: 2
         x: 0
@@ -826,14 +784,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f3fdfcb85725ff44abe2769b3236db5
-      internalID: 805751878
+      spriteID: 6a6466d524d88394dbfa8865028ae2c4
+      internalID: -402772691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_33
+      name: Zoom sprite_31
       rect:
         serializedVersion: 2
         x: 600
@@ -847,14 +805,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 861d5753a3f932c498a5f40dc0724edf
-      internalID: 1832117739
+      spriteID: 5db3681a065394b42b07f294e1c55345
+      internalID: 1475897757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_34
+      name: Zoom sprite_32
       rect:
         serializedVersion: 2
         x: 1200
@@ -868,14 +826,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ab33b98806d1534e84fd661bec58884
-      internalID: -44515235
+      spriteID: d15373eb956d485479dec2caca04cfe7
+      internalID: -18989721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_35
+      name: Zoom sprite_33
       rect:
         serializedVersion: 2
         x: 1800
@@ -889,14 +847,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffe4253d369def14a9b447ea368a4436
-      internalID: 1940830625
+      spriteID: 32220e26d122d504e9e4bd20f2c1c6cd
+      internalID: -583873101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_36
+      name: Zoom sprite_34
       rect:
         serializedVersion: 2
         x: 2400
@@ -910,14 +868,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b9da74a7d594314cb7445b5c4965a5e
-      internalID: -1234547687
+      spriteID: b511b22c99ad0ab4f97a288c63578827
+      internalID: -122797909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_37
+      name: Zoom sprite_35
       rect:
         serializedVersion: 2
         x: 3000
@@ -931,14 +889,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71999372f3eab9242b4407d967d57e32
-      internalID: 406012872
+      spriteID: b03b13575c0fbb940b0ff2081386f200
+      internalID: -271831941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_38
+      name: Zoom sprite_36
       rect:
         serializedVersion: 2
         x: 3600
@@ -952,14 +910,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56a011e4e1ad8f5498e03d1f73cd5384
-      internalID: -1060121019
+      spriteID: ec5c6dd5f14e5c54eb7c6f6493c86596
+      internalID: -1202671914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_39
+      name: Zoom sprite_37
       rect:
         serializedVersion: 2
         x: 4200
@@ -973,14 +931,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dd42a6b1e961e540ac64842fcff52db
-      internalID: 78275438
+      spriteID: a8f3be15ba556fe4b92cf4ec654ba563
+      internalID: -1574848416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_40
+      name: Zoom sprite_38
       rect:
         serializedVersion: 2
         x: 4800
@@ -994,14 +952,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 473b40390799a514d895d817035f64c2
-      internalID: -549782587
+      spriteID: d58f10e81064d8f469f6675edd5036d7
+      internalID: 1118149163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_41
+      name: Zoom sprite_39
       rect:
         serializedVersion: 2
         x: 5400
@@ -1015,35 +973,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d749a0388434524b916e89b4b47961c
-      internalID: 622712246
+      spriteID: c0f98ef63de41144ca548865d7527ae1
+      internalID: 1853956510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_42
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 1200
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 981c953a20665c94eb80ec2c072f9a7f
-      internalID: 2081817409
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_43
+      name: Zoom sprite_40
       rect:
         serializedVersion: 2
         x: 0
@@ -1057,14 +994,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 296e5832f4053574daf93a1a170cfb41
-      internalID: 171682349
+      spriteID: 783517436971cec4888b0341b210b4f7
+      internalID: 179691334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_44
+      name: Zoom sprite_41
       rect:
         serializedVersion: 2
         x: 600
@@ -1078,14 +1015,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29f676385a7f7d544835a00acecd6a7b
-      internalID: 911873463
+      spriteID: c33997d0a20bcb64482cf0fa926a670b
+      internalID: 351987275
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_45
+      name: Zoom sprite_42
       rect:
         serializedVersion: 2
         x: 1200
@@ -1099,14 +1036,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf47798b7728dbe4ba94dc9749328f1a
-      internalID: 1204423731
+      spriteID: bcc317f090472fa4d88a3318fee51041
+      internalID: 1592787656
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_46
+      name: Zoom sprite_43
       rect:
         serializedVersion: 2
         x: 1800
@@ -1120,14 +1057,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eecfc2396bdf69a448480cf3ffca8f62
-      internalID: -1810192725
+      spriteID: c48b789f8552e5b40993f04d9ef28236
+      internalID: -1808158915
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_47
+      name: Zoom sprite_44
       rect:
         serializedVersion: 2
         x: 2400
@@ -1141,14 +1078,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24dd7aa23b0c6a74da168c6b13c48ad2
-      internalID: 1387591081
+      spriteID: bbe54bf9591380e4b8ac256b2346715e
+      internalID: -997821081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_48
+      name: Zoom sprite_45
       rect:
         serializedVersion: 2
         x: 3000
@@ -1162,14 +1099,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a444eaa17b7c714a86543924885215c
-      internalID: -1816315158
+      spriteID: f29b87d597b88cd45abe1477e13c4b6a
+      internalID: 963920021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_49
+      name: Zoom sprite_46
       rect:
         serializedVersion: 2
         x: 3600
@@ -1183,14 +1120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd44c71c38a4976488874de79948d39d
-      internalID: -835859935
+      spriteID: f094cf3b59f31504286313bacc70a8ee
+      internalID: 1592137056
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_50
+      name: Zoom sprite_47
       rect:
         serializedVersion: 2
         x: 4200
@@ -1204,14 +1141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d199e96a2ee9574496c1c1069aa21ea
-      internalID: 1330955677
+      spriteID: 4bc7768928616bc42a762d233dd967c9
+      internalID: 406147215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_51
+      name: Zoom sprite_48
       rect:
         serializedVersion: 2
         x: 4800
@@ -1225,14 +1162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28861242a4c96d6438db150ef103c317
-      internalID: 192826216
+      spriteID: cfb6743c361f2d04a97205f80cbadb4e
+      internalID: -990790171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_52
+      name: Zoom sprite_49
       rect:
         serializedVersion: 2
         x: 5400
@@ -1246,35 +1183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b441f6b30888004481f53a13613e443
-      internalID: 1483968724
+      spriteID: 0071eca6ca39e4a47910460341ff71ae
+      internalID: -187058501
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_53
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 600
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f7923243cd366434ba25c3f6a3bd157b
-      internalID: -1286509422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_54
+      name: Zoom sprite_50
       rect:
         serializedVersion: 2
         x: 0
@@ -1288,14 +1204,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 201aa69f28925614780d5b0041bdc110
-      internalID: 705960615
+      spriteID: bd970546214eab44098e63b774dbd525
+      internalID: 2116522786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_55
+      name: Zoom sprite_51
       rect:
         serializedVersion: 2
         x: 600
@@ -1309,14 +1225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e1b5a8a31c87cd479f4ae9d36bc601e
-      internalID: 1466084159
+      spriteID: d6bcc04ecf80eaa429824f2ee5809876
+      internalID: -1800648487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_56
+      name: Zoom sprite_52
       rect:
         serializedVersion: 2
         x: 1200
@@ -1330,14 +1246,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 663e847fcebcc2143beedf480b518800
-      internalID: -1705587867
+      spriteID: c0d1bfc6695bd4640b9efd9b5216d889
+      internalID: -819488593
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_57
+      name: Zoom sprite_53
       rect:
         serializedVersion: 2
         x: 1800
@@ -1351,14 +1267,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2ed73c33463a8b42abad67914d9af00
-      internalID: -1490030239
+      spriteID: 15252daab2e28df478f432c816dab8cd
+      internalID: -1339264124
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_58
+      name: Zoom sprite_54
       rect:
         serializedVersion: 2
         x: 2400
@@ -1372,14 +1288,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71412c8507d153b44b0076e1e793b713
-      internalID: -1098876207
+      spriteID: 47b100be094479b47a432338230a98dc
+      internalID: -513611563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_59
+      name: Zoom sprite_55
       rect:
         serializedVersion: 2
         x: 3000
@@ -1393,14 +1309,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33cbff98614787e4bb42a80a68c569c5
-      internalID: -1135554760
+      spriteID: 0c0b1bad0424b1142aa4cbaaa0b314db
+      internalID: -1608930128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_60
+      name: Zoom sprite_56
       rect:
         serializedVersion: 2
         x: 3600
@@ -1414,14 +1330,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d0c713190551cc40900c4f2849d90e2
-      internalID: -2098384300
+      spriteID: 764534aa493696a42a53e9acd3a04ee0
+      internalID: -2098939920
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_61
+      name: Zoom sprite_57
       rect:
         serializedVersion: 2
         x: 4200
@@ -1435,71 +1351,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cb36474a0c0a6b408fef216ad12eeea
-      internalID: -1668935015
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_62
-      rect:
-        serializedVersion: 2
-        x: 4800
-        y: 0
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1769a53e820a96f4c97b70d148e8ddc2
-      internalID: -114748243
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_63
-      rect:
-        serializedVersion: 2
-        x: 5400
-        y: 0
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6500b325d94cc0e4d90a5bca8a323da7
-      internalID: -1387232998
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: object_64
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 0
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e585279f729b964f8d948698e01dc19
-      internalID: -1447911420
+      spriteID: 2b249eb7bc9a58d44acdead16f8efd0b
+      internalID: 991056803
       vertices: []
       indices: 
       edges: []
@@ -1515,71 +1368,64 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      object_35: 1940830625
-      object_1: -1689177539
-      object_49: -835859935
-      object_23: 216972051
-      object_27: -1576899247
-      object_4: -1254267640
-      object_44: 911873463
-      object_18: 488966617
-      object_26: -1142327702
-      object_55: 1466084159
-      object_40: -549782587
-      object_39: 78275438
-      object_61: -1668935015
-      object_33: 1832117739
-      object_48: -1816315158
-      object_31: 467727396
-      object_30: 1300243098
-      object_36: -1234547687
-      object_63: -1387232998
-      object_62: -114748243
-      object_17: -711401447
-      object_6: -1780941413
-      object_37: 406012872
-      object_8: 1738658764
-      object_42: 2081817409
-      object_5: -1886507145
-      object_51: 192826216
-      object_10: 1010442612
-      object_45: 1204423731
-      object_41: 622712246
-      object_56: -1705587867
-      object_58: -1098876207
-      object_16: 2062592499
-      object_46: -1810192725
-      object_53: -1286509422
-      object_60: -2098384300
-      object_64: -1447911420
-      object_14: -1198400181
-      object_24: 1200947643
-      object_7: -337591810
-      object_2: 1635888320
-      object_22: -769980231
-      object_11: -2040413090
-      object_12: 1773127978
-      object_25: -379872597
-      object_43: 171682349
-      object_28: -1304052457
-      object_32: 805751878
-      object_54: 705960615
-      object_20: 1192767273
-      object_29: -1796343532
-      object_0: -974510422
-      object_15: -522705397
-      object_52: 1483968724
-      object_59: -1135554760
-      object_34: -44515235
-      object_38: -1060121019
-      object_19: -1463992807
-      object_57: -1490030239
-      object_13: -583117842
-      object_50: 1330955677
-      object_9: 2097482605
-      object_3: 1007503869
-      object_21: 885120493
-      object_47: 1387591081
+      Zoom sprite_20: 280610586
+      Zoom sprite_4: 1375537031
+      Zoom sprite_17: -1799023607
+      Zoom sprite_3: -1022769823
+      Zoom sprite_27: -359399515
+      Zoom sprite_13: -1824535528
+      Zoom sprite_33: -583873101
+      Zoom sprite_49: -187058501
+      Zoom sprite_47: 406147215
+      Zoom sprite_51: -1800648487
+      Zoom sprite_5: 800237670
+      Zoom sprite_24: 63190527
+      Zoom sprite_56: -2098939920
+      Zoom sprite_32: -18989721
+      Zoom sprite_19: -163431051
+      Zoom sprite_9: -1195674891
+      Zoom sprite_22: 1445325429
+      Zoom sprite_41: 351987275
+      Zoom sprite_45: 963920021
+      Zoom sprite_10: -29837796
+      Zoom sprite_6: 1477649816
+      Zoom sprite_50: 2116522786
+      Zoom sprite_23: -179632228
+      Zoom sprite_48: -990790171
+      Zoom sprite_18: 1130763121
+      Zoom sprite_38: 1118149163
+      Zoom sprite_8: -64798849
+      Zoom sprite_43: -1808158915
+      Zoom sprite_44: -997821081
+      Zoom sprite_0: 1612229895
+      Zoom sprite_1: -2094978998
+      Zoom sprite_11: 1668180611
+      Zoom sprite_16: 755093749
+      Zoom sprite_40: 179691334
+      Zoom sprite_26: 102979373
+      Zoom sprite_35: -271831941
+      Zoom sprite_53: -1339264124
+      Zoom sprite_52: -819488593
+      Zoom sprite_21: 364882191
+      Zoom sprite_36: -1202671914
+      Zoom sprite_55: -1608930128
+      Zoom sprite_14: 2175487
+      Zoom sprite_7: 900197996
+      Zoom sprite_29: -1061124961
+      Zoom sprite_28: -2082184266
+      Zoom sprite_46: 1592137056
+      Zoom sprite_30: -402772691
+      Zoom sprite_15: 1274664616
+      Zoom sprite_39: 1853956510
+      Zoom sprite_37: -1574848416
+      Zoom sprite_12: -821741889
+      Zoom sprite_31: 1475897757
+      Zoom sprite_34: -122797909
+      Zoom sprite_2: 78112649
+      Zoom sprite_42: 1592787656
+      Zoom sprite_54: -513611563
+      Zoom sprite_57: 991056803
+      Zoom sprite_25: 1803774932
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

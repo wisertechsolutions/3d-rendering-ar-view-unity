@@ -21,7 +21,6 @@ namespace ViitorCloud.ARModelViewer {
             if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) { 
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                        //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
                         transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
                     }
                 }
@@ -35,10 +34,13 @@ namespace ViitorCloud.ARModelViewer {
                             initialFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
                             initialScale = transform.localScale;
                         } else if (t1.phase == UnityEngine.InputSystem.TouchPhase.Moved || t2.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                            var currentFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
-                            var scaleFactor = currentFingersDistance / initialFingersDistance;
+                            //var currentFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
+                            //var scaleFactor = currentFingersDistance / initialFingersDistance;
 
-                            float scale = initialScale.x * scaleFactor;
+                            //float scale = initialScale.x * scaleFactor;
+
+                            float scale = initialScale.x * (Vector2.Distance(t1.screenPosition, t2.screenPosition) / initialFingersDistance);
+
                             if (scale > minSize + 0.01f && scale < maxSize - 0.01f) {
                                 transform.localScale = new Vector3(scale, scale, scale);
                             }
