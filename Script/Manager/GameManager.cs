@@ -86,7 +86,8 @@ namespace ViitorCloud.ARModelViewer {
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
             GameObject obj = Instantiate(model);
-            obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
+            //obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
+            obj.transform.position = nonARParent.transform.position;
             obj.transform.parent = nonARParent.transform;
             obj.transform.localScale = Vector3.one;
             loader.SetActive(false);
