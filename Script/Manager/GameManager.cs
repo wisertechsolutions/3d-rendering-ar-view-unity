@@ -13,12 +13,30 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private PlaceObject placeObject;
         [SerializeField] private GameObject loader;
         [SerializeField] private GameObject btnArOnOff;
-        [SerializeField] private GameObject btnSpawnAR;
         [SerializeField] private TMP_Text txtLoading;
+        public GameObject btnSpawnAR;
         public Rotate3dGameObject nonARParent;
         public Rotate3dGameObject aRParent;
         public bool touchStart;
-        public bool arMode = true;
+        public bool arMode;
+        public GameObject btnTouchOnOff;
+        public enum URL_type { Obj, Gltf };
+        public URL_type uRL_Type;
+        public GameObject panelScanFloor;
+        public GameObject panelZoomInOut;
+        public GameObject panelTapToPlaceObject;
+        //public TMP_Text txtDownloadProgress;
+
+        private string Url {
+            get {
+                if (uRL_Type == URL_type.Obj) {
+                    //return "https://wazir-ai.s3.us-east-2.amazonaws.com/76dd46533464b27512a03ffa4b067319a419493a5a50737287991d008bba6169+(1).zip";
+                    return "https://wazir-ai.s3.us-east-2.amazonaws.com/fb7a8a82058518326afe01d34139beca358f8fd075895130306fac36bf84b8bb+(1).zip";
+                } else {
+                    return "https://archive.org/download/paravti/paravti.glb";
+                }
+            }
+        } 
 
         private void Awake() {
             instance = this;
@@ -27,15 +45,8 @@ namespace ViitorCloud.ARModelViewer {
             StartCoroutine(CheckAvailability());
         }
 
-        private void Start() {
-            //string url = "https://archive.org/download/paravti/paroot.glb";
-            //string url = "https://archive.org/download/paravti/ardhnarishwar.glb";
-            string url = "https://archive.org/download/paravti/paravti.glb";
-            //string url = "https://archive.org/download/paravti/parrotlady.glb";
-            //string url = "https://archive.org/download/dowry_chest/asian_pirate_ship.glb";
-            //string url = "https://archive.org/download/dowry_chest/dowry_chest.glb";
-            //string url = "https://3d-model-construction.s3.ap-south-1.amazonaws.com/4b6f1d6ce2a511fa3c16f93f4916f2b49583e2744a49bea46bdbb49234e1afdf.zip";
-            GameManager.instance.AfterGetURL(url);
+        private void Start() {            
+            GameManager.instance.AfterGetURL(Url);
         }
 
         public void TouchOnOffClicked() {
@@ -72,14 +83,14 @@ namespace ViitorCloud.ARModelViewer {
         private void OnApplicationFocus(bool focus) {
             if (focus) {
                 btnArOnOff.SetActive(PermissionManager.instance.IsCameraPermissionhied());
-                btnSpawnAR.SetActive(PermissionManager.instance.IsCameraPermissionhied());
             }
         }
 
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
             GameObject obj = Instantiate(model);
-            obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
+            //obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
+            obj.transform.position = nonARParent.transform.position;
             obj.transform.parent = nonARParent.transform;
             obj.transform.localScale = Vector3.one;
             loader.SetActive(false);

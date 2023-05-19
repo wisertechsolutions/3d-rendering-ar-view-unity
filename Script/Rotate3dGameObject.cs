@@ -6,21 +6,21 @@ namespace ViitorCloud.ARModelViewer {
     public class Rotate3dGameObject : MonoBehaviour {
         private float initialFingersDistance;
         private Vector3 initialScale;
+        private GameObject objChild;
         [SerializeField] private float minSize;
         [SerializeField] private float maxSize;
         [SerializeField] private Vector3 originalSize;
         [SerializeField] private bool ifAR;
-        private GameObject getChild;       
+        public Quaternion originalRotation;
 
         private void Awake() {
             originalSize = transform.localScale;
-        }
+        }        
 
         private void Update() {
             if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) { 
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                        //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
                         transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
                     }
                 }
@@ -34,10 +34,13 @@ namespace ViitorCloud.ARModelViewer {
                             initialFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
                             initialScale = transform.localScale;
                         } else if (t1.phase == UnityEngine.InputSystem.TouchPhase.Moved || t2.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                            var currentFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
-                            var scaleFactor = currentFingersDistance / initialFingersDistance;
+                            //var currentFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
+                            //var scaleFactor = currentFingersDistance / initialFingersDistance;
 
-                            float scale = initialScale.x * scaleFactor;
+                            //float scale = initialScale.x * scaleFactor;
+
+                            float scale = initialScale.x * (Vector2.Distance(t1.screenPosition, t2.screenPosition) / initialFingersDistance);
+
                             if (scale > minSize + 0.01f && scale < maxSize - 0.01f) {
                                 transform.localScale = new Vector3(scale, scale, scale);
                             }
@@ -48,24 +51,27 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void ResetRotation() {
-            transform.rotation = Quaternion.identity;
+            transform.rotation = ifAR ? originalRotation : Quaternion.identity;
             transform.localScale = originalSize;
         }
 
         public void ResetPositionAndChildAlignment() {
-            getChild = transform.GetChild(0).gameObject;
-            Bounds bounds1 = GetCombinedBounds(getChild);
-            getChild.transform.parent = null;
-            float difference = transform.position.y - bounds1.min.y;
-            getChild.transform.position = new Vector3(getChild.transform.position.x, transform.position.y + difference, getChild.transform.position.z);
-            getChild.transform.parent = transform;
+            objChild = transform.GetChild(0).gameObject;
+            Bounds bounds = GetCombinedBounds(objChild);
+            objChild.transform.parent = null;
+            float difference = transform.position.y - bounds.min.y;
+            objChild.transform.position = new Vector3(objChild.transform.position.x, transform.position.y + difference, objChild.transform.position.z);
+            objChild.transform.parent = transform;
+
+            //float size = (4 / bounds.size.y) * originalSize.x;
+            //transform.localScale = new Vector3(size, size, size);   
         }
 
         private Bounds GetCombinedBounds(GameObject parent) {
             Bounds combinedBounds = new Bounds();
 
             //grab all child renderers
-            Renderer[] renderers = GetComponentsInChildren<Renderer>(GetComponent<Renderer>());
+            Renderer[] renderers = parent.GetComponentsInChildren<Renderer>(GetComponent<Renderer>());
 
             //grow combined bounds with every children renderer
             foreach (Renderer rendererChild in renderers) {
