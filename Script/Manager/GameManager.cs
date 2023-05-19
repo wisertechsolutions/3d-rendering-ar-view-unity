@@ -24,6 +24,8 @@ namespace ViitorCloud.ARModelViewer {
         public URL_type uRL_Type;
         public GameObject panelScanFloor;
         public GameObject panelZoomInOut;
+        public GameObject panelTapToPlaceObject;
+        //public TMP_Text txtDownloadProgress;
 
         private string Url {
             get {

@@ -16,6 +16,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
         [SerializeField] private bool zoomAnimationDone;
+
         public bool IsDone {
             get {
                 return m_isDone;
@@ -65,6 +66,7 @@ namespace ViitorCloud.ARModelViewer {
                         GameManager.instance.aRParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
                         GameManager.instance.aRParent.originalRotation = hit.pose.rotation;
                         IsDone = true;
+                        GameManager.instance.panelTapToPlaceObject.SetActive(false);
                         if (!zoomAnimationDone) {
                             GameManager.instance.panelZoomInOut.SetActive(true);
                             zoomAnimationDone = true;
@@ -76,6 +78,10 @@ namespace ViitorCloud.ARModelViewer {
 
         void CheckForTrackables() {
             GameManager.instance.panelScanFloor.SetActive(!(arPlaneManager.trackables.count > 0));
+            if (arPlaneManager.trackables.count > 0) {
+                GameManager.instance.panelTapToPlaceObject.SetActive(true);
+                CancelInvoke(nameof(CheckForTrackables));
+            }
         }
 
         public void ARCameraOnOff() {
