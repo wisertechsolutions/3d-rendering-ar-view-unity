@@ -11,11 +11,9 @@ namespace ViitorCloud.ARModelViewer {
         public static GameManager instance;
         [SerializeField] private UIManager uIManager;
         [SerializeField] private NativeManager nativeManager;
-        //[SerializeField] private PlaceObject placeObject;
         [SerializeField] private GameObject loader;
         [SerializeField] private TMP_Text txtLoading;
         public GameObject btnSpawnAR;
-        //public Rotate3dGameObject nonARParent;
         public Rotate3dGameObject objParent;
         public bool touchStart;
         public bool arMode;
@@ -25,7 +23,6 @@ namespace ViitorCloud.ARModelViewer {
         public GameObject panelScanFloor;
         public GameObject panelZoomInOut;
         public GameObject panelTapToPlaceObject;
-        //public TMP_Text txtDownloadProgress;
 
         private string Url {
             get {
@@ -87,14 +84,7 @@ namespace ViitorCloud.ARModelViewer {
         //}
 
         private void Get3dObject(GameObject model) {
-            txtLoading.text = "100.0";
-            //GameObject obj = Instantiate(model);
-            //obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
-            //obj.transform.position = nonARParent.transform.position;
-            //obj.transform.parent = nonARParent.transform;
-            //obj.transform.localScale = Vector3.one;
-
-            //nonARParent.ResetPositionAndChildAlignment();
+            txtLoading.text = "100.0";            
             loader.SetActive(false);
             objParent.ResetPositionAndChildAlignment();
         }
@@ -109,7 +99,6 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void LoadingInProgress(float obj) {
-            //Debug.Log("Download % "+ obj);
             txtLoading.text = (obj * 100f).ToString("F1");
         }
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,9 +11,7 @@ namespace ViitorCloud.ARModelViewer {
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
             for (int i = 0; i < results.Count; i++) {
-                if (results[i].gameObject.layer == 5) //5 = UI layer
-                {
-                    Debug.Log("IsPointerOverUIObject " + results[i].gameObject.name);
+                if (results[i].gameObject.layer == 5) {
                     return true;
                 }
             }

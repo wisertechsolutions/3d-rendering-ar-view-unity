@@ -7,11 +7,6 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 namespace ViitorCloud.ARModelViewer {
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
-        //[SerializeField] private ARCameraManager arCameraManager;
-        //[SerializeField] private Camera m_Camera;
-        //[SerializeField] private GameObject m_3dModelNonAR;
-        //[SerializeField] private GameObject m_3dModelAR;
-        //[SerializeField] private GameObject m_aRSessionOrigin;
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -32,7 +27,6 @@ namespace ViitorCloud.ARModelViewer {
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
-            //ARCameraOnOff();
             CheckIsArModelPlaced();
         }
 
@@ -57,17 +51,14 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void FingerDown(EnhancedTouch.Finger finger) {
-            Debug.Log("FingerDown isDone " + IsDone + MouseOverUILayerObject.IsPointerOverUIObject());
             if (finger.index != 0 || IsDone) {
                 return;
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
-                Debug.Log("FingerDown IsPointerOverUIObject " + MouseOverUILayerObject.IsPointerOverUIObject());
 
                 if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                     foreach (ARRaycastHit hit in hits) {
-                        Debug.Log("FingerDown hit.pose.position " + hit.pose.position);
                         GameManager.instance.objParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
                         GameManager.instance.objParent.originalRotation = hit.pose.rotation;
                         IsDone = true;
@@ -88,18 +79,6 @@ namespace ViitorCloud.ARModelViewer {
                 CancelInvoke(nameof(CheckForTrackables));
             }
         }
-
-        //public void ARCameraOnOff() {
-        //    GameManager.instance.arMode = !GameManager.instance.arMode;
-        //    arCameraManager.enabled = !arCameraManager.enabled;
-        //    arRaycastManager.enabled = !arRaycastManager.enabled;
-        //    arPlaneManager.enabled = !arPlaneManager.enabled;
-        //    m_Camera.enabled = !m_Camera.enabled;
-        //    m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
-        //    m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
-        //    m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
-        //    CheckIsArModelPlaced();
-        //}
 
         public void PlaceARObjectAgain() {
             IsDone = false;
