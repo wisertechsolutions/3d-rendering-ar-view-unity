@@ -15,8 +15,8 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject btnArOnOff;
         [SerializeField] private TMP_Text txtLoading;
         public GameObject btnSpawnAR;
-        public Rotate3dGameObject nonARParent;
-        public Rotate3dGameObject aRParent;
+        //public Rotate3dGameObject nonARParent;
+        public Rotate3dGameObject objParent;
         public bool touchStart;
         public bool arMode;
         public GameObject btnTouchOnOff;
@@ -60,16 +60,16 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             Debug.Log($"Current AR Session State:{ARSession.state}");
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-            if (ARSession.state != ARSessionState.Unsupported) {
-                if (!PermissionManager.instance.IsCameraPermissionhied()) {
-                    PermissionManager.instance.RequestCameraPermission();
-                }
-            } else if (ARSession.state != ARSessionState.Unsupported) {
-                btnArOnOff.SetActive(false);
-                btnSpawnAR.SetActive(false);
-            }
-#endif
+//#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+//            if (ARSession.state != ARSessionState.Unsupported) {
+//                if (!PermissionManager.instance.IsCameraPermissionhied()) {
+//                    PermissionManager.instance.RequestCameraPermission();
+//                }
+//            } else if (ARSession.state != ARSessionState.Unsupported) {
+//                btnArOnOff.SetActive(false);
+//                btnSpawnAR.SetActive(false);
+//            }
+//#endif
         }
 
         private void OnEnable() {
@@ -80,23 +80,23 @@ namespace ViitorCloud.ARModelViewer {
             uIManager.onModelDownloaded -= Get3dObject;
         }
 
-        private void OnApplicationFocus(bool focus) {
-            if (focus) {
-                btnArOnOff.SetActive(PermissionManager.instance.IsCameraPermissionhied());
-            }
-        }
+        //private void OnApplicationFocus(bool focus) {
+        //    if (focus) {
+        //        btnArOnOff.SetActive(PermissionManager.instance.IsCameraPermissionhied());
+        //    }
+        //}
 
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
-            GameObject obj = Instantiate(model);
+            //GameObject obj = Instantiate(model);
             //obj.transform.SetPositionAndRotation(nonARParent.transform.position, nonARParent.transform.rotation);
-            obj.transform.position = nonARParent.transform.position;
-            obj.transform.parent = nonARParent.transform;
-            obj.transform.localScale = Vector3.one;
-            loader.SetActive(false);
+            //obj.transform.position = nonARParent.transform.position;
+            //obj.transform.parent = nonARParent.transform;
+            //obj.transform.localScale = Vector3.one;
+            //loader.SetActive(false);
 
-            nonARParent.ResetPositionAndChildAlignment();
-            aRParent.ResetPositionAndChildAlignment();
+            //nonARParent.ResetPositionAndChildAlignment();
+            objParent.ResetPositionAndChildAlignment();
         }
 
         public void AfterGetURL(string url) {

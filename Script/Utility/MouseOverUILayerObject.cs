@@ -14,6 +14,7 @@ namespace ViitorCloud.ARModelViewer {
             for (int i = 0; i < results.Count; i++) {
                 if (results[i].gameObject.layer == 5) //5 = UI layer
                 {
+                    Debug.Log("IsPointerOverUIObject " + results[i].gameObject.name);
                     return true;
                 }
             }
