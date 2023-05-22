@@ -4,15 +4,15 @@ using UnityEngine.XR.ARFoundation;
 using ViitorCloud.ModelViewer;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace ViitorCloud.ARModelViewer {
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
         [SerializeField] private UIManager uIManager;
         [SerializeField] private NativeManager nativeManager;
-        [SerializeField] private PlaceObject placeObject;
+        //[SerializeField] private PlaceObject placeObject;
         [SerializeField] private GameObject loader;
-        [SerializeField] private GameObject btnArOnOff;
         [SerializeField] private TMP_Text txtLoading;
         public GameObject btnSpawnAR;
         //public Rotate3dGameObject nonARParent;
@@ -46,7 +46,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {            
-            GameManager.instance.AfterGetURL(Url);
+            AfterGetURL(Url);
         }
 
         public void TouchOnOffClicked() {
@@ -93,9 +93,9 @@ namespace ViitorCloud.ARModelViewer {
             //obj.transform.position = nonARParent.transform.position;
             //obj.transform.parent = nonARParent.transform;
             //obj.transform.localScale = Vector3.one;
-            //loader.SetActive(false);
 
             //nonARParent.ResetPositionAndChildAlignment();
+            loader.SetActive(false);
             objParent.ResetPositionAndChildAlignment();
         }
 
@@ -111,6 +111,10 @@ namespace ViitorCloud.ARModelViewer {
         private void LoadingInProgress(float obj) {
             //Debug.Log("Download % "+ obj);
             txtLoading.text = (obj * 100f).ToString("F1");
+        }
+
+        public void OnBackButtonPress() {
+            SceneManager.LoadScene("Lobby");
         }
 
         //https://archive.org/download/paravti/paroot.glb
