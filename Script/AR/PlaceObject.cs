@@ -7,11 +7,11 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 namespace ViitorCloud.ARModelViewer {
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
-        [SerializeField] private ARCameraManager arCameraManager;
-        [SerializeField] private Camera m_Camera;
-        [SerializeField] private GameObject m_3dModelNonAR;
-        [SerializeField] private GameObject m_3dModelAR;
-        [SerializeField] private GameObject m_aRSessionOrigin;
+        //[SerializeField] private ARCameraManager arCameraManager;
+        //[SerializeField] private Camera m_Camera;
+        //[SerializeField] private GameObject m_3dModelNonAR;
+        //[SerializeField] private GameObject m_3dModelAR;
+        //[SerializeField] private GameObject m_aRSessionOrigin;
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -89,17 +89,17 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
-        public void ARCameraOnOff() {
-            GameManager.instance.arMode = !GameManager.instance.arMode;
-            arCameraManager.enabled = !arCameraManager.enabled;
-            arRaycastManager.enabled = !arRaycastManager.enabled;
-            arPlaneManager.enabled = !arPlaneManager.enabled;
-            m_Camera.enabled = !m_Camera.enabled;
-            m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
-            m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
-            m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
-            CheckIsArModelPlaced();
-        }
+        //public void ARCameraOnOff() {
+        //    GameManager.instance.arMode = !GameManager.instance.arMode;
+        //    arCameraManager.enabled = !arCameraManager.enabled;
+        //    arRaycastManager.enabled = !arRaycastManager.enabled;
+        //    arPlaneManager.enabled = !arPlaneManager.enabled;
+        //    m_Camera.enabled = !m_Camera.enabled;
+        //    m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
+        //    m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
+        //    m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
+        //    CheckIsArModelPlaced();
+        //}
 
         public void PlaceARObjectAgain() {
             IsDone = false;
