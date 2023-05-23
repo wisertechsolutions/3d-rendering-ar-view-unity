@@ -10,7 +10,7 @@ namespace ViitorCloud.ARModelViewer {
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
         [SerializeField] private UIManager uIManager;
-        [SerializeField] private NativeManager nativeManager;
+        //[SerializeField] private NativeManager nativeManager;
         [SerializeField] private GameObject loader;
         [SerializeField] private TMP_Text txtLoading;
         public GameObject btnSpawnAR;
