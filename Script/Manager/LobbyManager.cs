@@ -6,10 +6,11 @@ using ViitorCloud.ModelViewer;
 
 namespace ViitorCloud.ARModelViewer {
     public class LobbyManager : MonoBehaviour {
-
+        public static LobbyManager instance;
         public enum URL_type { Obj, Gltf };
         public URL_type uRL_Type;
-        [SerializeField] private GameObject loader;
+        [SerializeField] private GameObject panelLoader;
+        [SerializeField] private GameObject panelDark;
         [SerializeField] private TMP_Text txtLoading;
         [SerializeField] private UIManager uIManager;
 
@@ -22,7 +23,10 @@ namespace ViitorCloud.ARModelViewer {
                     return "https://archive.org/download/paravti/paravti.glb";
                 }
             }
-        }        
+        }
+        private void Awake() {
+            instance = this;
+        }
 
         private void Start() {
             AfterGetURL(Url);
@@ -38,7 +42,9 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
-            loader.SetActive(false);
+            panelLoader.SetActive(false);
+            model.AddComponent<DontDestroyManager>();
+            DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
         }
 
@@ -46,7 +52,7 @@ namespace ViitorCloud.ARModelViewer {
             if (string.IsNullOrEmpty(url)) {
                 return;
             } else {
-                loader.SetActive(true);
+                panelLoader.SetActive(true);
                 uIManager.DownloadorLoadAsset(url, LoadingInProgress);
             }
         }
@@ -56,6 +62,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void LoadScene(int no) {
+            panelDark.SetActive(true);
             if (no == 0) {
                 SceneManager.LoadScene("Main-AR");
             } else {

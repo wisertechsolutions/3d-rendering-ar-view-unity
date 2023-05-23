@@ -83,6 +83,7 @@ namespace ViitorCloud.ARModelViewer {
         public void PlaceARObjectAgain() {
             IsDone = false;
             GameManager.instance.objParent.transform.position = new Vector3(Constant.aRPosition, Constant.aRPosition, Constant.aRPosition);
+            GameManager.instance.objParent.ResetRotation();
         }
     }
 }

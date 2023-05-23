@@ -56,7 +56,9 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void ResetPositionAndChildAlignment() {
-            objChild = transform.GetChild(0).gameObject;
+            objChild = DataForAllScene.Instance.model3d;
+            objChild.transform.localPosition = new Vector3(0, 0, 0);
+            objChild.transform.localScale = new Vector3(1, 1, 1);
             Bounds bounds = GetCombinedBounds(objChild);
             objChild.transform.parent = null;
             float difference = transform.position.y - bounds.min.y;

@@ -11,13 +11,15 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void OnBackToNativeClicked() {
-            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-            jo.Call("onBackPressed");
+            //AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            //AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            //jo.Call("onBackPressed");
+            Application.Quit();
         }
 
         public void GetModelDownloadLink(string url, bool isAR) {
-            GameManager.instance.AfterGetURL(url);
+            DataForAllScene.Instance.isAR = isAR;
+            LobbyManager.instance.AfterGetURL(url);
             // Send data to PlaceObject.cs method ARCameraOnOff();
         }
     }
