@@ -52,7 +52,8 @@ namespace ViitorCloud.ARModelViewer {
         }        
 
         public void OnBackButtonPress() {
-            SceneManager.LoadScene("Lobby");
+            //SceneManager.LoadScene("Lobby");
+            Application.Quit();
         }
 
         //https://archive.org/download/paravti/paroot.glb
