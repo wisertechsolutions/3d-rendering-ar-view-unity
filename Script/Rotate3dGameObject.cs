@@ -13,15 +13,45 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private bool ifAR;
         public Quaternion originalRotation;
 
+        private float _startingPositionX;
+        private float _startingPositionY;
+        public BoundsRecalculations.SideSelect sideSelect;
+        public Vector2 lastPos;       
+
         private void Awake() {
             originalSize = transform.localScale;
-        }        
+        }
 
         private void Update() {
             if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
-                foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) { 
-                    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved) {
-                        transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
+                foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
+                    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
+                        _startingPositionX = touch.delta.x;
+                        _startingPositionY = touch.delta.y;
+                        lastPos = touch.delta;
+                    }
+
+                    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved && Vector2.Distance(lastPos, touch.delta) > Constant.minDistanceForTouch) {
+                        //transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeed, 0f);
+                        //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
+
+                        //Debug.Log(Vector2.Distance(lastPos, touch.delta));
+                        if (_startingPositionX > touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.up, Constant.rotateSpeed2 * Time.deltaTime);
+                        } else if (_startingPositionX < touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.up, -Constant.rotateSpeed2 * Time.deltaTime);
+                        }
+
+                        if (_startingPositionY > touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.left, Constant.rotateSpeed2 * Time.deltaTime);
+                        } else if (_startingPositionY < touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.left, -Constant.rotateSpeed2 * Time.deltaTime);
+                        }
+                    }
+                    if (touch.phase == UnityEngine.InputSystem.TouchPhase.Stationary) {
+                        lastPos = touch.delta;
+                        _startingPositionX = touch.delta.x;
+                        _startingPositionY = touch.delta.y;
                     }
                 }
             }
@@ -55,15 +85,20 @@ namespace ViitorCloud.ARModelViewer {
             transform.localScale = originalSize;
         }
 
+
         public void ResetPositionAndChildAlignment() {
-            objChild = DataForAllScene.Instance.model3d;
-            objChild.transform.localPosition = new Vector3(0, 0, 0);
-            objChild.transform.localScale = new Vector3(1, 1, 1);
-            Bounds bounds = GetCombinedBounds(objChild);
-            objChild.transform.parent = null;
-            float difference = transform.position.y - bounds.min.y;
-            objChild.transform.position = new Vector3(objChild.transform.position.x, transform.position.y + difference, objChild.transform.position.z);
-            objChild.transform.parent = transform;
+            if (GameManager.instance.arMode) {
+                objChild = DataForAllScene.Instance.model3d;
+                objChild.transform.localPosition = new Vector3(0, 0, 0);
+                objChild.transform.localScale = new Vector3(1, 1, 1);
+                Bounds bounds = GetCombinedBounds(objChild);
+                objChild.transform.parent = null;
+                float difference = transform.position.y - bounds.min.y;
+                objChild.transform.position = new Vector3(objChild.transform.position.x, transform.position.y + difference, objChild.transform.position.z);
+                objChild.transform.parent = transform;
+            } else {
+                BoundsRecalculations.instance.ChildAlignmentAndScalling(GameManager.instance.objParent.gameObject, false, 0, sideSelect);
+            }
 
             //float size = (4 / bounds.size.y) * originalSize.x;
             //transform.localScale = new Vector3(size, size, size);   

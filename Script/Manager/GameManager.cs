@@ -24,7 +24,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void OnEnable() {
-            DataForAllScene.Instance.model3d.transform.SetParent(objParent.transform);
+            DataForAllScene.Instance.model3d.transform.SetParent(objParent.transform);            
             objParent.ResetPositionAndChildAlignment();
         }
 

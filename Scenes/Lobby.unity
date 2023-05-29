@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 428583021}
   - component: {fileID: 428583020}
   m_Layer: 0
-  m_Name: ARParent
+  m_Name: Download OBJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fae7862df1058843acce49e2d2279d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uRL_Type: 0
+  uRL_Type: 1
   panelLoader: {fileID: 849327803}
   panelDark: {fileID: 1443492273}
   txtLoading: {fileID: 1932444926}
