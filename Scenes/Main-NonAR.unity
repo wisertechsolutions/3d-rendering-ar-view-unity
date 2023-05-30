@@ -3088,14 +3088,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c265bd18d4936c64ca2b8d52f68e34b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSize: 0.1
-  maxSize: 1
+  minSize: 0.5
+  maxSize: 2
   originalSize: {x: 1, y: 1, z: 1}
   ifAR: 0
   originalRotation: {x: 0, y: 0, z: 0, w: 0}
   sideSelect: 4
   lastPos: {x: 0, y: 0}
-  minDistance: 5
 --- !u!114 &2051507676
 MonoBehaviour:
   m_ObjectHideFlags: 0

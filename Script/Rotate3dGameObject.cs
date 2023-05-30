@@ -22,7 +22,7 @@ namespace ViitorCloud.ARModelViewer {
             originalSize = transform.localScale;
         }
 
-        private void Update() {
+        private void Update() {  
             if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
@@ -37,15 +37,15 @@ namespace ViitorCloud.ARModelViewer {
 
                         //Debug.Log(Vector2.Distance(lastPos, touch.delta));
                         if (_startingPositionX > touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
-                            transform.RotateAroundLocal(Vector3.up, Constant.rotateSpeed2 * Time.deltaTime);
+                            transform.RotateAroundLocal(Vector3.up, Constant.rotateSpeed * Time.deltaTime);
                         } else if (_startingPositionX < touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
-                            transform.RotateAroundLocal(Vector3.up, -Constant.rotateSpeed2 * Time.deltaTime);
+                            transform.RotateAroundLocal(Vector3.up, -Constant.rotateSpeed * Time.deltaTime);
                         }
 
                         if (_startingPositionY > touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
-                            transform.RotateAroundLocal(Vector3.left, Constant.rotateSpeed2 * Time.deltaTime);
+                            transform.RotateAroundLocal(Vector3.left, Constant.rotateSpeed * Time.deltaTime);
                         } else if (_startingPositionY < touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
-                            transform.RotateAroundLocal(Vector3.left, -Constant.rotateSpeed2 * Time.deltaTime);
+                            transform.RotateAroundLocal(Vector3.left, -Constant.rotateSpeed * Time.deltaTime);
                         }
                     }
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Stationary) {
