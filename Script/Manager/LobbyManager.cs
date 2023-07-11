@@ -33,7 +33,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            AfterGetURL(Url);
+            //AfterGetURL(Url);
         }
 
         private void OnEnable() {
@@ -46,10 +46,21 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
-            panelLoader.SetActive(false);
+            
             model.AddComponent<DontDestroyManager>();
             DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
+            Invoke(nameof(InvokeLoadScene),1f);
+           
+        }
+
+        void InvokeLoadScene() {
+            panelLoader.SetActive(false);
+            if (DataForAllScene.Instance.isAR) {
+                LoadScene(0);
+            } else {
+                LoadScene(1);
+            }
         }
 
         public void AfterGetURL(string url) {

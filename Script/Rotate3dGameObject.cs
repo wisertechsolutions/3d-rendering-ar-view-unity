@@ -113,7 +113,7 @@ namespace ViitorCloud.ARModelViewer {
                 }
                 combinedBounds.Encapsulate(rendererChild.bounds);
             }
-            //at this point combinedBounds should be size of renderer and all its renderers children
+            //at this point combinedBounds should be size of renderer and all its renderer children
             return combinedBounds;
         }
     }
