@@ -19,7 +19,9 @@ MonoBehaviour:
     GameID: 3D Rendering & AR View
     repoPath: https://github.com/viitoradmin/3d-rendering-ar-view-unity.git
     Scenes:
-    - Scenes/Main.unity
+    - Scenes/Lobby.unity
+    - Scenes/Main-AR.unity
+    - Scenes/Main-NonAR.unity
     PhotonID: 
     AgoraID: 
     ProjectSettings:

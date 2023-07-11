@@ -7,11 +7,6 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 namespace ViitorCloud.ARModelViewer {
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
-        [SerializeField] private ARCameraManager arCameraManager;
-        [SerializeField] private Camera m_Camera;
-        [SerializeField] private GameObject m_3dModelNonAR;
-        [SerializeField] private GameObject m_3dModelAR;
-        [SerializeField] private GameObject m_aRSessionOrigin;
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -32,7 +27,7 @@ namespace ViitorCloud.ARModelViewer {
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
-            ARCameraOnOff();
+            CheckIsArModelPlaced();
         }
 
         private void OnEnable() {
@@ -61,10 +56,11 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
+
                 if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                     foreach (ARRaycastHit hit in hits) {
-                        GameManager.instance.aRParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
-                        GameManager.instance.aRParent.originalRotation = hit.pose.rotation;
+                        GameManager.instance.objParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
+                        GameManager.instance.objParent.originalRotation = hit.pose.rotation;
                         IsDone = true;
                         GameManager.instance.panelTapToPlaceObject.SetActive(false);
                         if (!zoomAnimationDone) {
@@ -84,21 +80,10 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
-        public void ARCameraOnOff() {
-            GameManager.instance.arMode = !GameManager.instance.arMode;
-            arCameraManager.enabled = !arCameraManager.enabled;
-            arRaycastManager.enabled = !arRaycastManager.enabled;
-            arPlaneManager.enabled = !arPlaneManager.enabled;
-            m_Camera.enabled = !m_Camera.enabled;
-            m_3dModelNonAR.SetActive(!m_3dModelNonAR.activeInHierarchy);
-            m_3dModelAR.SetActive(!m_3dModelAR.activeInHierarchy);
-            m_aRSessionOrigin.SetActive(!m_aRSessionOrigin.activeInHierarchy);
-            CheckIsArModelPlaced();
-        }
-
         public void PlaceARObjectAgain() {
             IsDone = false;
-            GameManager.instance.aRParent.transform.position = new Vector3(Constant.aRPosition, Constant.aRPosition, Constant.aRPosition);
+            GameManager.instance.objParent.transform.position = new Vector3(Constant.aRPosition, Constant.aRPosition, Constant.aRPosition);
+            GameManager.instance.objParent.ResetRotation();
         }
     }
 }

@@ -2,22 +2,24 @@ using UnityEngine;
 namespace ViitorCloud.ARModelViewer {
 
     public class NativeManager : MonoBehaviour {
-//        private void Start() {
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-//            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-//            jo.Call("CallMethodToGetURL");
-//#endif
-//        }
-
-        private void OnBackToNativeClicked() {
+        private void AfterUnityLoad() {
+#if UNITY_ANDROID && !UNITY_EDITOR
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-            jo.Call("onBackPressed");
+            jo.Call("CallMethodToGetURL");
+#endif
+        }
+
+        private void OnBackToNativeClicked() {
+            //AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            //AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            //jo.Call("onBackPressed");
+            Application.Quit();
         }
 
         public void GetModelDownloadLink(string url, bool isAR) {
-            GameManager.instance.AfterGetURL(url);
+            DataForAllScene.Instance.isAR = isAR;
+            LobbyManager.instance.AfterGetURL(url);
             // Send data to PlaceObject.cs method ARCameraOnOff();
         }
     }
