@@ -52,7 +52,6 @@ namespace ViitorCloud.ARModelViewer {
         }        
 
         public void OnBackButtonPress() {
-            //SceneManager.LoadScene("Lobby");
             Application.Quit();
         }
 

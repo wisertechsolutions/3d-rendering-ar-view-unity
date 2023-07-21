@@ -2,6 +2,8 @@ using AsImpL;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ViitorCloud.API;
+using ViitorCloud.API.StandardTemplates;
 using ViitorCloud.ModelViewer;
 
 namespace ViitorCloud.ARModelViewer {
@@ -34,6 +36,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             //AfterGetURL(Url);
+            GetURL();
         }
 
         private void OnEnable() {
@@ -42,6 +45,21 @@ namespace ViitorCloud.ARModelViewer {
 
         private void OnDisable() {
             uIManager.onModelDownloaded -= Get3dObject;
+        }
+
+        private void GetURL() {
+            RequestURLFor3d getURLFor3D = new RequestURLFor3d();
+            getURLFor3D.playerID = "fdaf123";
+            ServerCommunicationTemplate.Instance.RequestModelURL(JsonUtility.ToJson(getURLFor3D), OnRecieve3dModelURLData, OnDataLoadFail);
+        }
+
+        private void OnDataLoadFail(string msg) {
+            Debug.Log("Fail");
+        }
+
+        private void OnRecieve3dModelURLData(APIResponse<GetURLFor3d> getURLFor3d) {
+            Debug.Log("OnRecieve3dModelURLData " + getURLFor3d.data.url);
+            AfterGetURL(getURLFor3d.data.url);
         }
 
         private void Get3dObject(GameObject model) {
