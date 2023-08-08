@@ -25,7 +25,7 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else {
                     //return "https://archive.org/download/paravti/paravti.glb";
-                    return "https://wazir-ai.s3.us-east-2.amazonaws.com/it20000-mc512-output.glb";
+                    return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            //AfterGetURL(Url);
+           // AfterGetURL(Url);
             //GetURL();
         }
 
@@ -67,8 +67,8 @@ namespace ViitorCloud.ARModelViewer {
             model.AddComponent<DontDestroyManager>();
             DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
-            Invoke(nameof(InvokeLoadScene),1f);
-           
+            //Invoke(nameof(InvokeLoadScene),1f);
+            panelLoader.SetActive(false);//ravi
         }
 
         void InvokeLoadScene() {
