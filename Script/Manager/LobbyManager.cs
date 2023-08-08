@@ -1,4 +1,3 @@
-using AsImpL;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,7 +35,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             //AfterGetURL(Url);
-            GetURL();
+            //GetURL();
         }
 
         private void OnEnable() {

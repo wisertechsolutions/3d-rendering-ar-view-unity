@@ -17,8 +17,9 @@ namespace ViitorCloud.ARModelViewer {
             Application.Quit();
         }
 
-        public void GetModelDownloadLink(string url, bool isAR) {
-            DataForAllScene.Instance.isAR = isAR;
+        //public void GetModelDownloadLink(string url, bool isAR) {
+        public void GetModelDownloadLink(string url) {
+                //DataForAllScene.Instance.isAR = isAR;
             LobbyManager.instance.AfterGetURL(url);
             // Send data to PlaceObject.cs method ARCameraOnOff();
         }
