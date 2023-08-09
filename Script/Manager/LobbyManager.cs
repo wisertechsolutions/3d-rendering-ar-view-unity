@@ -34,7 +34,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-           // AfterGetURL(Url);
+            //AfterGetURL(Url);
             //GetURL();
         }
 
