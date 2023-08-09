@@ -25,7 +25,8 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else {
                     //return "https://archive.org/download/paravti/paravti.glb";
-                    return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
+                    //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
+                    return "https://cdn-luma.com/00d536b293be5d40f1a76697fc239dd6b5e6fb6ab762757a4802fbe1a70f6089/Turtle_with_Lotus_textured_mesh_glb.glb";
                 }
             }
         }
@@ -65,6 +66,7 @@ namespace ViitorCloud.ARModelViewer {
             txtLoading.text = "100.0";
             
             model.AddComponent<DontDestroyManager>();
+            model.transform.position = new Vector3(1000,1000,1000); // Ravi
             DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
             //Invoke(nameof(InvokeLoadScene),1f);

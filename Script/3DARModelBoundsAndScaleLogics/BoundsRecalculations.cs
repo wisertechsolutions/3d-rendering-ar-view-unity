@@ -59,12 +59,15 @@ public class BoundsRecalculations : MonoBehaviour {
     /// <param name="margins">Pass the value of boundary margins between 20-50 in percent</param>
     /// <param name="sideSelectParent">Pass the value of new pivot position from given list</param>
     public void ChildAlignmentAndScalling(GameObject parentObj, bool scalling, int margins, SideSelect sideSelectParent) {
+       // return;
+
         objParent = parentObj;
         sideSelect = sideSelectParent;          
 
         Init();
         //tempInstatiate.transform.position = objParent.transform.position;
         objChild = objParent.transform.GetChild(0).gameObject;
+        objChild.transform.position = new Vector3(0,0,0);
         bounds1 = GetCombinedBounds(objChild);
         objChild.transform.parent = null;
 
