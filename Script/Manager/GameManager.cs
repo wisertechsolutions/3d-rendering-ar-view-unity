@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace ViitorCloud.ARModelViewer {
     public class GameManager : MonoBehaviour {
@@ -52,7 +53,20 @@ namespace ViitorCloud.ARModelViewer {
         }        
 
         public void OnBackButtonPress() {
-            Application.Quit();
+            //Application.Quit();
+#if UNITY_ANDROID
+            // Get the current activity
+            AndroidJavaClass unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject currentActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
+            // Call the finish method to return to the previous activity
+            currentActivity.Call("finish");
+#elif UNITY_IOS
+// Get a reference to the current navigation controller
+IntPtr uiNavigationControllerClass = GetClass("UINavigationController");
+IntPtr uiNavigationControllerInstance = ObjC.CallStatic<NSObject>(uiNavigationControllerClass, "visibleViewController").GetRawClass();
+// Call the popViewControllerAnimated method to return to the previous view controller
+ObjC.Call(uiNavigationControllerInstance, "popViewControllerAnimated:", new object[] { true });
+#endif
         }
 
         //https://archive.org/download/paravti/paroot.glb

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -79,7 +80,7 @@ namespace ViitorCloud.ARModelViewer {
                 LoadScene(0);
             } else {
                 LoadScene(1);
-            }
+            }           
         }
 
         public void AfterGetURL(string url) {
