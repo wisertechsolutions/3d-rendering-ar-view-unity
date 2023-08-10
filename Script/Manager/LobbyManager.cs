@@ -69,7 +69,7 @@ namespace ViitorCloud.ARModelViewer {
             model.transform.position = new Vector3(1000,1000,1000); // Ravi
             DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
-            //Invoke(nameof(InvokeLoadScene),1f);
+            Invoke(nameof(InvokeLoadScene),1f);
             panelLoader.SetActive(false);//ravi
         }
 
