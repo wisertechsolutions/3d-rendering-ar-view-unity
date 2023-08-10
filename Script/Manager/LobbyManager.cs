@@ -27,7 +27,8 @@ namespace ViitorCloud.ARModelViewer {
                 } else {
                     //return "https://archive.org/download/paravti/paravti.glb";
                     //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
-                    return "https://cdn-luma.com/00d536b293be5d40f1a76697fc239dd6b5e6fb6ab762757a4802fbe1a70f6089/Turtle_with_Lotus_textured_mesh_glb.glb";
+                    //return "https://cdn-luma.com/00d536b293be5d40f1a76697fc239dd6b5e6fb6ab762757a4802fbe1a70f6089/Turtle_with_Lotus_textured_mesh_glb.glb";
+                    return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/it20000-mc512.glb";
                 }
             }
         }
@@ -36,7 +37,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            //AfterGetURL(Url);
+            AfterGetURL(Url);
             //GetURL();
         }
 
