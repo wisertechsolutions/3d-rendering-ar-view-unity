@@ -7,14 +7,18 @@ using ViitorCloud.API.StandardTemplates;
 using ViitorCloud.ModelViewer;
 
 namespace ViitorCloud.ARModelViewer {
+
     public class LobbyManager : MonoBehaviour {
         public static LobbyManager instance;
+
         public enum URL_type { Obj, Gltf };
+
         public URL_type uRL_Type;
         [SerializeField] private GameObject panelLoader;
         [SerializeField] private GameObject panelDark;
         [SerializeField] private TMP_Text txtLoading;
         [SerializeField] private UIManager uIManager;
+        public bool ifTesting;
 
         private string Url {
             get {
@@ -32,12 +36,15 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
         }
+
         private void Awake() {
             instance = this;
         }
 
         private void Start() {
-            AfterGetURL(Url);
+            if (ifTesting) {
+                AfterGetURL(Url);
+            }
             //GetURL();
         }
 
@@ -66,22 +73,25 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Get3dObject(GameObject model) {
             txtLoading.text = "100.0";
-            
+
             model.AddComponent<DontDestroyManager>();
-            model.transform.position = new Vector3(1000,1000,1000); // Ravi
+            model.transform.position = new Vector3(1000, 1000, 1000); // Ravi
             DataForAllScene.Instance.model3d = model;
             //objParent.ResetPositionAndChildAlignment();
-            Invoke(nameof(InvokeLoadScene),1f);
-            panelLoader.SetActive(false);//ravi
+            if (!ifTesting) {
+                Invoke(nameof(InvokeLoadScene), 1f);
+            } else {
+                panelLoader.SetActive(false);//ravi
+            }
         }
 
-        void InvokeLoadScene() {
+        private void InvokeLoadScene() {
             panelLoader.SetActive(false);
             if (DataForAllScene.Instance.isAR) {
                 LoadScene(0);
             } else {
                 LoadScene(1);
-            }           
+            }
         }
 
         public void AfterGetURL(string url) {
