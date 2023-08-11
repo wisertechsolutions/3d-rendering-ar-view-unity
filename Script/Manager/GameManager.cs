@@ -29,6 +29,30 @@ namespace ViitorCloud.ARModelViewer {
             objParent.ResetPositionAndChildAlignment();
         }
 
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                CallPreviousSceneOfNative();
+            }
+        }
+
+        void CallPreviousSceneOfNative() {
+#if UNITY_ANDROID
+            // Get the current activity
+            IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
+            IntPtr jactivity = AndroidJNI.GetStaticObjectField(jclass, AndroidJNI.GetStaticFieldID(jclass, "currentActivity", "Landroid/app/Activity;"));
+
+            // Get the finish() method and call it on the current activity
+            IntPtr jmethod = AndroidJNI.GetMethodID(jclass, "finish", "()V");
+            AndroidJNI.CallVoidMethod(jactivity, jmethod, new jvalue[] { });
+
+            // Release references to avoid memory leaks
+            AndroidJNI.DeleteLocalRef(jactivity);
+            AndroidJNI.DeleteLocalRef(jclass);
+#elif UNITY_IOS
+
+#endif
+        }
+
         public void TouchOnOffClicked() {
             touchStart = !touchStart;
         }
@@ -53,21 +77,7 @@ namespace ViitorCloud.ARModelViewer {
         }        
 
         public void OnBackButtonPress() {
-            //Application.Quit();
-#if UNITY_ANDROID
-            // Get the current activity
-            AndroidJavaClass unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject currentActivity = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity");
-            // Call the finish method to return to the previous activity
-            currentActivity.Call("finish");
-#elif UNITY_IOS
-// Get a reference to the current navigation controller
-IntPtr uiNavigationControllerClass = GetClass("UINavigationController");
-IntPtr uiNavigationControllerInstance = ObjC.CallStatic<NSObject>(uiNavigationControllerClass, "visibleViewController").GetRawClass();
-// Call the popViewControllerAnimated method to return to the previous view controller
-ObjC.Call(uiNavigationControllerInstance, "popViewControllerAnimated:", new object[] { true });
-#endif
-            //UnityEditor.iOS.Xcode
+            CallPreviousSceneOfNative();
         }
 
         //https://archive.org/download/paravti/paroot.glb
