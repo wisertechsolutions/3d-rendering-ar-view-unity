@@ -153,12 +153,14 @@ namespace ViitorCloud.ARModelViewer {
                 Sprite spriteImage = Sprite.Create(textureImage, new Rect(0, 0, textureImage.width, textureImage.height), new Vector2(0.5f, 0.5f));
                 DataForAllScene.Instance.imageForFrame = spriteImage;
 
-                Invoke(nameof(InvokeLoadScene), 1f);
                 /*if (!ifTesting) {
+                Invoke(nameof(InvokeLoadScene), 1f);
                 } else {
                     panelLoader.SetActive(false);//ravi
                 }*/
             }
+            yield return new WaitForEndOfFrame();
+            Invoke(nameof(InvokeLoadScene), 1f);
         }
 
         #endregion Image Download
