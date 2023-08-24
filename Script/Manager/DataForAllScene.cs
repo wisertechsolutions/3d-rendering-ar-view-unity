@@ -1,12 +1,19 @@
 using UnityEngine;
 
 namespace ViitorCloud.ARModelViewer {
+
     public class DataForAllScene : MonoBehaviour {
-        public static DataForAllScene Instance { get; private set; }
+
+        public static DataForAllScene Instance {
+            get; private set;
+        }
+
         public GameObject model3d;
         public bool isAR;
+        public bool isFrameImage;
+        public Sprite imageForFrame;
 
-        void Awake() {
+        private void Awake() {
             if (Instance == null) {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);

@@ -25,6 +25,8 @@ MonoBehaviour:
       scene: {fileID: 102900000, guid: ceec722470d4cb4459d053e114e4c6d8, type: 3}
     - active: 1
       scene: {fileID: 102900000, guid: bf3d0b2b6c2e5ee4b9ca520ecf396122, type: 3}
+    - active: 1
+      scene: {fileID: 102900000, guid: 125af9bd653b8d44e828a2e1cb873134, type: 3}
     PhotonID: 
     AgoraID: 
     ProjectSettings:

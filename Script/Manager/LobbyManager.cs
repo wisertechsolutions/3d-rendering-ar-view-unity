@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Net;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using ViitorCloud.API;
 using ViitorCloud.API.StandardTemplates;
@@ -11,7 +14,9 @@ namespace ViitorCloud.ARModelViewer {
     public class LobbyManager : MonoBehaviour {
         public static LobbyManager instance;
 
-        public enum URL_type { Obj, Gltf };
+        public enum URL_type {
+            Obj, Gltf, Image
+        };
 
         public URL_type uRL_Type;
         [SerializeField] private GameObject panelLoader;
@@ -28,6 +33,8 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/c973f57c056f6283e8c79357068f5523e0b4857766b88d87285489c92b899036.zip";
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/jet_221fcea2e21bc68674cf779726f2e2b514c35f7d67f151040f6786754af51ea9.zip";
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
+                } else if (uRL_Type == URL_type.Image) {
+                    return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
                 } else {
                     //return "https://archive.org/download/paravti/paravti.glb";
                     //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
@@ -43,7 +50,8 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             if (ifTesting) {
-                AfterGetURL(Url);
+                DownloadImageCall(Url);
+                //AfterGetURL(Url);
             }
             //GetURL();
         }
@@ -89,8 +97,10 @@ namespace ViitorCloud.ARModelViewer {
             panelLoader.SetActive(false);
             if (DataForAllScene.Instance.isAR) {
                 LoadScene(0);
-            } else {
+            } else if (DataForAllScene.Instance.isFrameImage) {
                 LoadScene(1);
+            } else {
+                LoadScene(2);
             }
         }
 
@@ -111,9 +121,46 @@ namespace ViitorCloud.ARModelViewer {
             panelDark.SetActive(true);
             if (no == 0) {
                 SceneManager.LoadScene("Main-AR");
+            } else if (no == 1) {
+                SceneManager.LoadScene("Main-ARFrame");
             } else {
                 SceneManager.LoadScene("Main-NonAR");
             }
         }
+
+        #region Image Download
+
+        public void DownloadImageCall(string imageURL) {
+            DataForAllScene.Instance.isFrameImage = true;
+            panelLoader.SetActive(true);
+            StartCoroutine(DownloadImageURL(imageURL));
+        }
+
+        private IEnumerator DownloadImageURL(string imageURL) {
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageURL);
+            request.SendWebRequest();
+
+            while (request.downloadProgress != 1.0f) {
+                yield return new WaitForEndOfFrame();
+                txtLoading.text = ((request.downloadProgress) * 100f).ToString("F1");
+            }
+
+            if (request.result != UnityWebRequest.Result.Success) {
+                Debug.Log(request.error);
+            } else {
+                Texture2D textureImage = DownloadHandlerTexture.GetContent(request);
+                // Do something with the texture, such as displaying it on a UI element
+                Sprite spriteImage = Sprite.Create(textureImage, new Rect(0, 0, textureImage.width, textureImage.height), new Vector2(0.5f, 0.5f));
+                DataForAllScene.Instance.imageForFrame = spriteImage;
+
+                Invoke(nameof(InvokeLoadScene), 1f);
+                /*if (!ifTesting) {
+                } else {
+                    panelLoader.SetActive(false);//ravi
+                }*/
+            }
+        }
+
+        #endregion Image Download
     }
 }
