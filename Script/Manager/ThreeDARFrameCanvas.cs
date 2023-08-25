@@ -12,8 +12,8 @@ namespace ViitorCloud.ARModelViewer {
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
             imageFrame.sprite = imageToDisplay;
 
-            int width = 200;
-            int height = 100;
+            float width = imageToDisplay.rect.width * 0.1f;
+            float height = imageToDisplay.rect.height * 0.1f;
 
             // get the RectTransform component
             RectTransform rectTransform = imageFrame.GetComponent<RectTransform>();
