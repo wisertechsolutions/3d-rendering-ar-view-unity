@@ -9,6 +9,8 @@ namespace ViitorCloud.ARModelViewer {
 
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
             imageFrame.sprite = imageToDisplay;
+            Vector2 scale = new Vector2(imageToDisplay.texture.width, imageToDisplay.texture.height);
+            frameImage.rectTransform.sizeDelta = scale;
 
             FrameColorChange(frameColor);
         }
