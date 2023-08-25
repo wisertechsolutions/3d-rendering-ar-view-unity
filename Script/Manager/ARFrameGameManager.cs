@@ -3,7 +3,6 @@ using UnityEngine.XR.ARFoundation;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.XR.ARSubsystems;
-using System;
 
 namespace ViitorCloud.ARModelViewer {
 
