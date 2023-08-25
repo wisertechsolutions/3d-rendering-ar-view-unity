@@ -19,5 +19,9 @@ namespace ViitorCloud.ARModelViewer {
         public void FrameColorChange(Color frameColor) {
             frameImage.color = frameColor;
         }
+
+        public void RotateTheImage() {
+            imageFrame.transform.localRotation = Quaternion.Euler(0, 0, imageFrame.transform.localRotation.z + 90);
+        }
     }
 }

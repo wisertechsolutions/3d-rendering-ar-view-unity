@@ -88,7 +88,7 @@ namespace ViitorCloud.ARModelViewer {
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
                 if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
                 } else {
@@ -98,7 +98,7 @@ namespace ViitorCloud.ARModelViewer {
                     } else {
                         Destroy(spawnedObject);
 
-                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
                         SpawnObjectData(spawnedObject);
                     }
                 }
@@ -116,7 +116,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void OnButtonFrameRotate() {
-            spawnedObject.transform.rotation = Quaternion.Euler(0, 0, spawnedObject.transform.rotation.z + 90);
+            spawnedObject.GetComponent<ThreeDARFrameCanvas>().RotateTheImage();
         }
     }
 }
