@@ -29,6 +29,11 @@ namespace ViitorCloud.ARModelViewer {
             LobbyManager.instance.AfterGetURL(url);
             // Send data to PlaceObject.cs method ARCameraOnOff();
         }
+
+        public void GetImageDownloadLink(string url) {
+            DataForAllScene.Instance.isFrameImage = true;
+            LobbyManager.instance.DownloadImageCall(url);
+        }
     }
 }
 

@@ -154,9 +154,9 @@ namespace ViitorCloud.ARModelViewer {
                 Sprite downloadedImage = GetByteToSprite(response);
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
 
-                if (ifTesting) {
+                
                     Invoke(nameof(InvokeLoadScene), 1f);
-                }
+                
             }, (errorMessage) => {
                 Debug.LogError(errorMessage);
             }, (progress) => {
