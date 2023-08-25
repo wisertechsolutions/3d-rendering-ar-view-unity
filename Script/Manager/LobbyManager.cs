@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
+using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using TMPro;
+using UnityEditor;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -24,6 +28,21 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private TMP_Text txtLoading;
         [SerializeField] private UIManager uIManager;
         public bool ifTesting;
+
+        private DownloadManager _downloaManager;
+
+        [SerializeField]
+        private DownloadManager downloadManager {
+            get {
+                if (_downloaManager == null) {
+                    _downloaManager = FindObjectOfType<DownloadManager>();
+                }
+                return _downloaManager;
+            }
+            set {
+                _downloaManager = value;
+            }
+        }
 
         private string Url {
             get {
@@ -130,10 +149,38 @@ namespace ViitorCloud.ARModelViewer {
 
         #region Image Download
 
-        public void DownloadImageCall(string imageURL) {
+        public async void DownloadImageCall(string imageURL) {
             DataForAllScene.Instance.isFrameImage = true;
             panelLoader.SetActive(true);
-            StartCoroutine(DownloadImageURL(imageURL));
+
+            await DownloadManager.DownloadAssetAsync(imageURL, (response) =>
+            {
+                string progressText = "100%";
+                txtLoading.text = progressText;
+
+                Sprite downloadedImage = GetByteToSprite(response);
+                DataForAllScene.Instance.imageForFrame = downloadedImage;
+
+                if (ifTesting) {
+                    Invoke(nameof(InvokeLoadScene), 1f);
+                }
+            }, (errorMessage) =>
+            {
+                Debug.LogError(errorMessage);
+            }, (progress) =>
+            {
+                string progressText = (progress * 100f).ToString("F1") + "%";
+                txtLoading.text = progressText;
+                Debug.Log(progressText);
+            });
+            //StartCoroutine(DownloadImageURL(imageURL));
+        }
+
+        private Sprite GetByteToSprite(byte[] imageBytes) {
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(imageBytes);
+            Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+            return sprite;
         }
 
         private IEnumerator DownloadImageURL(string imageURL) {
@@ -153,14 +200,10 @@ namespace ViitorCloud.ARModelViewer {
                 Sprite spriteImage = Sprite.Create(textureImage, new Rect(0, 0, textureImage.width, textureImage.height), new Vector2(0.5f, 0.5f));
                 DataForAllScene.Instance.imageForFrame = spriteImage;
 
-                /*if (!ifTesting) {
-                Invoke(nameof(InvokeLoadScene), 1f);
-                } else {
-                    panelLoader.SetActive(false);//ravi
-                }*/
+                if (ifTesting) {
+                    Invoke(nameof(InvokeLoadScene), 1f);
+                }
             }
-            yield return new WaitForEndOfFrame();
-            Invoke(nameof(InvokeLoadScene), 1f);
         }
 
         #endregion Image Download
