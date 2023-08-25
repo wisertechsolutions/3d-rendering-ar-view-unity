@@ -16,6 +16,9 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private Color[] colorFrame;
 
         [SerializeField]
+        private GameObject[] selectedTrueImage;
+
+        [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         private GameObject m_PlacedPrefab;
 
@@ -24,6 +27,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
+        private int colorTempCount = 0;
         private int touchTempCount = 0;
         public bool touchStart;
 
@@ -111,10 +115,23 @@ namespace ViitorCloud.ARModelViewer {
 
         private void SpawnObjectData(GameObject spawnObj) {
             spawnObj.GetComponent<Canvas>().worldCamera = Camera.main;
-            spawnObj.GetComponent<ThreeDARFrameCanvas>().DataToDisplay(DataForAllScene.Instance.imageForFrame, colorFrame[0]);
+            spawnObj.GetComponent<ThreeDARFrameCanvas>().DataToDisplay(DataForAllScene.Instance.imageForFrame, colorFrame[colorTempCount]);
+            SelectedColorTickOnOff(colorTempCount);
+        }
+
+        private void SelectedColorTickOnOff(int indexStatus) {
+            for (int i = 0; i <= selectedTrueImage.Length; i++) {
+                if (i == indexStatus) {
+                    selectedTrueImage[i].SetActive(true);
+                } else {
+                    selectedTrueImage[i].SetActive(false);
+                }
+            }
         }
 
         public void FrameColorChangeOnButton(int index) {
+            colorTempCount = index;
+            SelectedColorTickOnOff(colorTempCount);
             spawnedObject.GetComponent<ThreeDARFrameCanvas>().FrameColorChange(colorFrame[index]);
         }
 
