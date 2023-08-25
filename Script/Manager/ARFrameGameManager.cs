@@ -82,34 +82,37 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Update() {
-            if (!touchStart) {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+            if (touchStart) {
+                Debug.Log("Raycast Blocked");
+                return;
+            }
 
-                if (!TryGetTouchPosition(out Vector2 touchPosition))
-                    return;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-                if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 5)) {
-                    // Raycast hits are sorted by distance, so the first one
-                    // will be the closest hit.
-                    var hitPose = s_Hits[0].pose;
-                    if (spawnedObject == null) {
-                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
-                        lowerButton.SetActive(true);
-                        SpawnObjectData(spawnedObject);
+            if (!TryGetTouchPosition(out Vector2 touchPosition))
+                return;
+
+            if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 5)) {
+                // Raycast hits are sorted by distance, so the first one
+                // will be the closest hit.
+                var hitPose = s_Hits[0].pose;
+                if (spawnedObject == null) {
+                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
+                    lowerButton.SetActive(true);
+                    SpawnObjectData(spawnedObject);
+                } else {
+                    if (spawnedObject.name == m_PlacedPrefab.name) {
+                        //repositioning of the object
+                        spawnedObject.transform.position = hitPose.position;
                     } else {
-                        if (spawnedObject.name == m_PlacedPrefab.name) {
-                            //repositioning of the object
-                            spawnedObject.transform.position = hitPose.position;
-                        } else {
-                            Destroy(spawnedObject);
+                        Destroy(spawnedObject);
 
-                            spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
-                            SpawnObjectData(spawnedObject);
-                        }
+                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
+                        SpawnObjectData(spawnedObject);
                     }
-                    placementUpdate.Invoke();
                 }
+                placementUpdate.Invoke();
             }
         }
 
@@ -130,6 +133,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void FrameColorChangeOnButton(int index) {
+            Debug.Log("Color " + index + " Selected");
             colorTempCount = index;
             SelectedColorTickOnOff(colorTempCount);
             spawnedObject.GetComponent<ThreeDARFrameCanvas>().FrameColorChange(colorFrame[index]);
