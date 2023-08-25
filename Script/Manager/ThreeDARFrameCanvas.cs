@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private Image imageFrame;
         [SerializeField] private Image frameImage;
         private float variation = 20f;
+        private Vector3 axis = new Vector3(0, 0, 1);
 
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
             imageFrame.sprite = imageToDisplay;
@@ -21,7 +23,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void RotateTheImage() {
-            imageFrame.transform.localRotation = Quaternion.Euler(0, 0, imageFrame.transform.localRotation.z + 90);
+            imageFrame.transform.Rotate(axis, 90f);
         }
     }
 }
