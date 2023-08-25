@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +11,17 @@ namespace ViitorCloud.ARModelViewer {
 
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
             imageFrame.sprite = imageToDisplay;
+
+            int width = 200;
+            int height = 100;
+
+            // get the RectTransform component
+            RectTransform rectTransform = imageFrame.GetComponent<RectTransform>();
+
+            // set the width and height
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+
             FrameColorChange(frameColor);
 
             if (imageToDisplay.texture.width > imageToDisplay.texture.height) {

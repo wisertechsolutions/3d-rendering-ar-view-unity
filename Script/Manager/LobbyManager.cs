@@ -183,29 +183,6 @@ namespace ViitorCloud.ARModelViewer {
             return sprite;
         }
 
-        private IEnumerator DownloadImageURL(string imageURL) {
-            UnityWebRequest request = UnityWebRequestTexture.GetTexture(imageURL);
-            request.SendWebRequest();
-
-            while (request.downloadProgress != 1.0f) {
-                yield return new WaitForEndOfFrame();
-                txtLoading.text = ((request.downloadProgress) * 100f).ToString("F1");
-            }
-
-            if (request.result != UnityWebRequest.Result.Success) {
-                Debug.Log(request.error);
-            } else {
-                Texture2D textureImage = DownloadHandlerTexture.GetContent(request);
-                // Do something with the texture, such as displaying it on a UI element
-                Sprite spriteImage = Sprite.Create(textureImage, new Rect(0, 0, textureImage.width, textureImage.height), new Vector2(0.5f, 0.5f));
-                DataForAllScene.Instance.imageForFrame = spriteImage;
-
-                if (ifTesting) {
-                    Invoke(nameof(InvokeLoadScene), 1f);
-                }
-            }
-        }
-
         #endregion Image Download
     }
 }

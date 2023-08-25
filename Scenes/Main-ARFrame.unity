@@ -2402,7 +2402,7 @@ MonoBehaviour:
   m_PlacedPrefab: {fileID: 581798219459552006, guid: 5edd50a513b7aa8419a51b7b741a4e86, type: 3}
   planeDetectionCanvas: {fileID: 51975786}
   tapToPlace: {fileID: 600269416}
-  lowerButton: {fileID: 883827129}
+  lowerButton: {fileID: 1833263347}
 --- !u!1 &1454996972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,7 +3237,7 @@ GameObject:
   - component: {fileID: 1833263350}
   - component: {fileID: 1833263349}
   m_Layer: 5
-  m_Name: Lower Button
+  m_Name: '[D] [E/D] Lower Button'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
