@@ -1,11 +1,5 @@
-using System;
 using System.Collections;
-using System.IO;
-using System.Net;
-using System.Runtime.InteropServices;
 using TMPro;
-using UnityEditor;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -153,8 +147,7 @@ namespace ViitorCloud.ARModelViewer {
             DataForAllScene.Instance.isFrameImage = true;
             panelLoader.SetActive(true);
 
-            await DownloadManager.DownloadAssetAsync(imageURL, (response) =>
-            {
+            await DownloadManager.DownloadAssetAsync(imageURL, (response) => {
                 string progressText = "100%";
                 txtLoading.text = progressText;
 
@@ -164,11 +157,9 @@ namespace ViitorCloud.ARModelViewer {
                 if (ifTesting) {
                     Invoke(nameof(InvokeLoadScene), 1f);
                 }
-            }, (errorMessage) =>
-            {
+            }, (errorMessage) => {
                 Debug.LogError(errorMessage);
-            }, (progress) =>
-            {
+            }, (progress) => {
                 string progressText = (progress * 100f).ToString("F1") + "%";
                 txtLoading.text = progressText;
                 Debug.Log(progressText);
