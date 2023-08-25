@@ -26,7 +26,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private Vector2 OutLineCalculations(float sizeImage) {
-            return new Vector2((sizeImage / divisionValueOutline), (sizeImage / divisionValueOutline));
+            return new Vector2((sizeImage / (divisionValueOutline * imageFrame.transform.localScale.x)), (sizeImage / (divisionValueOutline * imageFrame.transform.localScale.x)));
         }
     }
 }
