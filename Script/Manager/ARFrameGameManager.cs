@@ -25,6 +25,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
+        private int touchTempCount = 0;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -59,11 +60,14 @@ namespace ViitorCloud.ARModelViewer {
 
         private void DisableUi(ARPlanesChangedEventArgs args) {
             planeDetectionCanvas.SetActive(false);
-            tapToPlace.SetActive(true);
+            if (touchTempCount <= 0) {
+                tapToPlace.SetActive(true);
+            }
         }
 
         private bool TryGetTouchPosition(out Vector2 touchPosition) {
             if (Input.touchCount > 0) {
+                touchTempCount++;
                 tapToPlace.SetActive(false);
                 touchPosition = Input.GetTouch(0).position;
                 return true;
