@@ -133,10 +133,9 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void FrameColorChangeOnButton(int index) {
-            Debug.Log("Color " + index + " Selected");
-            colorTempCount = index;
             SelectedColorTickOnOff(colorTempCount);
             spawnedObject.GetComponent<ThreeDARFrameCanvas>().FrameColorChange(colorFrame[index]);
+            colorTempCount = index;
         }
 
         public void OnButtonFrameRotate() {
