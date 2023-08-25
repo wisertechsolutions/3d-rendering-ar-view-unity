@@ -66,7 +66,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private bool TryGetTouchPosition(out Vector2 touchPosition) {
-            if (Input.touchCount > 0 && !touchStart) {
+            if (Input.touchCount > 0) {
                 touchTempCount++;
                 tapToPlace.SetActive(false);
                 touchPosition = Input.GetTouch(0).position;
@@ -78,32 +78,34 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Update() {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            if (!touchStart) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-            if (!TryGetTouchPosition(out Vector2 touchPosition))
-                return;
+                if (!TryGetTouchPosition(out Vector2 touchPosition))
+                    return;
 
-            if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 5)) {
-                // Raycast hits are sorted by distance, so the first one
-                // will be the closest hit.
-                var hitPose = s_Hits[0].pose;
-                if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
-                    lowerButton.SetActive(true);
-                    SpawnObjectData(spawnedObject);
-                } else {
-                    if (spawnedObject.name == m_PlacedPrefab.name) {
-                        //repositioning of the object
-                        spawnedObject.transform.position = hitPose.position;
-                    } else {
-                        Destroy(spawnedObject);
-
+                if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 5)) {
+                    // Raycast hits are sorted by distance, so the first one
+                    // will be the closest hit.
+                    var hitPose = s_Hits[0].pose;
+                    if (spawnedObject == null) {
                         spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
+                        lowerButton.SetActive(true);
                         SpawnObjectData(spawnedObject);
+                    } else {
+                        if (spawnedObject.name == m_PlacedPrefab.name) {
+                            //repositioning of the object
+                            spawnedObject.transform.position = hitPose.position;
+                        } else {
+                            Destroy(spawnedObject);
+
+                            spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, Quaternion.identity);
+                            SpawnObjectData(spawnedObject);
+                        }
                     }
+                    placementUpdate.Invoke();
                 }
-                placementUpdate.Invoke();
             }
         }
 
