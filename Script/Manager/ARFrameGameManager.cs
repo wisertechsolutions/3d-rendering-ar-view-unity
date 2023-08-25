@@ -25,6 +25,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
         private int touchTempCount = 0;
+        public bool touchStart;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -83,7 +84,7 @@ namespace ViitorCloud.ARModelViewer {
             if (!TryGetTouchPosition(out Vector2 touchPosition))
                 return;
 
-            if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 5)) {
+            if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && Physics.Raycast(ray, out hit, 100.0f, 4)) {
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var hitPose = s_Hits[0].pose;
@@ -117,6 +118,10 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnButtonFrameRotate() {
             spawnedObject.GetComponent<ThreeDARFrameCanvas>().RotateTheImage();
+        }
+
+        public void TouchOnOffClicked() {
+            touchStart = !touchStart;
         }
     }
 }
