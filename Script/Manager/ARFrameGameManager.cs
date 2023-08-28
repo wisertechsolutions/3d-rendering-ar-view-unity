@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 namespace ViitorCloud.ARModelViewer {
@@ -30,6 +30,9 @@ namespace ViitorCloud.ARModelViewer {
         private int colorTempCount = 0;
         private int touchTempCount = 0;
         public bool touchStart;
+
+        [Header("TestMode")]
+        public bool testMode;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -82,6 +85,12 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Update() {
+#if UNITY_EDITOR || UNITY_WIN
+            if (Input.GetKeyDown(KeyCode.Z) && testMode) {
+                TestModeFunc();
+            }
+#endif
+
             if (touchStart) {
                 Debug.Log("Raycast Blocked");
                 return;
@@ -116,6 +125,14 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
+        private void TestModeFunc() {
+            planeDetectionCanvas.SetActive(false);
+
+            spawnedObject = Instantiate(m_PlacedPrefab, Vector3.zero, Quaternion.identity);
+            lowerButton.SetActive(true);
+            SpawnObjectData(spawnedObject);
+        }
+
         private void SpawnObjectData(GameObject spawnObj) {
             spawnObj.GetComponent<Canvas>().worldCamera = Camera.main;
             spawnObj.GetComponent<ThreeDARFrameCanvas>().DataToDisplay(DataForAllScene.Instance.imageForFrame, colorFrame[colorTempCount]);
@@ -123,7 +140,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void SelectedColorTickOnOff(int indexStatus) {
-            for (int i = 0; i <= selectedTrueImage.Length; i++) {
+            for (int i = 0; i <= selectedTrueImage.Length - 1; i++) {
                 if (i == indexStatus) {
                     selectedTrueImage[i].SetActive(true);
                 } else {

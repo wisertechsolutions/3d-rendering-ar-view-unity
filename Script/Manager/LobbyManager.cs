@@ -1,7 +1,5 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using ViitorCloud.API;
 using ViitorCloud.API.StandardTemplates;
@@ -47,7 +45,9 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/jet_221fcea2e21bc68674cf779726f2e2b514c35f7d67f151040f6786754af51ea9.zip";
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else if (uRL_Type == URL_type.Image) {
-                    return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
+                    // return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
+                    // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
+                    return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
                 } else {
                     //return "https://archive.org/download/paravti/paravti.glb";
                     //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
@@ -154,9 +154,7 @@ namespace ViitorCloud.ARModelViewer {
                 Sprite downloadedImage = GetByteToSprite(response);
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
 
-                
-                    Invoke(nameof(InvokeLoadScene), 1f);
-                
+                Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
                 Debug.LogError(errorMessage);
             }, (progress) => {
