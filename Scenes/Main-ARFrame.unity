@@ -1173,8 +1173,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ViitorCloud.ARModelViewer.GameManager, ARModelViewerAssembly
+      - m_Target: {fileID: 1412776409}
+        m_TargetAssemblyTypeName: ViitorCloud.ARModelViewer.ARFrameGameManager, ARModelViewerAssembly
         m_MethodName: OnBackButtonPress
         m_Mode: 1
         m_Arguments:
