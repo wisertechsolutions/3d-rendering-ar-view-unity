@@ -30,7 +30,6 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject lowerButton;
         private int colorTempCount = 0;
         private int touchTempCount = 0;
-        public bool touchStart;
 
         [Header("TestMode")]
         public bool testMode;
@@ -91,11 +90,6 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
-            /*
-                        if (touchStart) {
-                            Debug.Log("Raycast Blocked");
-                            return;
-                        }*/
 
             if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -160,10 +154,6 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnButtonFrameRotate() {
             spawnedObject.GetComponent<ThreeDARFrameCanvas>().RotateTheImage();
-        }
-
-        public void TouchOnOffClicked(bool value) {
-            touchStart = value;
         }
 
         public void OnBackButtonPress() {
