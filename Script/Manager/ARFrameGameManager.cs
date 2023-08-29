@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
@@ -175,9 +174,11 @@ namespace ViitorCloud.ARModelViewer {
             AndroidJNI.DeleteLocalRef(jactivity);
             AndroidJNI.DeleteLocalRef(jclass);
 #elif UNITY_IOS
-            _closeUnityAndReturnToiOS("Description of iOS on Back Button Clicked", "iOS Back Button Clicked");
+            SendMessage("iOSBridge", "CloseUnityAndReturnToiOS");
 #endif
         }
+
+        //_closeUnityAndReturnToiOS("Description of iOS on Back Button Clicked", "iOS Back Button Clicked");
 
 #if UNITY_IOS
     [DllImport("__Internal")]
