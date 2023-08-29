@@ -174,8 +174,13 @@ namespace ViitorCloud.ARModelViewer {
             AndroidJNI.DeleteLocalRef(jactivity);
             AndroidJNI.DeleteLocalRef(jclass);
 #elif UNITY_IOS
-
+            _closeUnityAndReturnToiOS("Description of iOS on Back Button Clicked", "iOS Back Button Clicked")
 #endif
         }
+
+#if UNITY_IOS
+    [DllImport("__Internal")]
+	extern static private void _closeUnityAndReturnToiOS(string description, string msg);
+#endif
     }
 }
