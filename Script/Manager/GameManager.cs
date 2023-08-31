@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace ViitorCloud.ARModelViewer {
     public class GameManager : MonoBehaviour {
@@ -26,6 +27,30 @@ namespace ViitorCloud.ARModelViewer {
         private void OnEnable() {
             DataForAllScene.Instance.model3d.transform.SetParent(objParent.transform);            
             objParent.ResetPositionAndChildAlignment();
+        }
+
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                CallPreviousSceneOfNative();
+            }
+        }
+
+        void CallPreviousSceneOfNative() {
+#if UNITY_ANDROID
+            // Get the current activity
+            IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
+            IntPtr jactivity = AndroidJNI.GetStaticObjectField(jclass, AndroidJNI.GetStaticFieldID(jclass, "currentActivity", "Landroid/app/Activity;"));
+
+            // Get the finish() method and call it on the current activity
+            IntPtr jmethod = AndroidJNI.GetMethodID(jclass, "finish", "()V");
+            AndroidJNI.CallVoidMethod(jactivity, jmethod, new jvalue[] { });
+
+            // Release references to avoid memory leaks
+            AndroidJNI.DeleteLocalRef(jactivity);
+            AndroidJNI.DeleteLocalRef(jclass);
+#elif UNITY_IOS
+
+#endif
         }
 
         public void TouchOnOffClicked() {
@@ -52,8 +77,7 @@ namespace ViitorCloud.ARModelViewer {
         }        
 
         public void OnBackButtonPress() {
-            //SceneManager.LoadScene("Lobby");
-            Application.Quit();
+            CallPreviousSceneOfNative();
         }
 
         //https://archive.org/download/paravti/paroot.glb
