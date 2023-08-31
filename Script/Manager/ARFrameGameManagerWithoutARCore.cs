@@ -111,10 +111,10 @@ namespace ViitorCloud.ARModelViewer {
                     SpawnObjectData(spawnedObject);
                 }
                 placementUpdate.Invoke();
-            } /*else {
-                Swipe();
-            }*/
-            UpdateSwipe();
+            } else {
+                //Swipe();
+                UpdateSwipe();
+            }
         }
 
         private void TestModeFunc() {
