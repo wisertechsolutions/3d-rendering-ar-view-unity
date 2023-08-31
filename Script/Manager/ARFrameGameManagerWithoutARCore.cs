@@ -95,7 +95,7 @@ namespace ViitorCloud.ARModelViewer {
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
-            if (Input.GetTouch(0).phase == TouchPhase.Began) {
+            if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject == null) {
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
@@ -109,18 +109,10 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
-                } else {
-                    if (spawnedObject.name == m_PlacedPrefab.name) {
-                        //repositioning of the object
-                        spawnedObject.transform.position = newHitPosition;
-                    } else {
-                        Destroy(spawnedObject);
-
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
-                        SpawnObjectData(spawnedObject);
-                    }
                 }
                 placementUpdate.Invoke();
+            } else {
+                Swipe();
             }
         }
 
@@ -186,5 +178,65 @@ namespace ViitorCloud.ARModelViewer {
     [DllImport("__Internal")]
 	extern static private void _closeUnityAndReturnToiOS(string description, string msg);
 #endif
+
+        #region SwipeLogic
+
+        private Vector2 _firstPressPos;
+        private Vector2 _secondPressPos;
+        private Vector2 _currentSwipe;
+        private float swipeValue = 10f;
+
+        public void Swipe() {
+            if (Input.GetMouseButtonDown(0) && spawnedObject != null) {
+                _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            }
+            if (Input.GetMouseButtonUp(0) && spawnedObject != null) {
+                _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+                _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
+
+                _currentSwipe.Normalize();
+
+                if (LeftSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
+                } else if (RightSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
+                } else if (UpLeftSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
+                } else if (UpRightSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(swipeValue, swipeValue, 0) * Time.deltaTime;
+                } else if (DownLeftSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(-swipeValue, -swipeValue, 0) * Time.deltaTime;
+                } else if (DownRightSwipe(_currentSwipe)) {
+                    spawnedObject.transform.position += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
+                }
+            }
+        }
+
+        private bool LeftSwipe(Vector2 Swipe) {
+            return _currentSwipe.x < 0 && _currentSwipe.y < 0.5f && _currentSwipe.y > -0.5f;
+        }
+
+        private bool RightSwipe(Vector2 Swipe) {
+            return _currentSwipe.x > 0 && _currentSwipe.y < 0.5f && _currentSwipe.y > -0.5f;
+        }
+
+        private bool UpLeftSwipe(Vector2 Swipe) {
+            return _currentSwipe.y > 0 && _currentSwipe.x < 0f;
+        }
+
+        private bool UpRightSwipe(Vector2 Swipe) {
+            return _currentSwipe.y > 0 && _currentSwipe.x > 0f;
+        }
+
+        private bool DownLeftSwipe(Vector2 Swipe) {
+            return _currentSwipe.y < 0 && _currentSwipe.x < 0f;
+        }
+
+        private bool DownRightSwipe(Vector2 Swipe) {
+            return _currentSwipe.y < 0 && _currentSwipe.x > 0f;
+        }
+
+        #endregion SwipeLogic
     }
 }
