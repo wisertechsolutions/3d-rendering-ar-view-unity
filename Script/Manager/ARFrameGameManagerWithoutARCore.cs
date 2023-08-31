@@ -106,14 +106,15 @@ namespace ViitorCloud.ARModelViewer {
                 var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
                 Debug.Log("New hit Position = " + newHitPosition);
                 if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
                 }
                 placementUpdate.Invoke();
-            } else {
-                Swipe();
             }
+            // else {
+            //    Swipe();
+            //}
         }
 
         private void TestModeFunc() {
@@ -168,7 +169,9 @@ namespace ViitorCloud.ARModelViewer {
             AndroidJNI.DeleteLocalRef(jactivity);
             AndroidJNI.DeleteLocalRef(jclass);
 #elif UNITY_IOS
-            SendMessage("iOSBridge", "CloseUnityAndReturnToiOS");
+            Application.Unload();
+
+//SendMessage("iOSBridge", "CloseUnityAndReturnToiOS");
 #endif
         }
 
@@ -184,7 +187,9 @@ namespace ViitorCloud.ARModelViewer {
         private Vector2 _firstPressPos;
         private Vector2 _secondPressPos;
         private Vector2 _currentSwipe;
-        private float swipeValue = 10f;
+
+        [Header("Swipe Logic")]
+        [SerializeField] private float swipeValue = 10f;
 
         public void Swipe() {
             if (Input.GetMouseButtonDown(0) && spawnedObject != null) {
