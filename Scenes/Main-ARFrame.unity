@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1006597058}
-  m_IndirectSpecularColor: {r: 0.8505971, g: 0.8389451, b: 0.83171105, a: 1}
+  m_IndirectSpecularColor: {r: 0.8444639, g: 0.8332054, b: 0.8254611, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2127,6 +2127,7 @@ GameObject:
   - component: {fileID: 1412776407}
   - component: {fileID: 1412776409}
   - component: {fileID: 1412776410}
+  - component: {fileID: 1412776411}
   m_Layer: 0
   m_Name: AR Session Origin And Manager
   m_TagString: Untagged
@@ -2246,6 +2247,20 @@ MonoBehaviour:
   tapToPlace: {fileID: 600269416}
   lowerButton: {fileID: 1833263347}
   testMode: 0
+--- !u!114 &1412776411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412776403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be02c9a98dc4ae498868988b159fc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasTransform: {fileID: 0}
+  dragSpeed: 1
 --- !u!1 &1485741743
 GameObject:
   m_ObjectHideFlags: 0
