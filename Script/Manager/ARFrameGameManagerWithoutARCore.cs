@@ -91,7 +91,7 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
-
+            Swipe();
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
@@ -195,10 +195,10 @@ namespace ViitorCloud.ARModelViewer {
         private Vector2 _currentSwipe;
         float swipeValue = 10f;
         public void Swipe() {
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(1) && spawnedObject != null) {
                 _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
-            if (Input.GetMouseButtonUp(0)) {
+            if (Input.GetMouseButtonUp(1) && && spawnedObject != null) {
                 _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
                 _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
