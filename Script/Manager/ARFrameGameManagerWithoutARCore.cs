@@ -91,14 +91,14 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
-            if (spawnedObject.name == m_PlacedPrefab.name && touchTempCount > 0) {
-                Swipe();
-            }
 
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
             if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                if (spawnedObject.name == m_PlacedPrefab.name && touchTempCount > 0) {
+                    Swipe();
+                }
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
@@ -197,6 +197,7 @@ namespace ViitorCloud.ARModelViewer {
         private Vector2 _firstPressPos;
         private Vector2 _secondPressPos;
         private Vector2 _currentSwipe;
+        float swipeValue = 10f;
         public void Swipe() {
             if (Input.GetMouseButtonDown(0)) {
                 _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -209,17 +210,17 @@ namespace ViitorCloud.ARModelViewer {
                 _currentSwipe.Normalize();
 
                 if (LeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-1, 0, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
                 } else if (RightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(1, 0, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
                 } else if (UpLeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-1, 1, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
                 } else if (UpRightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(1, 1, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(swipeValue, swipeValue, 0) * Time.deltaTime;
                 } else if (DownLeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-1, -1, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(-swipeValue, -swipeValue, 0) * Time.deltaTime;
                 } else if (DownRightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(1, -1, 0) * Time.deltaTime;
+                    spawnedObject.transform.position += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
                 }
             }
         }
