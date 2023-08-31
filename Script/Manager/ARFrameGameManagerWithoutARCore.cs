@@ -92,34 +92,35 @@ namespace ViitorCloud.ARModelViewer {
             }
 #endif
 
-            if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
+            if (MouseOverUILayerObject.IsPointerOverUIObject())
+                return;
+
+            if (Input.GetTouch(0).phase == TouchPhase.Began) {
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
                 }
-
-                if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                    var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    // Raycast hits are sorted by distance, so the first one
-                    // will be the closest hit.
-                    var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
-                    if (spawnedObject == null) {
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
-                        lowerButton.SetActive(true);
-                        SpawnObjectData(spawnedObject);
+                var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                // Raycast hits are sorted by distance, so the first one
+                // will be the closest hit.
+                var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                if (spawnedObject == null) {
+                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                    lowerButton.SetActive(true);
+                    SpawnObjectData(spawnedObject);
+                } else {
+                    if (spawnedObject.name == m_PlacedPrefab.name) {
+                        //repositioning of the object
+                        spawnedObject.transform.position = newHitPosition;
                     } else {
-                        if (spawnedObject.name == m_PlacedPrefab.name) {
-                            //repositioning of the object
-                            spawnedObject.transform.position = newHitPosition;
-                        } else {
-                            Destroy(spawnedObject);
+                        Destroy(spawnedObject);
 
-                            spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
-                            SpawnObjectData(spawnedObject);
-                        }
+                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                        SpawnObjectData(spawnedObject);
                     }
-                    placementUpdate.Invoke();
                 }
+                placementUpdate.Invoke();
+
 
             }
         }

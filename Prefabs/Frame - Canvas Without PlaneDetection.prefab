@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 581798219450263601}
   - component: {fileID: 581798219450263759}
   - component: {fileID: 581798219450263758}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Downloaded - Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 581798219459552004}
   - component: {fileID: 581798219459552007}
   - component: {fileID: 581798219459552003}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Frame - Canvas Without PlaneDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 6570044232059181593}
   - component: {fileID: 4008595734089486647}
   - component: {fileID: 6553342368917197436}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Frame - Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
