@@ -96,9 +96,7 @@ namespace ViitorCloud.ARModelViewer {
                 return;
 
             if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                if (spawnedObject.name == m_PlacedPrefab.name && touchTempCount > 0) {
-                    Swipe();
-                }
+
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
@@ -115,8 +113,6 @@ namespace ViitorCloud.ARModelViewer {
                     if (spawnedObject.name == m_PlacedPrefab.name) {
                         //repositioning of the object
                         spawnedObject.transform.position = newHitPosition;
-
-                        // Swipe();
                     } else {
                         Destroy(spawnedObject);
 
