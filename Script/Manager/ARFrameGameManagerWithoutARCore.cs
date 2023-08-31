@@ -112,8 +112,7 @@ namespace ViitorCloud.ARModelViewer {
                 }
                 placementUpdate.Invoke();
             } else {
-                //Swipe();
-                UpdateSwipe();
+                Swipe();
             }
         }
 
@@ -179,25 +178,6 @@ namespace ViitorCloud.ARModelViewer {
     [DllImport("__Internal")]
 	extern static private void _closeUnityAndReturnToiOS(string description, string msg);
 #endif
-
-        #region Testing Swipe
-
-        public float moveSpeed = 10f;
-
-        private Vector2 targetPosition;
-
-        private void UpdateSwipe() {
-            if (Input.touchCount > 0 && spawnedObject != null) {
-                Touch touch = Input.GetTouch(0);
-                targetPosition = touch.position;
-            }
-
-            Vector2 currentPosition = spawnedObject.GetComponent<RectTransform>().position;
-            Vector2 newPosition = Vector2.Lerp(currentPosition, targetPosition, Time.deltaTime * moveSpeed);
-            spawnedObject.GetComponent<RectTransform>().position = newPosition;
-        }
-
-        #endregion Testing Swipe
 
         #region SwipeLogic
 
