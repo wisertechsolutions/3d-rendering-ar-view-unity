@@ -93,17 +93,16 @@ namespace ViitorCloud.ARModelViewer {
 #endif
 
             if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                if (Input.touchCount > 0 && touchTempCount <= 0) {
+                    touchTempCount++;
+                    tapToPlace.SetActive(false);
+                }
 
-                if (!TryGetTouchPosition(out Vector2 touchPosition))
-                    return;
-
-                if (/*m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon) && */Physics.Raycast(ray, out hit, 100.0f, 5)) {
+                if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                    var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                     // Raycast hits are sorted by distance, so the first one
                     // will be the closest hit.
-                    var hitPose = hit.point;
-                    var newHitPosition = new Vector3(hitPose.x, hitPose.y, fixedZPos);
+                    var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
                     if (spawnedObject == null) {
                         spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
                         lowerButton.SetActive(true);
@@ -121,6 +120,7 @@ namespace ViitorCloud.ARModelViewer {
                     }
                     placementUpdate.Invoke();
                 }
+
             }
         }
 

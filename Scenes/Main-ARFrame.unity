@@ -332,7 +332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &51975787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -834,7 +834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &600269417
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2253,7 +2253,7 @@ MonoBehaviour:
   - {fileID: 2002524279}
   - {fileID: 757946119}
   - {fileID: 1335858885}
-  m_PlacedPrefab: {fileID: 581798219459552006, guid: 5edd50a513b7aa8419a51b7b741a4e86, type: 3}
+  m_PlacedPrefab: {fileID: 581798219459552006, guid: b0f3bb184971eac498ee6bdbc0cf08a9, type: 3}
   planeDetectionCanvas: {fileID: 51975786}
   tapToPlace: {fileID: 600269416}
   lowerButton: {fileID: 1833263347}
