@@ -32,6 +32,7 @@ namespace ViitorCloud.ARModelViewer {
 
         [Header("TestMode")]
         public bool testMode;
+
         private float fixedZPos = 5f;
 
         /// <summary>
@@ -96,7 +97,6 @@ namespace ViitorCloud.ARModelViewer {
                 return;
 
             if (Input.GetTouch(0).phase == TouchPhase.Began) {
-
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
@@ -121,8 +121,6 @@ namespace ViitorCloud.ARModelViewer {
                     }
                 }
                 placementUpdate.Invoke();
-
-
             }
         }
 
@@ -190,15 +188,17 @@ namespace ViitorCloud.ARModelViewer {
 #endif
 
         #region SwipeLogic
+
         private Vector2 _firstPressPos;
         private Vector2 _secondPressPos;
         private Vector2 _currentSwipe;
-        float swipeValue = 10f;
+        private float swipeValue = 10f;
+
         public void Swipe() {
             if (Input.GetMouseButtonDown(1) && spawnedObject != null) {
                 _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
-            if (Input.GetMouseButtonUp(1) && && spawnedObject != null) {
+            if (Input.GetMouseButtonUp(1) && spawnedObject != null) {
                 _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
                 _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
@@ -244,6 +244,7 @@ namespace ViitorCloud.ARModelViewer {
         private bool DownRightSwipe(Vector2 Swipe) {
             return _currentSwipe.y < 0 && _currentSwipe.x > 0f;
         }
-        #endregion
+
+        #endregion SwipeLogic
     }
 }
