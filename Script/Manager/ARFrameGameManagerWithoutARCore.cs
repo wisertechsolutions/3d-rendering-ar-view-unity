@@ -112,7 +112,8 @@ namespace ViitorCloud.ARModelViewer {
                 } else {
                     if (spawnedObject.name == m_PlacedPrefab.name) {
                         //repositioning of the object
-                        spawnedObject.transform.position = newHitPosition;
+                        //spawnedObject.transform.position = newHitPosition;
+                        CanvasDragger.instance.canvasTransform = spawnedObject.GetComponent<RectTransform>();
                     } else {
                         Destroy(spawnedObject);
 
