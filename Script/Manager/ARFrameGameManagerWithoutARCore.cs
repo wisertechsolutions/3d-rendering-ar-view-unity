@@ -92,7 +92,6 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
-            Swipe();
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
@@ -105,6 +104,7 @@ namespace ViitorCloud.ARModelViewer {
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                Debug.Log("New hit Position = " + newHitPosition);
                 if (spawnedObject == null) {
                     spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
                     lowerButton.SetActive(true);
