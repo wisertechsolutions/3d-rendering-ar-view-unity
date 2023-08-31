@@ -91,6 +91,9 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
+            if (spawnedObject.name == m_PlacedPrefab.name && touchTempCount > 0) {
+                Swipe();
+            }
 
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
@@ -111,9 +114,9 @@ namespace ViitorCloud.ARModelViewer {
                 } else {
                     if (spawnedObject.name == m_PlacedPrefab.name) {
                         //repositioning of the object
-                        //spawnedObject.transform.position = newHitPosition;
+                        spawnedObject.transform.position = newHitPosition;
 
-                        Swipe();
+                        // Swipe();
                     } else {
                         Destroy(spawnedObject);
 
