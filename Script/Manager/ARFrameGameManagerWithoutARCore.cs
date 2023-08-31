@@ -106,7 +106,7 @@ namespace ViitorCloud.ARModelViewer {
                 var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
                 Debug.Log("New hit Position = " + newHitPosition);
                 if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
                 } else {
@@ -116,7 +116,7 @@ namespace ViitorCloud.ARModelViewer {
                     } else {
                         Destroy(spawnedObject);
 
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                         SpawnObjectData(spawnedObject);
                     }
                 }
