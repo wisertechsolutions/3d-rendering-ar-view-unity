@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
@@ -100,25 +101,15 @@ namespace ViitorCloud.ARModelViewer {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
                 }
-                var hitPosVector = /*Camera.main.ScreenToWorldPoint*/(Input.GetTouch(0).position);
+                var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                 // Raycast hits are sorted by distance, so the first one
                 // will be the closest hit.
                 var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
                 Debug.Log("New hit Position = " + newHitPosition);
                 if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
-                } else {
-                    if (spawnedObject.name == m_PlacedPrefab.name) {
-                        //repositioning of the object
-                        spawnedObject.transform.position = newHitPosition;
-                    } else {
-                        Destroy(spawnedObject);
-
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
-                        SpawnObjectData(spawnedObject);
-                    }
                 }
                 placementUpdate.Invoke();
             }
