@@ -33,7 +33,7 @@ namespace ViitorCloud.ARModelViewer {
         [Header("TestMode")]
         public bool testMode;
 
-        private float fixedZPos = 5f;
+        private float fixedZPos = 10f;
 
         /// <summary>
         /// The prefab to instantiate on touch.
