@@ -187,10 +187,10 @@ namespace ViitorCloud.ARModelViewer {
         private bool spawned;
 
         public void Swipe() {
-            if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject != null) {
+            if (Input.GetTouch(0).phase == TouchPhase.Began && spawned) {
                 _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
-            if (Input.GetTouch(0).phase == TouchPhase.Moved && spawnedObject != null) {
+            if (Input.GetTouch(0).phase == TouchPhase.Moved && spawned) {
                 _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
                 _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
