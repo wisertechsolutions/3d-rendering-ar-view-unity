@@ -109,22 +109,14 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
-                } else {
-                    if (spawnedObject.name == m_PlacedPrefab.name) {
-                        //repositioning of the object
-                        spawnedObject.transform.position = newHitPosition;
-                    } else {
-                        Destroy(spawnedObject);
-
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
-                        SpawnObjectData(spawnedObject);
-                    }
-                    placementUpdate.Invoke();
+                    spawned = true;
                 }
+                placementUpdate.Invoke();
             }
-            // else {
-            //    Swipe();
-            //}
+
+            if (spawned) {
+                Swipe();
+            }
         }
 
         private void TestModeFunc() {
@@ -192,11 +184,13 @@ namespace ViitorCloud.ARModelViewer {
         [Header("Swipe Logic")]
         [SerializeField] private float swipeValue = 10f;
 
+        private bool spawned;
+
         public void Swipe() {
-            if (Input.GetMouseButtonDown(0) && spawnedObject != null) {
+            if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject != null) {
                 _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
-            if (Input.GetMouseButtonUp(0) && spawnedObject != null) {
+            if (Input.GetTouch(0).phase == TouchPhase.Moved && spawnedObject != null) {
                 _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
                 _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
