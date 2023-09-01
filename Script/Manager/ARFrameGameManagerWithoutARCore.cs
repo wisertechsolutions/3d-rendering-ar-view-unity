@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
@@ -96,7 +95,7 @@ namespace ViitorCloud.ARModelViewer {
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
-            if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject == null) {
+            if (Input.GetTouch(0).phase == TouchPhase.Began) {
                 if (Input.touchCount > 0 && touchTempCount <= 0) {
                     touchTempCount++;
                     tapToPlace.SetActive(false);
@@ -110,8 +109,18 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
                     lowerButton.SetActive(true);
                     SpawnObjectData(spawnedObject);
+                } else {
+                    if (spawnedObject.name == m_PlacedPrefab.name) {
+                        //repositioning of the object
+                        spawnedObject.transform.position = newHitPosition;
+                    } else {
+                        Destroy(spawnedObject);
+
+                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity);
+                        SpawnObjectData(spawnedObject);
+                    }
+                    placementUpdate.Invoke();
                 }
-                placementUpdate.Invoke();
             }
             // else {
             //    Swipe();
@@ -171,17 +180,8 @@ namespace ViitorCloud.ARModelViewer {
             AndroidJNI.DeleteLocalRef(jclass);
 #elif UNITY_IOS
             Application.Unload();
-
-//SendMessage("iOSBridge", "CloseUnityAndReturnToiOS");
 #endif
         }
-
-        //_closeUnityAndReturnToiOS("Description of iOS on Back Button Clicked", "iOS Back Button Clicked");
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-	extern static private void _closeUnityAndReturnToiOS(string description, string msg);
-#endif
 
         #region SwipeLogic
 
