@@ -34,6 +34,9 @@ namespace ViitorCloud.ARModelViewer {
 
         private float fixedZPos = 5f;
 
+        private float rotationValueOnZ = 5f;
+        private float rotationAngle = 0f; // The current rotation angle of the object
+
         /// <summary>
         /// The prefab to instantiate on touch.
         /// </summary>
@@ -61,6 +64,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
+            Input.gyro.enabled = true;
             planeDetectionCanvas.SetActive(true);
             tapToPlace.SetActive(false);
         }
@@ -75,43 +79,42 @@ namespace ViitorCloud.ARModelViewer {
                 return;
 
             Vector3 acceleration = Input.acceleration;
-
+            Debug.Log(acceleration);
             // Check if phone is held straight
-            float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
-            float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
+            float tiltThresholdX = 0.1f; // Adjust this value as per your requirement
 
-            if (!spawned && Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
-                Debug.Log("Phone is held properly straight.");
-                planeDetectionCanvas.SetActive(false);
+            float tiltThresholdY = 0.9f; // Adjust this value as per your requirement
+            if (!spawned) {
+                if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
+                    Debug.Log("Phone is held properly straight.");
+                    planeDetectionCanvas.SetActive(false);
 
-                tapToPlace.SetActive(true);
+                    tapToPlace.SetActive(true);
 
-                if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                    if (Input.touchCount > 0 && touchTempCount <= 0) {
-                        touchTempCount++;
-                        tapToPlace.SetActive(false);
+                    if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                        if (Input.touchCount > 0 && touchTempCount <= 0) {
+                            touchTempCount++;
+                            tapToPlace.SetActive(false);
+                        }
+                        var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        // Raycast hits are sorted by distance, so the first one
+                        // will be the closest hit.
+                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                        Debug.Log("New hit Position = " + newHitPosition);
+                        if (spawnedObject == null) {
+                            spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
+                            lowerButton.SetActive(true);
+                            SpawnObjectData(spawnedObject);
+                            spawned = true;
+                        }
+                        placementUpdate.Invoke();
                     }
-                    var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    // Raycast hits are sorted by distance, so the first one
-                    // will be the closest hit.
-                    var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
-                    Debug.Log("New hit Position = " + newHitPosition);
-                    if (spawnedObject == null) {
-                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
-                        lowerButton.SetActive(true);
-                        SpawnObjectData(spawnedObject);
-                        spawned = true;
-                    }
-                    placementUpdate.Invoke();
-                }
-            } else {
-                if (!spawned) {
+                } else {
                     Debug.Log("Phone is not held straight.");
                     planeDetectionCanvas.SetActive(true);
                     tapToPlace.SetActive(false);
                 }
-            }
-            if (spawned) {
+            } else if (spawned) {
                 Swipe();
             }
         }
@@ -152,6 +155,14 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnBackButtonPress() {
             CallPreviousSceneOfNative();
+        }
+
+        public void RotateOnZOnClickButtons(bool isRToL) {
+            if (isRToL) {
+                spawnedObject.transform.Rotate(Vector3.forward, rotationValueOnZ);
+            } else {
+                spawnedObject.transform.Rotate(Vector3.forward, -rotationValueOnZ);
+            }
         }
 
         private void CallPreviousSceneOfNative() {
