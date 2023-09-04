@@ -62,28 +62,8 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            planeDetectionCanvas.SetActive(false);
-            tapToPlace.SetActive(true);
-            planeManager.planesChanged += DisableUi;
-        }
-
-        private void DisableUi(ARPlanesChangedEventArgs args) {
-            planeDetectionCanvas.SetActive(false);
-            if (touchTempCount <= 0) {
-                tapToPlace.SetActive(true);
-            }
-        }
-
-        private bool TryGetTouchPosition(out Vector2 touchPosition) {
-            if (Input.touchCount > 0) {
-                touchTempCount++;
-                tapToPlace.SetActive(false);
-                touchPosition = Input.GetTouch(0).position;
-                return true;
-            }
-
-            touchPosition = default;
-            return false;
+            planeDetectionCanvas.SetActive(true);
+            tapToPlace.SetActive(false);
         }
 
         private void Update() {
@@ -95,25 +75,43 @@ namespace ViitorCloud.ARModelViewer {
             if (MouseOverUILayerObject.IsPointerOverUIObject())
                 return;
 
-            if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                if (Input.touchCount > 0 && touchTempCount <= 0) {
-                    touchTempCount++;
+            Vector3 acceleration = Input.acceleration;
+
+            // Check if phone is held straight
+            float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
+            float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
+
+            if (!spawned && Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
+                Debug.Log("Phone is held properly straight.");
+                planeDetectionCanvas.SetActive(false);
+
+                tapToPlace.SetActive(true);
+
+                if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                    if (Input.touchCount > 0 && touchTempCount <= 0) {
+                        touchTempCount++;
+                        tapToPlace.SetActive(false);
+                    }
+                    var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                    // Raycast hits are sorted by distance, so the first one
+                    // will be the closest hit.
+                    var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                    Debug.Log("New hit Position = " + newHitPosition);
+                    if (spawnedObject == null) {
+                        spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
+                        lowerButton.SetActive(true);
+                        SpawnObjectData(spawnedObject);
+                        spawned = true;
+                    }
+                    placementUpdate.Invoke();
+                }
+            } else {
+                if (!spawned) {
+                    Debug.Log("Phone is not held straight.");
+                    planeDetectionCanvas.SetActive(true);
                     tapToPlace.SetActive(false);
                 }
-                var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                // Raycast hits are sorted by distance, so the first one
-                // will be the closest hit.
-                var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
-                Debug.Log("New hit Position = " + newHitPosition);
-                if (spawnedObject == null) {
-                    spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
-                    lowerButton.SetActive(true);
-                    SpawnObjectData(spawnedObject);
-                    spawned = true;
-                }
-                placementUpdate.Invoke();
             }
-
             if (spawned) {
                 Swipe();
             }
