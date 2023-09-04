@@ -23,6 +23,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private UnityEvent placementUpdate;
 
+        private Transform mainCam;
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
@@ -64,6 +65,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
+            mainCam = Camera.main.transform;
             Input.gyro.enabled = true;
             planeDetectionCanvas.SetActive(true);
             tapToPlace.SetActive(false);
@@ -81,9 +83,9 @@ namespace ViitorCloud.ARModelViewer {
             Vector3 acceleration = Input.acceleration;
             Debug.Log(acceleration);
             // Check if phone is held straight
-            float tiltThresholdX = 0.1f; // Adjust this value as per your requirement
+            float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
 
-            float tiltThresholdY = 0.9f; // Adjust this value as per your requirement
+            float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
             if (!spawned) {
                 if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
                     Debug.Log("Phone is held properly straight.");
@@ -102,7 +104,8 @@ namespace ViitorCloud.ARModelViewer {
                         var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
                         Debug.Log("New hit Position = " + newHitPosition);
                         if (spawnedObject == null) {
-                            spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, Camera.main.transform);
+                            spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
+                            spawnedObject.transform.localEulerAngles = Vector3.zero;
                             lowerButton.SetActive(true);
                             SpawnObjectData(spawnedObject);
                             spawned = true;
