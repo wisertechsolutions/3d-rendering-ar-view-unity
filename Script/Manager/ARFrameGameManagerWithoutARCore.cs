@@ -231,6 +231,7 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject.transform.position += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
                 }
             }
+            spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, fixedZPos);
             Debug.Log("Swipe Ended");
         }
 
