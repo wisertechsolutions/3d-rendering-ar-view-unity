@@ -111,6 +111,7 @@ namespace ViitorCloud.ARModelViewer {
                         Debug.Log("New hit Position = " + newHitPosition);
                         if (spawnedObject == null) {
                             spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
+                            spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
                             spawnedObject.transform.localEulerAngles = Vector3.zero;
                             Debug.Log("Spawned Obj Name = " + spawnedObject.name);
                             Debug.Log("Spawned Obj Pos = " + spawnedObject.transform.localPosition);
