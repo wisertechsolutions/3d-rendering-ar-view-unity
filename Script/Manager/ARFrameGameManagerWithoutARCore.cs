@@ -23,7 +23,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private UnityEvent placementUpdate;
 
-        private Transform mainCam;
+        [SerializeField] private Transform mainCam;
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
@@ -65,8 +65,16 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            mainCam = Camera.main.transform;
-            Input.gyro.enabled = true;
+            spawnedObject = null;
+            spawned = false;
+            Debug.Log("SpawnedObj = " + spawnedObject.name + " SpawnedBool = " + spawned);
+            if (mainCam == null) {
+                mainCam = Camera.main.transform;
+            }
+            if (!Input.gyro.enabled) {
+                Input.gyro.enabled = true;
+            }
+            Debug.Log("Gyro Input Status = " + Input.gyro.enabled);
             planeDetectionCanvas.SetActive(true);
             tapToPlace.SetActive(false);
         }
@@ -77,8 +85,6 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
-            if (MouseOverUILayerObject.IsPointerOverUIObject())
-                return;
 
             Vector3 acceleration = Input.acceleration;
             Debug.Log(acceleration);
@@ -106,19 +112,25 @@ namespace ViitorCloud.ARModelViewer {
                         if (spawnedObject == null) {
                             spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
                             spawnedObject.transform.localEulerAngles = Vector3.zero;
+                            Debug.Log("Spawned Obj Name = " + spawnedObject.name);
+                            Debug.Log("Spawned Obj Pos = " + spawnedObject.transform.localPosition);
+                            Debug.Log("Spawned Obj Rot = " + spawnedObject.transform.localRotation);
                             lowerButton.SetActive(true);
                             SpawnObjectData(spawnedObject);
                             spawned = true;
                         }
-                        placementUpdate.Invoke();
                     }
+                    placementUpdate.Invoke();
                 } else {
                     Debug.Log("Phone is not held straight.");
                     planeDetectionCanvas.SetActive(true);
                     tapToPlace.SetActive(false);
                 }
             } else if (spawned) {
-                Swipe();
+                if (Input.GetMouseButton(0)) {
+                    Swipe();
+                    Debug.Log("Swipe Started");
+                }
             }
         }
 
@@ -225,6 +237,7 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject.transform.position += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
                 }
             }
+            Debug.Log("Swipe Ended");
         }
 
         private bool LeftSwipe(Vector2 Swipe) {
