@@ -67,7 +67,7 @@ namespace ViitorCloud.ARModelViewer {
         private void Start() {
             spawnedObject = null;
             spawned = false;
-            Debug.Log("SpawnedObj = " + spawnedObject.name + " SpawnedBool = " + spawned);
+            Debug.Log("SpawnedBool = " + spawned);
             if (mainCam == null) {
                 mainCam = Camera.main.transform;
             }
@@ -99,7 +99,7 @@ namespace ViitorCloud.ARModelViewer {
 
                     tapToPlace.SetActive(true);
 
-                    if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
                         if (Input.touchCount > 0 && touchTempCount <= 0) {
                             touchTempCount++;
                             tapToPlace.SetActive(false);
