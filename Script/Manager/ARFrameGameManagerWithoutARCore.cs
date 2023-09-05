@@ -67,14 +67,12 @@ namespace ViitorCloud.ARModelViewer {
         private void Start() {
             spawnedObject = null;
             spawned = false;
-            Debug.Log("SpawnedBool = " + spawned);
             if (mainCam == null) {
                 mainCam = Camera.main.transform;
             }
             if (!Input.gyro.enabled) {
                 Input.gyro.enabled = true;
             }
-            Debug.Log("Gyro Input Status = " + Input.gyro.enabled);
             planeDetectionCanvas.SetActive(true);
             tapToPlace.SetActive(false);
         }
@@ -87,7 +85,6 @@ namespace ViitorCloud.ARModelViewer {
 #endif
 
             Vector3 acceleration = Input.acceleration;
-            Debug.Log(acceleration);
             // Check if phone is held straight
             float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
 
@@ -108,14 +105,11 @@ namespace ViitorCloud.ARModelViewer {
                         // Raycast hits are sorted by distance, so the first one
                         // will be the closest hit.
                         var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
-                        Debug.Log("New hit Position = " + newHitPosition);
                         if (spawnedObject == null) {
                             spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
                             spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
                             spawnedObject.transform.localEulerAngles = Vector3.zero;
-                            Debug.Log("Spawned Obj Name = " + spawnedObject.name);
-                            Debug.Log("Spawned Obj Pos = " + spawnedObject.transform.localPosition);
-                            Debug.Log("Spawned Obj Rot = " + spawnedObject.transform.localRotation);
+
                             lowerButton.SetActive(true);
                             SpawnObjectData(spawnedObject);
                             spawned = true;
