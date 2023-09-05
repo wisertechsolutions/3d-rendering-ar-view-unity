@@ -33,7 +33,7 @@ namespace ViitorCloud.ARModelViewer {
         [Header("TestMode")]
         public bool testMode;
 
-        private float fixedZPos = 5f;
+        private float fixedZPos = 15f;
 
         private float rotationValueOnZ = 5f;
         private float rotationAngle = 0f; // The current rotation angle of the object
