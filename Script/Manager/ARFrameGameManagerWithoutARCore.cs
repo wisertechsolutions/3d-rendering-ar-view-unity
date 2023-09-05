@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -177,7 +178,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void CallPreviousSceneOfNative() {
 #if UNITY_ANDROID
-            /*// Get the current activity
+            // Get the current activity
             IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
             IntPtr jactivity = AndroidJNI.GetStaticObjectField(jclass, AndroidJNI.GetStaticFieldID(jclass, "currentActivity", "Landroid/app/Activity;"));
 
@@ -187,9 +188,7 @@ namespace ViitorCloud.ARModelViewer {
 
             // Release references to avoid memory leaks
             AndroidJNI.DeleteLocalRef(jactivity);
-            AndroidJNI.DeleteLocalRef(jclass);*/
-
-            Application.Unload();
+            AndroidJNI.DeleteLocalRef(jclass);
 
 #elif UNITY_IOS
             Application.Unload();
