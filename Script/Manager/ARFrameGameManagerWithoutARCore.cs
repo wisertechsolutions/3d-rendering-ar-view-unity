@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,6 +27,7 @@ namespace ViitorCloud.ARModelViewer {
 
         [SerializeField] private Transform mainCam;
         [SerializeField] private GameObject planeDetectionCanvas;
+        [SerializeField] private GameObject waitingPanel;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
         private int colorTempCount = 0;
@@ -37,7 +39,7 @@ namespace ViitorCloud.ARModelViewer {
         private float fixedZPos = 15f;
 
         private float rotationValueOnZ = 5f;
-        private float rotationAngle = 0f; // The current rotation angle of the object
+        private bool waitingLoaderIsOn;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -66,6 +68,8 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
+            waitingLoaderIsOn = true;
+            StartCoroutine(WaitingPanelHandler());
             spawnedObject = null;
             spawned = false;
             if (mainCam == null) {
@@ -78,7 +82,16 @@ namespace ViitorCloud.ARModelViewer {
             tapToPlace.SetActive(false);
         }
 
+        private IEnumerator WaitingPanelHandler() {
+            yield return new WaitForSeconds(2);
+            waitingPanel.SetActive(false);
+            waitingLoaderIsOn = false;
+        }
+
         private void Update() {
+            if (waitingLoaderIsOn)
+                return;
+
 #if UNITY_EDITOR || UNITY_WIN
             if (Input.GetKeyDown(KeyCode.Z) && testMode) {
                 TestModeFunc();
@@ -90,7 +103,7 @@ namespace ViitorCloud.ARModelViewer {
             float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
 
             float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
-            if (!spawned) {
+            if (!spawned && !waitingLoaderIsOn) {
                 if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
                     Debug.Log("Phone is held properly straight.");
                     planeDetectionCanvas.SetActive(false);
@@ -166,6 +179,13 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnBackButtonPress() {
             CallPreviousSceneOfNative();
+        }
+
+        public void OnBackButtonReset() {
+            if (spawned) {
+                spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                spawnedObject.transform.localEulerAngles = Vector3.zero;
+            }
         }
 
         public void RotateOnZOnClickButtons(bool isRToL) {
