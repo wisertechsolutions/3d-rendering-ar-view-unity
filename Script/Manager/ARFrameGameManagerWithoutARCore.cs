@@ -145,8 +145,10 @@ namespace ViitorCloud.ARModelViewer {
 
         private void TestModeFunc() {
             planeDetectionCanvas.SetActive(false);
+            tapToPlace.SetActive(false);
 
             spawnedObject = Instantiate(m_PlacedPrefab, Vector3.zero, Quaternion.identity);
+            spawned = true;
             lowerButton.SetActive(true);
             SpawnObjectData(spawnedObject);
         }
