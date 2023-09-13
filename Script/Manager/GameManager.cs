@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.SceneManagement;
-using System;
 
 namespace ViitorCloud.ARModelViewer {
+
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
         public GameObject btnSpawnAR;
@@ -15,7 +15,7 @@ namespace ViitorCloud.ARModelViewer {
         public GameObject btnTouchOnOff;
         public GameObject panelScanFloor;
         public GameObject panelZoomInOut;
-        public GameObject panelTapToPlaceObject; 
+        public GameObject panelTapToPlaceObject;
 
         private void Awake() {
             instance = this;
@@ -25,17 +25,17 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void OnEnable() {
-            DataForAllScene.Instance.model3d.transform.SetParent(objParent.transform);            
+            DataForAllScene.Instance.model3d.transform.SetParent(objParent.transform);
             objParent.ResetPositionAndChildAlignment();
         }
 
-        void Update() {
+        private void Update() {
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 CallPreviousSceneOfNative();
             }
         }
 
-        void CallPreviousSceneOfNative() {
+        private void CallPreviousSceneOfNative() {
 #if UNITY_ANDROID
             // Get the current activity
             IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
@@ -49,7 +49,7 @@ namespace ViitorCloud.ARModelViewer {
             AndroidJNI.DeleteLocalRef(jactivity);
             AndroidJNI.DeleteLocalRef(jclass);
 #elif UNITY_IOS
-
+            Application.Unload();
 #endif
         }
 
@@ -64,17 +64,17 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             Debug.Log($"Current AR Session State:{ARSession.state}");
-//#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-//            if (ARSession.state != ARSessionState.Unsupported) {
-//                if (!PermissionManager.instance.IsCameraPermissionhied()) {
-//                    PermissionManager.instance.RequestCameraPermission();
-//                }
-//            } else if (ARSession.state != ARSessionState.Unsupported) {
-//                btnArOnOff.SetActive(false);
-//                btnSpawnAR.SetActive(false);
-//            }
-//#endif
-        }        
+            //#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+            //            if (ARSession.state != ARSessionState.Unsupported) {
+            //                if (!PermissionManager.instance.IsCameraPermissionhied()) {
+            //                    PermissionManager.instance.RequestCameraPermission();
+            //                }
+            //            } else if (ARSession.state != ARSessionState.Unsupported) {
+            //                btnArOnOff.SetActive(false);
+            //                btnSpawnAR.SetActive(false);
+            //            }
+            //#endif
+        }
 
         public void OnBackButtonPress() {
             CallPreviousSceneOfNative();
