@@ -1,8 +1,9 @@
+using System.Linq;
 using UnityEngine;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
-using System.Linq;
 
 namespace ViitorCloud.ARModelViewer {
+
     public class Rotate3dGameObject : MonoBehaviour {
         private float initialFingersDistance;
         private Vector3 initialScale;
@@ -16,13 +17,13 @@ namespace ViitorCloud.ARModelViewer {
         private float _startingPositionX;
         private float _startingPositionY;
         public BoundsRecalculations.SideSelect sideSelect;
-        public Vector2 lastPos;       
+        public Vector2 lastPos;
 
         private void Awake() {
             originalSize = transform.localScale;
         }
 
-        private void Update() {  
+        private void Update() {
             if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
@@ -33,8 +34,9 @@ namespace ViitorCloud.ARModelViewer {
 
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved && Vector2.Distance(lastPos, touch.delta) > Constant.minDistanceForTouch) {
                         if (ifAR) {
-                            transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeedAR, 0f);
+                            //transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeedAR, 0f);
                             //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
+                            transform.Rotate(touch.delta.y * Constant.rotateSpeedAR, -touch.delta.x * Constant.rotateSpeed, 0f);//Divya
                         } else {
                             if (_startingPositionX > touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
                                 transform.RotateAroundLocal(Vector3.up, Constant.rotateSpeed * Time.deltaTime);
@@ -61,7 +63,6 @@ namespace ViitorCloud.ARModelViewer {
             if (EnhancedTouch.Touch.activeFingers.Count == 2) {
                 if (transform.localScale.x > minSize && transform.localScale.x < maxSize) {
                     foreach (var (t1, t2) in from EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches let t1 = EnhancedTouch.Touch.activeTouches[0] let t2 = EnhancedTouch.Touch.activeTouches[1] select (t1, t2)) {
-
                         if (t1.phase == UnityEngine.InputSystem.TouchPhase.Began || t2.phase == UnityEngine.InputSystem.TouchPhase.Began) {
                             initialFingersDistance = Vector2.Distance(t1.screenPosition, t2.screenPosition);
                             initialScale = transform.localScale;
@@ -97,7 +98,7 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             //float size = (4 / bounds.size.y) * originalSize.x;
-            //transform.localScale = new Vector3(size, size, size);   
+            //transform.localScale = new Vector3(size, size, size);
         }
 
         private Bounds GetCombinedBounds(GameObject parent) {

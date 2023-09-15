@@ -49,6 +49,7 @@ namespace ViitorCloud.ARModelViewer {
                     return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
                 } else {
+                    // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
                     //return "https://archive.org/download/paravti/paravti.glb";
                     //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
                     return "https://cdn-luma.com/00d536b293be5d40f1a76697fc239dd6b5e6fb6ab762757a4802fbe1a70f6089/Turtle_with_Lotus_textured_mesh_glb.glb";
@@ -63,8 +64,12 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             if (ifTesting) {
-                DownloadImageCall(Url);
-                //AfterGetURL(Url);
+                if (uRL_Type == URL_type.Image) {
+                    DownloadImageCall(Url);
+                } else if (uRL_Type == URL_type.Gltf) {
+                    DataForAllScene.Instance.isAR = true;
+                    AfterGetURL(Url);
+                }
             }
             //GetURL();
         }
