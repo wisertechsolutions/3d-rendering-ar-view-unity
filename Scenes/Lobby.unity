@@ -1225,7 +1225,7 @@ MonoBehaviour:
   panelDark: {fileID: 1443492273}
   txtLoading: {fileID: 1932444926}
   uIManager: {fileID: 1317539535}
-  ifTesting: 1
+  ifTesting: 0
 --- !u!4 &1276698758
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1607307149
 RectTransform:
   m_ObjectHideFlags: 0
