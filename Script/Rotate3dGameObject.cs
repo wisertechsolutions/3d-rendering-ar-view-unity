@@ -24,7 +24,8 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Update() {
-            if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) {
+            // if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) { //Divya
+            if (!GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 2) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
                         _startingPositionX = touch.delta.x;

@@ -5,12 +5,14 @@ using UnityEngine.XR.ARSubsystems;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace ViitorCloud.ARModelViewer {
+
     [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
     public class PlaceObject : MonoBehaviour {
         [SerializeField] private ARRaycastManager arRaycastManager;
         [SerializeField] private ARPlaneManager arPlaneManager;
         [SerializeField] private List<ARRaycastHit> hits = new List<ARRaycastHit>();
         [SerializeField] private bool zoomAnimationDone;
+        private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
         public bool IsDone {
             get {
@@ -21,6 +23,7 @@ namespace ViitorCloud.ARModelViewer {
                 CheckIsArModelPlaced();
             }
         }
+
         [SerializeField]
         private bool m_isDone;
 
@@ -42,11 +45,28 @@ namespace ViitorCloud.ARModelViewer {
 
         private void CheckIsArModelPlaced() {
             if (GameManager.instance.arMode) {
-                GameManager.instance.btnTouchOnOff.SetActive(IsDone);
+                //GameManager.instance.btnTouchOnOff.SetActive(IsDone);
                 GameManager.instance.btnSpawnAR.SetActive(IsDone);
             } else {
                 GameManager.instance.btnTouchOnOff.SetActive(true);
                 GameManager.instance.btnSpawnAR.SetActive(false);
+            }
+        }
+
+        private void Update() {
+            if (Input.touchCount > 1) {
+                return;
+            }
+
+            if (!MouseOverUILayerObject.IsPointerOverUIObject() && IsDone && Input.touchCount == 1) {
+                Vector2 touchPosition = Input.GetTouch(0).position;
+
+                if (arRaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon)) {
+                    var hitPose = s_Hits[0].pose;
+                    GameManager.instance.objParent.transform.SetPositionAndRotation(hitPose.position, GameManager.instance.objParent.transform.rotation);
+
+                    // GameManager.instance.objParent.originalRotation = hitPose.rotation;
+                }
             }
         }
 
@@ -56,7 +76,6 @@ namespace ViitorCloud.ARModelViewer {
             }
 
             if (arRaycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon)) {
-
                 if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                     foreach (ARRaycastHit hit in hits) {
                         GameManager.instance.objParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
@@ -72,7 +91,7 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
-        void CheckForTrackables() {
+        private void CheckForTrackables() {
             GameManager.instance.panelScanFloor.SetActive(!(arPlaneManager.trackables.count > 0));
             if (arPlaneManager.trackables.count > 0) {
                 GameManager.instance.panelTapToPlaceObject.SetActive(true);
