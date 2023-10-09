@@ -55,7 +55,6 @@ namespace ViitorCloud.ARModelViewer {
         [Header("Distance")]
         [SerializeField] private bool raycastLogic;
 
-        private RaycastHit hit;
         private float maRayDistance = 100f;
 
         /// <summary>
@@ -129,20 +128,21 @@ namespace ViitorCloud.ARModelViewer {
             if (raycastLogic) {
                 // RayCast Logic for Distance Calculations
                 Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, maRayDistance)) {
-                    if (hit.collider.gameObject.GetComponent<ARPlane>()) {
+                    Debug.Log("Hit object name: " + hit.collider.gameObject.name);
+                    if (hit.collider.gameObject.name.Contains("ARPlane")) {
                         string targetObjectName = hit.collider.gameObject.name;
-                        Debug.Log("Hit object name: " + targetObjectName);
+                        //Debug.Log("Hit object name: " + targetObjectName);
                         distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
-                    } else {
-                        distance = 0f;
-                    }
+                    Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
+                    } 
                 } else {
+                    Debug.Log("else distance");
                     distance = 0f;
                 }
-                DistanceChecker();
-                Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
                 Debug.Log($" Distance with RayCast is - {distance}");
+                DistanceChecker();
             }
 
             if (isDistanceMaintain) {
@@ -232,6 +232,7 @@ namespace ViitorCloud.ARModelViewer {
             } else {
                 isDistanceMaintain = false;
             }
+            
             Debug.Log("Distance Bool: " + isDistanceMaintain);
         }
 
