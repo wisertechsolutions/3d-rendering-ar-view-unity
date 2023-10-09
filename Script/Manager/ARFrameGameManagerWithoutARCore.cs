@@ -118,6 +118,19 @@ namespace ViitorCloud.ARModelViewer {
                 TestModeFunc();
             }
 #endif
+
+            // RayCast Logic for Distance Calculations
+            /*float maxDistance = 100f;
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, maxDistance)) {
+                if (hit.collider.gameObject.GetComponent<ARPlane>()) {
+                    GameObject targetObject = hit.collider.gameObject;
+                    string targetObjectName = targetObject.name;
+                    Debug.Log("Hit object name: " + targetObjectName);
+                }
+            }*/
+
             if (isDistanceMaintain) {
                 errorPanel.SetActive(false);
                 Vector3 acceleration = Input.acceleration;
