@@ -44,7 +44,6 @@ namespace ViitorCloud.ARModelViewer {
         private float rotationValueOnZ = 5f;
         private bool waitingLoaderIsOn;
 
-        [Header("Distance")]
         private bool isDistanceMaintain;
 
         private bool isDistanceMaintainUpdateSpawned;
@@ -52,6 +51,12 @@ namespace ViitorCloud.ARModelViewer {
         private float distance;
         private float minDistance = 0f;
         private Transform planeSuccessTransform;
+
+        [Header("Distance")]
+        [SerializeField] private bool raycastLogic;
+
+        private RaycastHit hit;
+        private float maRayDistance = 100f;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -81,7 +86,9 @@ namespace ViitorCloud.ARModelViewer {
 
         private void OnEnable() {
             // InvokeRepeating(nameof(ARPlaneDistanceTrackingUpdate), 0f, 1f);
-            Invoke(nameof(ARPlaneDistanceTrackingUpdate), 1f);
+            if (!raycastLogic) {
+                Invoke(nameof(ARPlaneDistanceTrackingUpdate), 1f);
+            }
         }
 
         private void OnDisable() {
@@ -119,17 +126,24 @@ namespace ViitorCloud.ARModelViewer {
             }
 #endif
 
-            // RayCast Logic for Distance Calculations
-            /*float maxDistance = 100f;
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxDistance)) {
-                if (hit.collider.gameObject.GetComponent<ARPlane>()) {
-                    GameObject targetObject = hit.collider.gameObject;
-                    string targetObjectName = targetObject.name;
-                    Debug.Log("Hit object name: " + targetObjectName);
+            if (raycastLogic) {
+                // RayCast Logic for Distance Calculations
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                if (Physics.Raycast(ray, out hit, maRayDistance)) {
+                    if (hit.collider.gameObject.GetComponent<ARPlane>()) {
+                        string targetObjectName = hit.collider.gameObject.name;
+                        Debug.Log("Hit object name: " + targetObjectName);
+                        distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
+                    } else {
+                        distance = 0f;
+                    }
+                } else {
+                    distance = 0f;
                 }
-            }*/
+                DistanceChecker();
+                Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
+                Debug.Log($" Distance with RayCast is - {distance}");
+            }
 
             if (isDistanceMaintain) {
                 errorPanel.SetActive(false);
@@ -200,23 +214,26 @@ namespace ViitorCloud.ARModelViewer {
                 if (arPlane.trackingState == TrackingState.Tracking) {
                     distance = Vector3.Distance(Camera.main.transform.position, arPlane.transform.position);
                     Debug.Log("Distance: " + distance);
-                    if (distance >= distanceToMaintain) {
-                        isDistanceMaintain = true;
-                        planeSuccessTransform = arPlane.transform;
-
-                        // planeManager.enabled = false; //Divya Plane Distance Optimization
-                        // Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.5f); //Divya Plane Distance Optimization
-                        // CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate)); //Divya Plane Distance Optimization
-
-                    } else {
-                        isDistanceMaintain = false;
-                    }
-                    Debug.Log("Distance Bool: " + isDistanceMaintain);
+                    DistanceChecker();
                 }
             }
             Invoke(nameof(ARPlaneDistanceTrackingUpdate), 0.5f);
         }
 
+        private void DistanceChecker() {
+            if (distance >= distanceToMaintain) {
+                isDistanceMaintain = true;
+
+                //planeSuccessTransform = arPlane.transform;
+
+                // planeManager.enabled = false; //Divya Plane Distance Optimization
+                // Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.5f); //Divya Plane Distance Optimization
+                // CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate)); //Divya Plane Distance Optimization
+            } else {
+                isDistanceMaintain = false;
+            }
+            Debug.Log("Distance Bool: " + isDistanceMaintain);
+        }
 
         //Divya Plane Distance Optimization
         /*private void ARPlaneDistanceTrackingAfterOneUpdate() {

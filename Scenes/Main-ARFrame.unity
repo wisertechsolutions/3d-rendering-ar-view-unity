@@ -2197,6 +2197,7 @@ MonoBehaviour:
   tapToPlace: {fileID: 600269416}
   lowerButton: {fileID: 1833263347}
   testMode: 0
+  raycastLogic: 1
   swipeValue: 7
 --- !u!1 &1479377873
 GameObject:
