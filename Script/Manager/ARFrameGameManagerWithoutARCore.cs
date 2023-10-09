@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
@@ -42,11 +43,15 @@ namespace ViitorCloud.ARModelViewer {
 
         private float rotationValueOnZ = 5f;
         private bool waitingLoaderIsOn;
+
+        [Header("Distance")]
         private bool isDistanceMaintain;
+
         private bool isDistanceMaintainUpdateSpawned;
         private float distanceToMaintain = 1f; //3.2Feet
         private float distance;
         private float minDistance = 0f;
+        private Transform planeSuccessTransform;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -180,10 +185,16 @@ namespace ViitorCloud.ARModelViewer {
         private void ARPlaneDistanceTrackingUpdate() {
             foreach (ARPlane arPlane in planeManager.trackables) {
                 if (arPlane.trackingState == TrackingState.Tracking) {
-                    distance = Vector3.Distance(this.transform.position, arPlane.transform.position);
+                    distance = Vector3.Distance(Camera.main.transform.position, arPlane.transform.position);
                     Debug.Log("Distance: " + distance);
                     if (distance >= distanceToMaintain) {
                         isDistanceMaintain = true;
+                        planeSuccessTransform = arPlane.transform;
+
+                        // planeManager.enabled = false; //Divya Plane Distance Optimization
+                        // Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.5f); //Divya Plane Distance Optimization
+                        // CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate)); //Divya Plane Distance Optimization
+
                     } else {
                         isDistanceMaintain = false;
                     }
@@ -192,6 +203,21 @@ namespace ViitorCloud.ARModelViewer {
             }
             Invoke(nameof(ARPlaneDistanceTrackingUpdate), 0.5f);
         }
+
+
+        //Divya Plane Distance Optimization
+        /*private void ARPlaneDistanceTrackingAfterOneUpdate() {
+            Debug.Log("ARPlaneDistanceTrackingAfterOneUpdate - " + planeSuccessTransform.position);
+            distance = Vector3.Distance(Camera.main.transform.position, planeSuccessTransform.position);
+            Debug.Log("Distance: " + distance);
+            if (distance >= distanceToMaintain) {
+                isDistanceMaintain = true;
+            } else {
+                isDistanceMaintain = false;
+            }
+            Debug.Log("Distance Bool: " + isDistanceMaintain);
+            Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.1f);
+        }*/
 
         private float CheckMinDistance(float distanceForCheck) {
             if (distanceForCheck <= minDistance) {
