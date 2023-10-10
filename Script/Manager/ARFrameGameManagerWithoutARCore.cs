@@ -47,7 +47,7 @@ namespace ViitorCloud.ARModelViewer {
         private bool isDistanceMaintain;
 
         private bool isDistanceMaintainUpdateSpawned;
-        private float distanceToMaintain = 1f; //3.2Feet
+        private float distanceToMaintain = 1.5f; //5Feet
         private float distance;
         private float minDistance = 0f;
         private Transform planeSuccessTransform;
@@ -135,8 +135,8 @@ namespace ViitorCloud.ARModelViewer {
                         string targetObjectName = hit.collider.gameObject.name;
                         //Debug.Log("Hit object name: " + targetObjectName);
                         distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
-                    Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
-                    } 
+                        Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
+                    }
                 } else {
                     Debug.Log("else distance");
                     distance = 0f;
@@ -232,7 +232,7 @@ namespace ViitorCloud.ARModelViewer {
             } else {
                 isDistanceMaintain = false;
             }
-            
+
             Debug.Log("Distance Bool: " + isDistanceMaintain);
         }
 
