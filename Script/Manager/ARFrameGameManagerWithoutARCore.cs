@@ -44,9 +44,6 @@ namespace ViitorCloud.ARModelViewer {
         private float rotationValueOnZ = 5f;
         private bool waitingLoaderIsOn;
 
-        private bool isDistanceMaintain;
-
-        private bool isDistanceMaintainUpdateSpawned;
         private float distanceToMaintain = 1.5f; //5Feet
         private float distance;
         private float minDistance = 0f;
@@ -136,73 +133,56 @@ namespace ViitorCloud.ARModelViewer {
                         //Debug.Log("Hit object name: " + targetObjectName);
                         distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
                         Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
+                        Debug.Log($" Distance with RayCast is - {distance}");
+                        DistanceChecker();
                     }
                 } else {
                     Debug.Log("else distance");
-                    distance = 0f;
+                    errorPanel.SetActive(false);
                 }
-                Debug.Log($" Distance with RayCast is - {distance}");
-                DistanceChecker();
             }
 
-            if (isDistanceMaintain) {
-                errorPanel.SetActive(false);
-                Vector3 acceleration = Input.acceleration;
-                // Check if phone is held straight
-                float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
+            Vector3 acceleration = Input.acceleration;
+            // Check if phone is held straight
+            float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
 
-                float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
-                if (!spawned && !waitingLoaderIsOn) {
-                    if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
-                        Debug.Log("Phone is held properly straight.");
-                        planeDetectionCanvas.SetActive(false);
+            float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
+            if (!spawned && !waitingLoaderIsOn) {
+                if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
+                    Debug.Log("Phone is held properly straight.");
+                    planeDetectionCanvas.SetActive(false);
 
-                        tapToPlace.SetActive(true);
+                    tapToPlace.SetActive(true);
 
-                        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-                            if (Input.touchCount > 0 && touchTempCount <= 0) {
-                                touchTempCount++;
-                                tapToPlace.SetActive(false);
-                            }
-                            var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                            // Raycast hits are sorted by distance, so the first one
-                            // will be the closest hit.
-                            var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
-                            if (spawnedObject == null) {
-                                spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
-                                spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
-                                spawnedObject.transform.localEulerAngles = Vector3.zero;
-
-                                lowerButton.SetActive(true);
-                                SpawnObjectData(spawnedObject);
-                                spawned = true;
-                            }
+                    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+                        if (Input.touchCount > 0 && touchTempCount <= 0) {
+                            touchTempCount++;
+                            tapToPlace.SetActive(false);
                         }
-                        placementUpdate.Invoke();
-                    } else {
-                        Debug.Log("Phone is not held straight.");
-                        planeDetectionCanvas.SetActive(true);
-                        tapToPlace.SetActive(false);
-                    }
-                } else if (spawned) {
-                    if (isDistanceMaintainUpdateSpawned) {
-                        spawnedObject.SetActive(true);
-                        OnBackButtonReset();
-                        isDistanceMaintainUpdateSpawned = false;
-                    } else {
-                        if (Input.GetMouseButton(0)) {
-                            Swipe();
-                            Debug.Log("Swipe Started");
+                        var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        // Raycast hits are sorted by distance, so the first one
+                        // will be the closest hit.
+                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                        if (spawnedObject == null) {
+                            spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
+                            spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                            spawnedObject.transform.localEulerAngles = Vector3.zero;
+
+                            lowerButton.SetActive(true);
+                            SpawnObjectData(spawnedObject);
+                            spawned = true;
                         }
                     }
+                    placementUpdate.Invoke();
+                } else {
+                    Debug.Log("Phone is not held straight.");
+                    planeDetectionCanvas.SetActive(true);
+                    tapToPlace.SetActive(false);
                 }
-            } else {
-                isDistanceMaintainUpdateSpawned = true;
-                errorPanel.SetActive(true);
-                planeDetectionCanvas.SetActive(false);
-                tapToPlace.SetActive(false);
-                if (spawned) {
-                    spawnedObject.SetActive(false);
+            } else if (spawned) {
+                if (Input.GetMouseButton(0)) {
+                    Swipe();
+                    Debug.Log("Swipe Started");
                 }
             }
         }
@@ -222,7 +202,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void DistanceChecker() {
             if (distance >= distanceToMaintain) {
-                isDistanceMaintain = true;
+                errorPanel.SetActive(false);
 
                 //planeSuccessTransform = arPlane.transform;
 
@@ -230,10 +210,8 @@ namespace ViitorCloud.ARModelViewer {
                 // Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.5f); //Divya Plane Distance Optimization
                 // CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate)); //Divya Plane Distance Optimization
             } else {
-                isDistanceMaintain = false;
+                errorPanel.SetActive(true);
             }
-
-            Debug.Log("Distance Bool: " + isDistanceMaintain);
         }
 
         //Divya Plane Distance Optimization
