@@ -1,8 +1,7 @@
-using System.IO;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Threading.Tasks;
 
 namespace ViitorCloud.ARModelViewer {
 
@@ -23,8 +22,8 @@ namespace ViitorCloud.ARModelViewer {
                 if (request.result != UnityWebRequest.Result.Success) {
                     OnDownloadFail?.Invoke(request.error);
                 } else {
-                    //byte[] data = request.downloadHandler.data;
-                    OnDownloadComplete?.Invoke(request.downloadHandler.data);
+                    byte[] data = request.downloadHandler.data;
+                    OnDownloadComplete?.Invoke(data);
                 }
             }
         }

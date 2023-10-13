@@ -1,3 +1,4 @@
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,8 +49,9 @@ namespace ViitorCloud.ARModelViewer {
                     // return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
                     // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
-                    // return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya
-                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
+                    //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
+                    return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
+                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
                 } else {
@@ -162,9 +164,13 @@ namespace ViitorCloud.ARModelViewer {
                 string progressText = "100%";
                 txtLoading.text = progressText;
 
-                Sprite downloadedImage = GetByteToSprite(response);
-                DataForAllScene.Instance.imageForFrame = downloadedImage;
+                //To Save New Updated Image
+                string name = Path.GetExtension(imageURL);
+                string path = Application.persistentDataPath + "/tempImage" + name;
+                File.WriteAllBytes(path, response);
 
+                Sprite downloadedImage = GetByteToSprite(File.ReadAllBytes(path));
+                DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
                 Debug.LogError(errorMessage);
