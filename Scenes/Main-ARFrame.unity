@@ -2140,7 +2140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 3902910221274817989, guid: 0f3de7d6e93a32b4abbb4fc1ddc73e8a, type: 3}
+  m_PlanePrefab: {fileID: 1585201990951412, guid: 80313e646d3945a498378a691b22e8a9, type: 3}
   m_DetectionMode: 2
 --- !u!114 &1412776409
 MonoBehaviour:
@@ -2198,7 +2198,6 @@ MonoBehaviour:
   lowerButton: {fileID: 1833263347}
   testMode: 0
   raycastLogic: 1
-  warningText: {fileID: 6497541978488133365}
   swipeValue: 7
 --- !u!1 &1479377873
 GameObject:
