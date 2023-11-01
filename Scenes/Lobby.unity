@@ -1220,12 +1220,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fae7862df1058843acce49e2d2279d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uRL_Type: 2
+  uRL_Type: 1
   panelLoader: {fileID: 849327803}
   panelDark: {fileID: 1443492273}
   txtLoading: {fileID: 1932444926}
   uIManager: {fileID: 1317539535}
-  ifTesting: 0
+  ifTesting: 1
 --- !u!4 &1276698758
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1607307149
 RectTransform:
   m_ObjectHideFlags: 0

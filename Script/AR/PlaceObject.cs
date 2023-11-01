@@ -27,6 +27,8 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField]
         private bool m_isDone;
 
+        private bool isReadyToMove;
+
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
@@ -47,6 +49,7 @@ namespace ViitorCloud.ARModelViewer {
             if (GameManager.instance.arMode) {
                 //GameManager.instance.btnTouchOnOff.SetActive(IsDone);
                 GameManager.instance.btnSpawnAR.SetActive(IsDone);
+                GameManager.instance.btnToggles.SetActive(IsDone);
             } else {
                 GameManager.instance.btnTouchOnOff.SetActive(true);
                 GameManager.instance.btnSpawnAR.SetActive(false);
@@ -54,11 +57,14 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Update() {
-            if (Input.touchCount > 1) {
+            if (isReadyToMove && Input.touchCount > 1) {
+                isReadyToMove = false;
                 return;
+            } else if (!isReadyToMove && Input.touchCount == 0) {
+                isReadyToMove = true;
             }
 
-            if (!MouseOverUILayerObject.IsPointerOverUIObject() && IsDone && Input.touchCount == 1) {
+            if (isReadyToMove && !MouseOverUILayerObject.IsPointerOverUIObject() && IsDone && Input.touchCount == 1) {
                 Vector2 touchPosition = Input.GetTouch(0).position;
 
                 if (arRaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon)) {
@@ -79,7 +85,8 @@ namespace ViitorCloud.ARModelViewer {
                 if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                     foreach (ARRaycastHit hit in hits) {
                         GameManager.instance.objParent.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
-                        GameManager.instance.objParent.originalRotation = hit.pose.rotation;
+                        //GameManager.instance.objParent.originalRotation = hit.pose.rotation;
+                        GameManager.instance.objParent.originalRotation = Quaternion.identity;
                         IsDone = true;
                         GameManager.instance.panelTapToPlaceObject.SetActive(false);
                         if (!zoomAnimationDone) {

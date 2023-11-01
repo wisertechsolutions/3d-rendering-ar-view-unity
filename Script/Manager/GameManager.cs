@@ -9,6 +9,7 @@ namespace ViitorCloud.ARModelViewer {
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
         public GameObject btnSpawnAR;
+        public GameObject btnToggles;
         public Rotate3dGameObject objParent;
         public bool touchStart;
         public bool arMode;

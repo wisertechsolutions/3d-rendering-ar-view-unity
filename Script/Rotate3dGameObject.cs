@@ -19,13 +19,24 @@ namespace ViitorCloud.ARModelViewer {
         public BoundsRecalculations.SideSelect sideSelect;
         public Vector2 lastPos;
 
+        private bool isScallingOn = true;
+        private bool isRotationOn = false;
+
         private void Awake() {
             originalSize = transform.localScale;
         }
 
+        public void OnToggleSetRotationBool(bool value) {
+            isRotationOn = value;
+        }
+
+        public void OnToggleSetScallingBool(bool value) {
+            isScallingOn = value;
+        }
+
         private void Update() {
             // if (GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 1) { //Divya
-            if (!GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 2) {
+            if (isRotationOn && !GameManager.instance.touchStart && EnhancedTouch.Touch.activeFingers.Count == 2) {
                 foreach (EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches) {
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
                         _startingPositionX = touch.delta.x;
@@ -61,7 +72,7 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
 
-            if (EnhancedTouch.Touch.activeFingers.Count == 2) {
+            if (isScallingOn && EnhancedTouch.Touch.activeFingers.Count == 2) {
                 if (transform.localScale.x > minSize && transform.localScale.x < maxSize) {
                     foreach (var (t1, t2) in from EnhancedTouch.Touch touch in EnhancedTouch.Touch.activeTouches let t1 = EnhancedTouch.Touch.activeTouches[0] let t2 = EnhancedTouch.Touch.activeTouches[1] select (t1, t2)) {
                         if (t1.phase == UnityEngine.InputSystem.TouchPhase.Began || t2.phase == UnityEngine.InputSystem.TouchPhase.Began) {
