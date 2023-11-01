@@ -29,6 +29,10 @@ namespace ViitorCloud.ARModelViewer {
 
         private bool isReadyToMove;
 
+        private bool isRotating = false;
+
+        private Vector2 touchPosition;
+
         private void Awake() {
             arRaycastManager = GetComponent<ARRaycastManager>();
             arPlaneManager = GetComponent<ARPlaneManager>();
@@ -43,6 +47,10 @@ namespace ViitorCloud.ARModelViewer {
         private void OnDisable() {
             EnhancedTouch.Touch.onFingerDown -= FingerDown;
             CancelInvoke(nameof(CheckForTrackables));
+        }
+
+        public void OnToggleSetRotationBool(bool value) {
+            isRotating = value;
         }
 
         private void CheckIsArModelPlaced() {
@@ -64,14 +72,16 @@ namespace ViitorCloud.ARModelViewer {
                 isReadyToMove = true;
             }
 
-            if (isReadyToMove && !MouseOverUILayerObject.IsPointerOverUIObject() && IsDone && Input.touchCount == 1) {
-                Vector2 touchPosition = Input.GetTouch(0).position;
+            if (!isRotating) {
+                if (isReadyToMove && !MouseOverUILayerObject.IsPointerOverUIObject() && IsDone && Input.touchCount == 1) {
+                    touchPosition = Input.GetTouch(0).position;
 
-                if (arRaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon)) {
-                    var hitPose = s_Hits[0].pose;
-                    GameManager.instance.objParent.transform.SetPositionAndRotation(hitPose.position, GameManager.instance.objParent.transform.rotation);
+                    if (arRaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon)) {
+                        var hitPose = s_Hits[0].pose;
+                        GameManager.instance.objParent.transform.SetPositionAndRotation(hitPose.position, GameManager.instance.objParent.transform.rotation);
 
-                    // GameManager.instance.objParent.originalRotation = hitPose.rotation;
+                        // GameManager.instance.objParent.originalRotation = hitPose.rotation;
+                    }
                 }
             }
         }
