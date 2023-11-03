@@ -20,9 +20,18 @@ namespace ViitorCloud.ARModelViewer {
         public Vector2 lastPos;
 
         private bool isRotationOn = false;
+        private float rotationSpeed;
 
         private void Awake() {
             originalSize = transform.localScale;
+        }
+
+        private void Start() {
+            if (ifAR) {
+                rotationSpeed = Constant.rotateSpeedAR;
+            } else {
+                rotationSpeed = Constant.rotateSpeed;
+            }
         }
 
         public void OnToggleSetRotationBool(bool value) {
@@ -40,22 +49,21 @@ namespace ViitorCloud.ARModelViewer {
                     }
 
                     if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved && Vector2.Distance(lastPos, touch.delta) > Constant.minDistanceForTouch) {
-                        if (ifAR) {
-                            //transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeedAR, 0f);
-                            //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
-                            transform.Rotate(touch.delta.y * Constant.rotateSpeedAR, -touch.delta.x * Constant.rotateSpeed, 0f);//Divya
-                        } else {
-                            if (_startingPositionX > touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
-                                transform.RotateAroundLocal(Vector3.up, Constant.rotateSpeed * Time.deltaTime);
-                            } else if (_startingPositionX < touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
-                                transform.RotateAroundLocal(Vector3.up, -Constant.rotateSpeed * Time.deltaTime);
-                            }
+                        //transform.Rotate(0f, -touch.delta.x * Constant.rotateSpeedAR, 0f);
+                        //transform.Rotate(touch.delta.y * Constant.rotateSpeed, -touch.delta.x * Constant.rotateSpeed, 0f);
 
-                            if (_startingPositionY > touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
-                                transform.RotateAroundLocal(Vector3.left, Constant.rotateSpeed * Time.deltaTime);
-                            } else if (_startingPositionY < touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
-                                transform.RotateAroundLocal(Vector3.left, -Constant.rotateSpeed * Time.deltaTime);
-                            }
+                        //transform.Rotate(touch.delta.y * Constant.rotateSpeedAR, -touch.delta.x * Constant.rotateSpeed, 0f);//Divya
+
+                        if (_startingPositionX > touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.up, rotationSpeed * Time.deltaTime);
+                        } else if (_startingPositionX < touch.delta.x && Mathf.Abs(lastPos.x - touch.delta.x) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.up, -rotationSpeed * Time.deltaTime);
+                        }
+
+                        if (_startingPositionY > touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.left, rotationSpeed * Time.deltaTime);
+                        } else if (_startingPositionY < touch.delta.y && Mathf.Abs(lastPos.y - touch.delta.y) > Constant.minDistanceForRotation) {
+                            transform.RotateAroundLocal(Vector3.left, -rotationSpeed * Time.deltaTime);
                         }
                     }
 
