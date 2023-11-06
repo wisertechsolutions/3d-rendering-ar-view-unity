@@ -19,7 +19,14 @@ MonoBehaviour:
     GameID: 3D Rendering & AR View
     repoPath: https://github.com/viitoradmin/3d-rendering-ar-view-unity.git
     Scenes:
-    - Scenes/main.unity
+    - active: 1
+      scene: {fileID: 102900000, guid: 2a5466b89621e0e49871992a0eba0987, type: 3}
+    - active: 1
+      scene: {fileID: 102900000, guid: ceec722470d4cb4459d053e114e4c6d8, type: 3}
+    - active: 1
+      scene: {fileID: 102900000, guid: bf3d0b2b6c2e5ee4b9ca520ecf396122, type: 3}
+    - active: 1
+      scene: {fileID: 102900000, guid: 125af9bd653b8d44e828a2e1cb873134, type: 3}
     PhotonID: 
     AgoraID: 
     ProjectSettings:
@@ -73,7 +80,7 @@ MonoBehaviour:
       SplashScreenLogoBG: {fileID: 0}
       SpashBGBlur: 1
       Portrait: 1
-      PortraitUpsideDown: 1
+      PortraitUpsideDown: 0
       LandscapeLeft: 0
       LandscapeRight: 0
     Packages:
@@ -82,4 +89,5 @@ MonoBehaviour:
       URP: 0
       HDRP: 0
       Addressables: 0
+      DoNotForceChangePipeline: 0
       rendringPipelineAsset: {fileID: 0}
