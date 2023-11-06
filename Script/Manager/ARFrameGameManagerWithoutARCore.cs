@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace ViitorCloud.ARModelViewer {
 
@@ -12,7 +14,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private ARPlaneManager planeManager;
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
-        private ARRaycastManager m_RaycastManager;
+        private ARRaycastManager arRaycastManager;
 
         [SerializeField] private Color[] colorFrame;
 
@@ -28,6 +30,7 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private Transform mainCam;
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject waitingPanel;
+        [SerializeField] private GameObject errorPanel;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
         private int colorTempCount = 0;
@@ -36,10 +39,15 @@ namespace ViitorCloud.ARModelViewer {
         [Header("TestMode")]
         public bool testMode;
 
-        private float fixedZPos = 15f;
-
-        private float rotationValueOnZ = 5f;
         private bool waitingLoaderIsOn;
+        private float distance;
+        private float minDistance = 0f;
+        private Transform planeSuccessTransform;
+
+        [Header("Distance")]
+        [SerializeField] private bool raycastLogic;
+
+        private float maRayDistance = 100f;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -61,10 +69,21 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Awake() {
-            m_RaycastManager = GetComponent<ARRaycastManager>();
+            arRaycastManager = GetComponent<ARRaycastManager>();
 
             if (placementUpdate == null)
                 placementUpdate = new UnityEvent();
+        }
+
+        private void OnEnable() {
+            // InvokeRepeating(nameof(ARPlaneDistanceTrackingUpdate), 0f, 1f);
+            if (!raycastLogic) {
+                Invoke(nameof(ARPlaneDistanceTrackingUpdate), 1f);
+            }
+        }
+
+        private void OnDisable() {
+            CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate));
         }
 
         private void Start() {
@@ -98,6 +117,26 @@ namespace ViitorCloud.ARModelViewer {
             }
 #endif
 
+            if (raycastLogic) {
+                // RayCast Logic for Distance Calculations
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, maRayDistance)) {
+                    Debug.Log("Hit object name: " + hit.collider.gameObject.name);
+                    if (hit.collider.gameObject.name.Contains("ARPlane")) {
+                        string targetObjectName = hit.collider.gameObject.name;
+                        //Debug.Log("Hit object name: " + targetObjectName);
+                        distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
+                        Debug.Log($" RayCast Hit is - {hit.collider.gameObject}");
+                        Debug.Log($" Distance with RayCast is - {distance}");
+                        DistanceChecker();
+                    }
+                } else {
+                    Debug.Log("else distance");
+                    errorPanel.SetActive(false);
+                }
+            }
+
             Vector3 acceleration = Input.acceleration;
             // Check if phone is held straight
             float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
@@ -118,10 +157,10 @@ namespace ViitorCloud.ARModelViewer {
                         var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                         // Raycast hits are sorted by distance, so the first one
                         // will be the closest hit.
-                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, Constant.fixedZPos);
                         if (spawnedObject == null) {
                             spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
-                            spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                            spawnedObject.transform.localPosition = new Vector3(0, 0, Constant.fixedZPos);
                             spawnedObject.transform.localEulerAngles = Vector3.zero;
 
                             lowerButton.SetActive(true);
@@ -143,9 +182,61 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
+        #region ARPlaneDistanceTracking
+
+        private void ARPlaneDistanceTrackingUpdate() {
+            foreach (ARPlane arPlane in planeManager.trackables) {
+                if (arPlane.trackingState == TrackingState.Tracking) {
+                    distance = Vector3.Distance(Camera.main.transform.position, arPlane.transform.position);
+                    Debug.Log("Distance: " + distance);
+                    DistanceChecker();
+                }
+            }
+            Invoke(nameof(ARPlaneDistanceTrackingUpdate), 0.5f);
+        }
+
+        private void DistanceChecker() {
+            if (distance >= Constant.distanceToMaintain) {
+                errorPanel.SetActive(false);
+
+                //planeSuccessTransform = arPlane.transform;
+
+                // planeManager.enabled = false; //Divya Plane Distance Optimization
+                // Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.5f); //Divya Plane Distance Optimization
+                // CancelInvoke(nameof(ARPlaneDistanceTrackingUpdate)); //Divya Plane Distance Optimization
+            } else {
+                errorPanel.SetActive(true);
+            }
+        }
+
+        //Divya Plane Distance Optimization
+        /*private void ARPlaneDistanceTrackingAfterOneUpdate() {
+            Debug.Log("ARPlaneDistanceTrackingAfterOneUpdate - " + planeSuccessTransform.position);
+            distance = Vector3.Distance(Camera.main.transform.position, planeSuccessTransform.position);
+            Debug.Log("Distance: " + distance);
+            if (distance >= distanceToMaintain) {
+                isDistanceMaintain = true;
+            } else {
+                isDistanceMaintain = false;
+            }
+            Debug.Log("Distance Bool: " + isDistanceMaintain);
+            Invoke(nameof(ARPlaneDistanceTrackingAfterOneUpdate), 0.1f);
+        }*/
+
+        private float CheckMinDistance(float distanceForCheck) {
+            if (distanceForCheck <= minDistance) {
+                minDistance = distanceForCheck;
+            }
+            Debug.Log("Min Distance: " + minDistance);
+            return minDistance;
+        }
+
+        #endregion ARPlaneDistanceTracking
+
         private void TestModeFunc() {
             planeDetectionCanvas.SetActive(false);
             tapToPlace.SetActive(false);
+            errorPanel.SetActive(false);
 
             spawnedObject = Instantiate(m_PlacedPrefab, Vector3.zero, Quaternion.identity);
             spawned = true;
@@ -185,16 +276,16 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnBackButtonReset() {
             if (spawned) {
-                spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                spawnedObject.transform.localPosition = new Vector3(0, 0, Constant.fixedZPos);
                 spawnedObject.transform.localEulerAngles = Vector3.zero;
             }
         }
 
         public void RotateOnZOnClickButtons(bool isRToL) {
             if (isRToL) {
-                spawnedObject.transform.Rotate(Vector3.forward, rotationValueOnZ);
+                spawnedObject.transform.Rotate(Vector3.forward, Constant.rotationValueOnZ);
             } else {
-                spawnedObject.transform.Rotate(Vector3.forward, -rotationValueOnZ);
+                spawnedObject.transform.Rotate(Vector3.forward, -Constant.rotationValueOnZ);
             }
         }
 
@@ -240,20 +331,20 @@ namespace ViitorCloud.ARModelViewer {
                 _currentSwipe.Normalize();
 
                 if (LeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
                 } else if (RightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
                 } else if (UpLeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
                 } else if (UpRightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(swipeValue, swipeValue, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(swipeValue, swipeValue, 0) * Time.deltaTime;
                 } else if (DownLeftSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(-swipeValue, -swipeValue, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(-swipeValue, -swipeValue, 0) * Time.deltaTime;
                 } else if (DownRightSwipe(_currentSwipe)) {
-                    spawnedObject.transform.position += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
+                    spawnedObject.transform.localPosition += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
                 }
             }
-            spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, fixedZPos);
+            spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, Constant.fixedZPos);
             Debug.Log("Swipe Ended");
         }
 

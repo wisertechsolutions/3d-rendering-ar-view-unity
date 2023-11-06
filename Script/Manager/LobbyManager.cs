@@ -1,3 +1,4 @@
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,12 +47,20 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else if (uRL_Type == URL_type.Image) {
                     // return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
-                    return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
+                    // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
+                    // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
+                    //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
+                    return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
+                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
+                    // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
                 } else {
+                    // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
                     //return "https://archive.org/download/paravti/paravti.glb";
                     //return "https://cdn-luma.com/e4e69c53efa92b819e54bc4ceb184074d7c5728459c78f33b6f45334889562c0.glb";
                     return "https://cdn-luma.com/00d536b293be5d40f1a76697fc239dd6b5e6fb6ab762757a4802fbe1a70f6089/Turtle_with_Lotus_textured_mesh_glb.glb";
+                    //return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/07c2b102-c049-42ba-885c-9181b62ef57e.glb";
+
                     //return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/it20000-mc512.glb";
                 }
             }
@@ -63,8 +72,12 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Start() {
             if (ifTesting) {
-                DownloadImageCall(Url);
-                //AfterGetURL(Url);
+                if (uRL_Type == URL_type.Image) {
+                    DownloadImageCall(Url);
+                } else if (uRL_Type == URL_type.Gltf) {
+                    DataForAllScene.Instance.isAR = true;
+                    AfterGetURL(Url);
+                }
             }
             //GetURL();
         }
@@ -151,9 +164,13 @@ namespace ViitorCloud.ARModelViewer {
                 string progressText = "100%";
                 txtLoading.text = progressText;
 
-                Sprite downloadedImage = GetByteToSprite(response);
-                DataForAllScene.Instance.imageForFrame = downloadedImage;
+                //To Save New Updated Image
+                string name = Path.GetExtension(imageURL);
+                string path = Application.persistentDataPath + "/tempImage" + name;
+                File.WriteAllBytes(path, response);
 
+                Sprite downloadedImage = GetByteToSprite(File.ReadAllBytes(path));
+                DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
                 Debug.LogError(errorMessage);

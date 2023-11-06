@@ -6,21 +6,19 @@ namespace ViitorCloud.ARModelViewer {
     public class ThreeDARFrameCanvas : MonoBehaviour {
         [SerializeField] private Image imageFrame;
         [SerializeField] private Image frameImage;
-        private float variation = 160f;
 
         [SerializeField] private Image frameImageWhite;
-        private float variationWhite = 80f;
 
         private Vector3 axis = new Vector3(0, 0, 1);
         private Vector2 frameStaticSizeDelta = new Vector2(1080, 1920);
 
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
             imageFrame.sprite = imageToDisplay;
-            Vector2 scale = new Vector2(frameImage.rectTransform.sizeDelta.x + variation, FrameHeightCalcLogic(imageToDisplay) + variation);
+            Vector2 scale = new Vector2(frameImage.rectTransform.sizeDelta.x + Constant.variation, FrameHeightCalcLogic(imageToDisplay) + Constant.variation);
             frameImage.rectTransform.sizeDelta = scale;
 
             //scale = new Vector2(frameImageWhite.rectTransform.sizeDelta.x - variationWhite, FrameHeightCalcLogic(imageToDisplay) - variationWhite);
-            frameImageWhite.rectTransform.sizeDelta = scale - new Vector2(variationWhite, variationWhite);
+            frameImageWhite.rectTransform.sizeDelta = scale - new Vector2(Constant.variationWhite, Constant.variationWhite);
 
             FrameColorChange(frameColor);
         }
