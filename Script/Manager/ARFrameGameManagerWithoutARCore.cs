@@ -39,12 +39,7 @@ namespace ViitorCloud.ARModelViewer {
         [Header("TestMode")]
         public bool testMode;
 
-        private float fixedZPos = 15f;
-
-        private float rotationValueOnZ = 5f;
         private bool waitingLoaderIsOn;
-
-        private float distanceToMaintain = 1.5f; //5Feet
         private float distance;
         private float minDistance = 0f;
         private Transform planeSuccessTransform;
@@ -162,10 +157,10 @@ namespace ViitorCloud.ARModelViewer {
                         var hitPosVector = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                         // Raycast hits are sorted by distance, so the first one
                         // will be the closest hit.
-                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, fixedZPos);
+                        var newHitPosition = new Vector3(hitPosVector.x, hitPosVector.y, Constant.fixedZPos);
                         if (spawnedObject == null) {
                             spawnedObject = Instantiate(m_PlacedPrefab, newHitPosition, Quaternion.identity, mainCam);
-                            spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                            spawnedObject.transform.localPosition = new Vector3(0, 0, Constant.fixedZPos);
                             spawnedObject.transform.localEulerAngles = Vector3.zero;
 
                             lowerButton.SetActive(true);
@@ -201,7 +196,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void DistanceChecker() {
-            if (distance >= distanceToMaintain) {
+            if (distance >= Constant.distanceToMaintain) {
                 errorPanel.SetActive(false);
 
                 //planeSuccessTransform = arPlane.transform;
@@ -281,16 +276,16 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnBackButtonReset() {
             if (spawned) {
-                spawnedObject.transform.localPosition = new Vector3(0, 0, fixedZPos);
+                spawnedObject.transform.localPosition = new Vector3(0, 0, Constant.fixedZPos);
                 spawnedObject.transform.localEulerAngles = Vector3.zero;
             }
         }
 
         public void RotateOnZOnClickButtons(bool isRToL) {
             if (isRToL) {
-                spawnedObject.transform.Rotate(Vector3.forward, rotationValueOnZ);
+                spawnedObject.transform.Rotate(Vector3.forward, Constant.rotationValueOnZ);
             } else {
-                spawnedObject.transform.Rotate(Vector3.forward, -rotationValueOnZ);
+                spawnedObject.transform.Rotate(Vector3.forward, -Constant.rotationValueOnZ);
             }
         }
 
@@ -349,7 +344,7 @@ namespace ViitorCloud.ARModelViewer {
                     spawnedObject.transform.localPosition += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
                 }
             }
-            spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, fixedZPos);
+            spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, Constant.fixedZPos);
             Debug.Log("Swipe Ended");
         }
 
