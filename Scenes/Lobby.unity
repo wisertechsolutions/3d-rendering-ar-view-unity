@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4439372, g: 0.49315345, b: 0.5721989, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402188, g: 0.4931649, b: 0.57223135, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -575,6 +575,8 @@ MonoBehaviour:
   isAR: 0
   isFrameImage: 0
   imageForFrame: {fileID: 0}
+  imageDimensions: {x: 0, y: 0}
+  imageDimensionUnit: 
 --- !u!4 &752160636
 Transform:
   m_ObjectHideFlags: 0
@@ -1220,7 +1222,7 @@ MonoBehaviour:
   panelDark: {fileID: 1443492273}
   txtLoading: {fileID: 1932444926}
   uIManager: {fileID: 1317539535}
-  ifTesting: 1
+  ifTesting: 0
 --- !u!4 &1276698758
 Transform:
   m_ObjectHideFlags: 0

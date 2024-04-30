@@ -378,5 +378,16 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         #endregion SwipeLogic
+        #region Test Dimension Panel
+        [SerializeField] private TMPro.TMP_InputField _inputField_Width;
+        [SerializeField] private TMPro.TMP_InputField _inputField_Height;
+        [SerializeField] private TMPro.TMP_InputField _inputField_Unit;
+        public void ResizeFrame() {
+            int w = int.Parse(_inputField_Height.text);
+            int h = int.Parse(_inputField_Width.text);
+            string u = _inputField_Unit.text.ToLower();
+            spawnedObject.GetComponent<ThreeDARFrameCanvas>().ResizeWithUnits(w, h, u);
+        }
+        #endregion Test Dimension Panel
     }
 }
