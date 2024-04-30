@@ -12,7 +12,7 @@ namespace ViitorCloud.API {
     public class ServerCommunication : PersistentLazySingleton<ServerCommunication> {
         #region [Server Communication]
 
-        private readonly bool debug = false;
+        private readonly bool debug = true;
         public static string CulumusToken = "";
         public static string ViitorCloudToken = "";
 

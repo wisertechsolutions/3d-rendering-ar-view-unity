@@ -50,8 +50,8 @@ namespace ViitorCloud.ARModelViewer {
                     // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
                     // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
                     //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
-                    return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
-                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
+                    //return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
+                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
                 } else {
@@ -91,6 +91,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void GetURL() {
+            Debug.Log("GetURL Called");
             RequestURLFor3d getURLFor3D = new RequestURLFor3d();
             getURLFor3D.playerID = "fdaf123";
             ServerCommunicationTemplate.Instance.RequestModelURL(JsonUtility.ToJson(getURLFor3D), OnRecieve3dModelURLData, OnDataLoadFail);

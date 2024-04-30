@@ -11,6 +11,7 @@ namespace ViitorCloud.ARModelViewer {
             Action<Byte[]> OnDownloadComplete = null,
             Action<string> OnDownloadFail = null,
             Action<float> progress = null) {
+            Debug.Log($"DownloadAssetAsync : url : {url}");
             using (UnityWebRequest request = UnityWebRequest.Get(url)) {
                 UnityWebRequestAsyncOperation asyncOp = request.SendWebRequest();
 
