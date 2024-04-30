@@ -30,8 +30,10 @@ namespace ViitorCloud.ARModelViewer {
             // Send data to PlaceObject.cs method ARCameraOnOff();
         }
 
-        public void GetImageDownloadLink(string url) {
+        public void GetImageDownloadLink(string url,float width,float height, string unit) {
             DataForAllScene.Instance.isFrameImage = true;
+            DataForAllScene.Instance.imageDimensions = new Vector2(width,height);
+            DataForAllScene.Instance.imageDimensionUnit= unit.ToLower();
             LobbyManager.instance.DownloadImageCall(url);
         }
     }

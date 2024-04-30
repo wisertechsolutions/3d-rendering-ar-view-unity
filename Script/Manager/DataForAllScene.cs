@@ -12,6 +12,8 @@ namespace ViitorCloud.ARModelViewer {
         public bool isAR;
         public bool isFrameImage;
         public Sprite imageForFrame;
+        public Vector2 imageDimensions;
+        public string imageDimensionUnit;
 
         private void Awake() {
             if (Instance == null) {

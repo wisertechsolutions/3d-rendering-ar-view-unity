@@ -132,6 +132,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void SpawnObjectData(GameObject spawnObj) {
+            Debug.Log("spawn");
             spawnObj.GetComponent<Canvas>().worldCamera = Camera.main;
             spawnObj.GetComponent<ThreeDARFrameCanvas>().DataToDisplay(DataForAllScene.Instance.imageForFrame, colorFrame[colorTempCount]);
             SelectedColorTickOnOff(colorTempCount);
