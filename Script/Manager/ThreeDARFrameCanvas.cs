@@ -4,6 +4,7 @@ using UnityEngine.UI;
 namespace ViitorCloud.ARModelViewer {
 
     public class ThreeDARFrameCanvas : MonoBehaviour {
+        [SerializeField] private Image bgFrame;
         [SerializeField] private Image imageFrame;
         [SerializeField] private Image frameImage;
 
@@ -36,16 +37,14 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void RotateTheImage() {
-            imageFrame.transform.Rotate(axis, 90f);
+            bgFrame.transform.Rotate(axis, 90f);
         }
 
         #region Resize Image
 
-        float inchesToPixels = 96f;
-        float cmToPixels = 37.795275591f;
-        float metersToPixels = 3779.5275591f;
-
-
+        private float inchesToPixels = 96f;
+        private float cmToPixels = 37.795275591f;
+        private float metersToPixels = 3779.5275591f;
 
         // method to resize the image with unit conversion
         public void ResizeWithUnits(float width, float height, string unit) {
@@ -57,25 +56,28 @@ namespace ViitorCloud.ARModelViewer {
                     newWidth *= inchesToPixels;
                     newHeight *= inchesToPixels;
                     break;
+
                 case "cm":
                     newWidth *= cmToPixels;
                     newHeight *= cmToPixels;
                     break;
+
                 case "m":
                     newWidth *= metersToPixels;
                     newHeight *= metersToPixels;
                     break;
+
                 default:
                     Debug.LogError("Invalid unit provided. Default inch taken");
                     newWidth *= inchesToPixels;
                     newHeight *= inchesToPixels;
                     break;
-                    
             }
 
-            RectTransform rectTransform = imageFrame.GetComponent<RectTransform>();
+            RectTransform rectTransform = bgFrame.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
         }
+
         #endregion Resize Image
     }
 }

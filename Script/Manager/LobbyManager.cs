@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using ViitorCloud.API;
 using ViitorCloud.API.StandardTemplates;
 using ViitorCloud.ModelViewer;
+using static System.Net.WebRequestMethods;
 
 namespace ViitorCloud.ARModelViewer {
 
@@ -51,9 +52,10 @@ namespace ViitorCloud.ARModelViewer {
                     // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
                     //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
                     //return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
-                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
+                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
+                    return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
                 } else {
                     // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
                     //return "https://archive.org/download/paravti/paravti.glb";
@@ -66,6 +68,9 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
+        public float h = 12f;
+        public float w = 8f;
+
         private void Awake() {
             instance = this;
         }
@@ -73,6 +78,8 @@ namespace ViitorCloud.ARModelViewer {
         private void Start() {
             if (ifTesting) {
                 if (uRL_Type == URL_type.Image) {
+                    DataForAllScene.Instance.imageDimensions = new Vector2(w, h);
+                    DataForAllScene.Instance.imageDimensionUnit = "in";
                     DownloadImageCall(Url);
                 } else if (uRL_Type == URL_type.Gltf) {
                     DataForAllScene.Instance.isAR = true;
@@ -168,9 +175,9 @@ namespace ViitorCloud.ARModelViewer {
                 //To Save New Updated Image
                 string name = Path.GetExtension(imageURL);
                 string path = Application.persistentDataPath + "/tempImage" + name;
-                File.WriteAllBytes(path, response);
+                System.IO.File.WriteAllBytes(path, response);
 
-                Sprite downloadedImage = GetByteToSprite(File.ReadAllBytes(path));
+                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path));
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
