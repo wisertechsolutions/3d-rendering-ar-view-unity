@@ -52,10 +52,10 @@ namespace ViitorCloud.ARModelViewer {
                     // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
                     //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
                     //return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
-                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
+                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
                     // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
-                    return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
+                    //return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
                 } else {
                     // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
                     //return "https://archive.org/download/paravti/paravti.glb";
@@ -156,6 +156,7 @@ namespace ViitorCloud.ARModelViewer {
             if (no == 0) {
                 SceneManager.LoadScene("Main-AR");
             } else if (no == 1) {
+                //SceneManager.LoadScene("Main-ARFrame Backup ARCore");
                 SceneManager.LoadScene("Main-ARFrame");
             } else {
                 SceneManager.LoadScene("Main-NonAR");

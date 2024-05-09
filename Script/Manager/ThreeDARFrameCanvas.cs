@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +14,12 @@ namespace ViitorCloud.ARModelViewer {
 
         private Vector3 axis = new Vector3(0, 0, 1);
         private Vector2 frameStaticSizeDelta = new Vector2(1080, 1920);
+        Vector3 screenBounds;
+        float aspectratio;
 
         public void DataToDisplay(Sprite imageToDisplay, Color frameColor) {
+            GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width * 1.6f, Screen.height * 1.6f);
+
             float aspectratio = imageToDisplay.bounds.size.x / imageToDisplay.bounds.size.y;
             imageFrame.sprite = imageToDisplay;
             ResizeWithUnits(DataForAllScene.Instance.imageDimensions.x, DataForAllScene.Instance.imageDimensions.y, DataForAllScene.Instance.imageDimensionUnit);// resize
@@ -76,7 +81,84 @@ namespace ViitorCloud.ARModelViewer {
 
             RectTransform rectTransform = bgFrame.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
+
+
+
+
+
+            ResizeOutofBoundImage();
+            //StartCoroutine(ResizeOutofBoundImage());
         }
+
+
+        private void ResizeOutofBoundImage() {
+            //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+            
+            RectTransform canvasRect = GetComponent<RectTransform>();
+            RectTransform imageRect = bgFrame.GetComponent<RectTransform>();
+            Bounds imageBounds = new Bounds(imageRect.position, imageRect.sizeDelta);
+            //Vector2 screensize = screenBounds.GetComponent<RectTransform>();
+            float image_aspectratio = imageBounds.size.x / imageBounds.size.y;
+            //aspectratio
+            if (imageRect.sizeDelta.x > canvasRect.sizeDelta.x) {
+                imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.x, canvasRect.sizeDelta.x / image_aspectratio);
+
+            }
+            if (imageRect.sizeDelta.y > canvasRect.sizeDelta.y) {
+                imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.y * image_aspectratio, canvasRect.sizeDelta.y);
+
+            }
+        }
+
+        //private IEnumerator ResizeOutofBoundImage() {
+        //    screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        //    yield return new WaitForEndOfFrame();
+        //    RectTransform rectTransform = bgFrame.GetComponent<RectTransform>();
+        //    //while (true) {
+        //    if (isImageOutOfBound()) {
+        //        rectTransform.sizeDelta = new Vector2(1000, 1000);
+        //    } else {
+        //        //yield break;
+        //        rectTransform.sizeDelta = new Vector2(1, 1);
+        //    }
+        //    yield return new WaitForEndOfFrame();
+        //    //}
+
+        //}
+
+        //private bool isImageOutOfBound() {
+
+        //    RectTransform imageRect = bgFrame.GetComponent<RectTransform>();
+        //    Bounds imageBounds = new Bounds(imageRect.position, imageRect.sizeDelta);
+        //    RectTransform canvasRect = bgFrame.canvas.GetComponent<RectTransform>();
+        //    float image_aspectratio = imageBounds.size.x / imageBounds.size.y;
+        //    //aspectratio
+        //    if (imageRect.sizeDelta.x > canvasRect.sizeDelta.x) {
+        //        imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.x, canvasRect.sizeDelta.x / image_aspectratio);
+
+        //    }
+        //    if (imageRect.sizeDelta.y > canvasRect.sizeDelta.y) {
+        //        imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.y * image_aspectratio, canvasRect.sizeDelta.y);
+
+        //    }
+        //}
+        //private bool isImageOutOfBound() {
+        //    RectTransform imageRect = bgFrame.GetComponent<RectTransform>();
+        //    Bounds imageBounds = new Bounds(imageRect.position, imageRect.sizeDelta);
+
+        //    Canvas canvas = bgFrame.canvas;
+        //    Vector3 canvasScale = canvas.transform.localScale;
+        //    Vector3 canvasPosition = canvas.transform.position;
+
+        //    imageBounds.center = Vector3.Scale(imageBounds.center - canvasPosition, new Vector3(1 / canvasScale.x, 1 / canvasScale.y, 1 / canvasScale.z));
+        //    imageBounds.size = Vector3.Scale(imageBounds.size, new Vector3(1 / canvasScale.x, 1 / canvasScale.y, 1 / canvasScale.z));
+
+        //    if (imageBounds.min.x > screenBounds.x || imageBounds.max.x < -screenBounds.x || imageBounds.min.y > screenBounds.y || imageBounds.max.y < -screenBounds.y) {// Image is out of screen bounds
+        //        Debug.Log("Image is out of screen bounds!");
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         #endregion Resize Image
     }
