@@ -157,7 +157,8 @@ namespace ViitorCloud.ARModelViewer {
                 SceneManager.LoadScene("Main-AR");
             } else if (no == 1) {
                 //SceneManager.LoadScene("Main-ARFrame Backup ARCore");
-                SceneManager.LoadScene("Main-ARFrame");
+                //SceneManager.LoadScene("Main-ARFrame");
+                SceneManager.LoadScene("ARFrameShowcase");
             } else {
                 SceneManager.LoadScene("Main-NonAR");
             }
@@ -178,7 +179,10 @@ namespace ViitorCloud.ARModelViewer {
                 string path = Application.persistentDataPath + "/tempImage" + name;
                 System.IO.File.WriteAllBytes(path, response);
 
-                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path));
+                Texture downloadedImageTexture;
+                
+                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path),out downloadedImageTexture);
+                DataForAllScene.Instance.TextureForFrame = downloadedImageTexture;
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
@@ -191,13 +195,14 @@ namespace ViitorCloud.ARModelViewer {
             //StartCoroutine(DownloadImageURL(imageURL));
         }
 
-        private Sprite GetByteToSprite(byte[] imageBytes) {
+        private Sprite GetByteToSprite(byte[] imageBytes, out Texture t) {
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(imageBytes);
+            t = tex;
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
             return sprite;
         }
-
+        
         #endregion Image Download
     }
 }

@@ -764,6 +764,7 @@ MonoBehaviour:
   isAR: 0
   isFrameImage: 0
   imageForFrame: {fileID: 0}
+  TextureForFrame: {fileID: 0}
   imageDimensions: {x: 0, y: 0}
   imageDimensionUnit: 
 --- !u!4 &752160636
@@ -1411,8 +1412,8 @@ MonoBehaviour:
   txtLoading: {fileID: 1932444926}
   uIManager: {fileID: 1317539535}
   ifTesting: 0
-  h: 120
-  w: 80
+  h: 8.5
+  w: 6
 --- !u!4 &1276698758
 Transform:
   m_ObjectHideFlags: 0

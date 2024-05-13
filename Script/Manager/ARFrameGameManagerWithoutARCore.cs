@@ -182,6 +182,8 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
+
+
         #region ARPlaneDistanceTracking
 
         private void ARPlaneDistanceTrackingUpdate() {
