@@ -16,6 +16,7 @@ namespace ViitorCloud.ARModelViewer {
         private Vector2 frameStaticSizeDelta = new Vector2(1080, 1920);
         Vector3 screenBounds;
         float aspectratio;
+        
 
         public void DataToDisplay(Texture imageToDisplay, Color frameColor) {
             paintingMaterial.mainTexture = imageToDisplay;
@@ -35,7 +36,7 @@ namespace ViitorCloud.ARModelViewer {
             frame_transform.Rotate(axis, 90f);
         }
         public void ResetRotation() {
-            frame_transform.rotation = Quaternion.identity;
+            frame_transform.localEulerAngles = Vector3.zero;
         }
 
 
@@ -69,9 +70,7 @@ namespace ViitorCloud.ARModelViewer {
                     newHeight *= inchesToMeter;
                     break;
             }
-
-            transform.localScale = new Vector3(newWidth, newHeight, transform.localScale.z);
-
+            frame_transform.localScale = new Vector3(newWidth, newHeight, frame_transform.localScale.z);
         }
         #endregion Resize Image
     }

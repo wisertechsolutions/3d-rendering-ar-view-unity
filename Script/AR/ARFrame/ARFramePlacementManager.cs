@@ -34,22 +34,13 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
         private int colorTempCount = 0;
-        private int touchTempCount = 0;
-
-        [Header("TestMode")]
-        public bool testMode;
-
+       
         private bool waitingLoaderIsOn;
-        private float distance;
-        private float minDistance = 0f;
         private Vector3 resetPosition;
-        private Vector3 resetRotation;
-        private Transform planeSuccessTransform;
+        private Quaternion resetRotation;
 
         [Header("Distance")]
         [SerializeField] private bool raycastLogic;
-
-        private float maRayDistance = 100f;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -72,8 +63,6 @@ namespace ViitorCloud.ARModelViewer {
 
         private void Awake() {
 
-            //if (placementUpdate == null)
-            //    placementUpdate = new UnityEvent();
         }
 
         private void Start() {
@@ -111,23 +100,11 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
 
-            //foreach (var plane in eventArgs.updated) {
-            //    // Check if the plane is moving by comparing position and rotation
-            //    if (Vector3.Distance(plane.transform.position, plane.transform.position) > 0.01f ||
-            //        Quaternion.Angle(plane.transform.rotation, plane.transform.rotation) > 1f) {
-            //        Debug.Log("AR Plane is moving");
-            //    }
-            //}
         }
 
 
         private void Update() {
-            //#if UNITY_EDITOR || UNITY_WIN
-            //            if (Input.GetKeyDown(KeyCode.Z) && testMode) {
-            //                TestModeFunc();
-            //            }
-            //#endif
-
+          
             TryPlaceObject();
         }
 
@@ -147,14 +124,12 @@ namespace ViitorCloud.ARModelViewer {
                             Debug.Log("Ray Hit");
                             Pose hitPose = s_Hits[0].pose;
 
-
                             SpawnFrame(hitPose);
                             lowerButton.SetActive(true);
                             tapToPlace.SetActive(false);
                         }
                     } else {
                         //repositioning of the object
-                        //spawnedObject.transform.position = hitPose.position;
                         Swipe();
                     }
                     //placementUpdate.Invoke();
@@ -163,66 +138,25 @@ namespace ViitorCloud.ARModelViewer {
             }
         }
 
-        //private bool CheckDeviceHeldStraight() {
-        //    Vector3 acceleration = Input.acceleration;
-        //    // Check if phone is held straight
-        //    float tiltThresholdX = 0.2f; // Adjust this value as per your requirement
-
-        //    float tiltThresholdY = 0.8f; // Adjust this value as per your requirement
-
-        //    if (Mathf.Abs(acceleration.x) < tiltThresholdX && Mathf.Abs(acceleration.y) > tiltThresholdY) {
-        //        planeDetectionCanvas.SetActive(false);
-        //        tapToPlace.SetActive(true);
-        //        return true;
-        //    } else {
-        //        Debug.Log("Phone is not held straight.");
-        //        planeDetectionCanvas.SetActive(true);
-        //        tapToPlace.SetActive(false);
-        //        return false;
-        //    }
-        //}
-
         private void SpawnFrame(Pose hitPose) {
-            spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-            //spawnedObject.transform.forward = -hitPose.up;
+            spawnedObject = Instantiate(m_PlacedPrefab);
+            SetFrameTransform(hitPose);
+
             resetPosition = spawnedObject.transform.position;
-            resetRotation = spawnedObject.transform.eulerAngles;
+            resetRotation = spawnedObject.transform.rotation;
             SetFrameData();
+        }
+        private void SetFrameTransform(Pose hitPose) {
+            spawnedObject.transform.position = hitPose.position;
+            float dotProduct = Vector3.Dot(-hitPose.up, Camera.main.transform.forward);
+
+            Quaternion rotation = Quaternion.LookRotation(dotProduct > 0 ? -hitPose.up : hitPose.up, Vector3.up);
+            spawnedObject.transform.rotation = rotation;
         }
         private void SetFrameData() {
             spawnedObject.GetComponent<ARFrame3D>().DataToDisplay(DataForAllScene.Instance.TextureForFrame, colorFrame[colorTempCount]);
             SelectedColorTickOnOff(colorTempCount);
         }
-
-
-
-        //private bool TryGetTouchPosition(out Vector2 touchPosition) {
-        //    if (Input.touchCount > 0) {
-        //        touchTempCount++;
-        //        tapToPlace.SetActive(false);
-        //        touchPosition = Input.GetTouch(0).position;
-        //        return true;
-        //    }
-
-        //    touchPosition = default;
-        //    return false;
-        //}
-
-
-        //private void TestModeFunc() {
-        //    planeDetectionCanvas.SetActive(false);
-
-        //    spawnedObject = Instantiate(m_PlacedPrefab, Vector3.zero, Quaternion.identity);
-        //    lowerButton.SetActive(true);
-        //    SpawnObjectData(spawnedObject);
-        //}
-
-        //private void SpawnObjectData(GameObject spawnObj) {
-        //    Debug.Log("spawn");
-        //    spawnObj.GetComponent<Canvas>().worldCamera = Camera.main;
-        //    spawnObj.GetComponent<ARFrame3D>().DataToDisplay(DataForAllScene.Instance.TextureForFrame, colorFrame[colorTempCount]);
-        //    SelectedColorTickOnOff(colorTempCount);
-        //}
 
         private void SelectedColorTickOnOff(int indexStatus) {
             for (int i = 0; i <= selectedTrueImage.Length - 1; i++) {
@@ -235,13 +169,13 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void FrameColorChangeOnButton(int index) {
-            //spawnedObject.GetComponent<ARFrame3D>().FrameColorChange(colorFrame[index]);
-            //colorTempCount = index;
-            //SelectedColorTickOnOff(colorTempCount);
+            spawnedObject.GetComponent<ARFrame3D>().FrameColorChange(colorFrame[index]);
+            colorTempCount = index;
+            SelectedColorTickOnOff(colorTempCount);
         }
 
         public void OnButtonFrameRotate() {
-            //spawnedObject.GetComponent<ARFrame3D>().RotateTheImage();
+            spawnedObject.GetComponent<ARFrame3D>().RotateTheImage();
         }
 
         public void OnBackButtonPress() {
@@ -250,19 +184,12 @@ namespace ViitorCloud.ARModelViewer {
 
         public void OnBackButtonReset() {
             if (spawnedObject != null) {
-                //spawnedObject.transform.localPosition = new Vector3(0, 0, Constant.fixedZPos);
                 spawnedObject.transform.position = resetPosition;
-                //spawnedObject.GetComponent<ARFrame3D>().ResetRotation();
+                spawnedObject.transform.rotation = resetRotation;
+                spawnedObject.GetComponent<ARFrame3D>().ResetRotation();
             }
         }
 
-        //public void RotateOnZOnClickButtons(bool isRToL) {
-        //    if (isRToL) {
-        //        spawnedObject.transform.Rotate(Vector3.forward, Constant.rotationValueOnZ);
-        //    } else {
-        //        spawnedObject.transform.Rotate(Vector3.forward, -Constant.rotationValueOnZ);
-        //    }
-        //}
         private void CallPreviousSceneOfNative() {
 #if UNITY_ANDROID
             // Get the current activity
@@ -284,15 +211,7 @@ namespace ViitorCloud.ARModelViewer {
 
         #region SwipeLogic
 
-        //private Vector2 _firstPressPos;
-        //private Vector2 _secondPressPos;
-        //private Vector2 _currentSwipe;
-
-        //[Header("Swipe Logic")]
-        //[SerializeField] private float swipeValue = 10f;
-
         float moveSpeed = 5f;
-
         private Vector2 touchStartPos;
         private Vector2 touchEndPos;
         private Vector2 swipeDelta;
@@ -319,73 +238,23 @@ namespace ViitorCloud.ARModelViewer {
 
                         // Translate the object in its local XY plane
                         spawnedObject.transform.Translate(moveDirection.normalized * moveSpeed * 0.1f * Time.deltaTime, Space.World);
+                        FixFrameOnWallAR();
                     }
                 }
             }
         }
 
+        private void FixFrameOnWallAR() {
+            Vector3 dir = spawnedObject.transform.position - Camera.main.transform.position;
 
-        //public void Swipe() {
-        //    if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject!=null) {
-        //        _firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        //    }
-        //    if (Input.GetTouch(0).phase == TouchPhase.Moved && spawnedObject != null) {
-        //        _secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            Ray ray = new Ray(Camera.main.transform.position, dir.normalized);
 
-        //        _currentSwipe = new Vector2(_secondPressPos.x - _firstPressPos.x, _secondPressPos.y - _firstPressPos.y);
-
-        //        _currentSwipe.Normalize();
-
-        //        if (LeftSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
-        //            spawnedObject.transform.localPosition += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
-        //        } else if (RightSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
-        //        } else if (UpLeftSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
-        //            spawnedObject.transform.up += new Vector3(0, swipeValue, 0) * Time.deltaTime;
-        //            //spawnedObject.transform.localPosition += new Vector3(-swipeValue, swipeValue, 0) * Time.deltaTime;
-        //        } else if (UpRightSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
-        //            spawnedObject.transform.up += new Vector3(0, swipeValue, 0) * Time.deltaTime;
-        //            //spawnedObject.transform.localPosition += new Vector3(swipeValue, swipeValue, 0) * Time.deltaTime;
-        //        } else if (DownLeftSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(-swipeValue, 0, 0) * Time.deltaTime;
-        //            spawnedObject.transform.up += new Vector3(0, -swipeValue, 0) * Time.deltaTime;
-        //            //spawnedObject.transform.localPosition += new Vector3(-swipeValue, -swipeValue, 0) * Time.deltaTime;
-        //        } else if (DownRightSwipe(_currentSwipe)) {
-        //            spawnedObject.transform.right += new Vector3(swipeValue, 0, 0) * Time.deltaTime;
-        //            spawnedObject.transform.up += new Vector3(0, -swipeValue, 0) * Time.deltaTime;
-        //            //spawnedObject.transform.localPosition += new Vector3(swipeValue, -swipeValue, 0) * Time.deltaTime;
-        //        }
-        //    }
-        //    //spawnedObject.transform.localPosition = new Vector3(spawnedObject.transform.localPosition.x, spawnedObject.transform.localPosition.y, Constant.fixedZPos);
-        //    //Debug.Log("Swipe Ended");
-        //}
-
-        //private bool LeftSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.x < 0 && _currentSwipe.y < 0.5f && _currentSwipe.y > -0.5f;
-        //}
-
-        //private bool RightSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.x > 0 && _currentSwipe.y < 0.5f && _currentSwipe.y > -0.5f;
-        //}
-
-        //private bool UpLeftSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.y > 0 && _currentSwipe.x < 0f;
-        //}
-
-        //private bool UpRightSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.y > 0 && _currentSwipe.x > 0f;
-        //}
-
-        //private bool DownLeftSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.y < 0 && _currentSwipe.x < 0f;
-        //}
-
-        //private bool DownRightSwipe(Vector2 Swipe) {
-        //    return _currentSwipe.y < 0 && _currentSwipe.x > 0f;
-        //}
+            if (arRaycastManager.Raycast(ray, s_Hits, TrackableType.PlaneWithinPolygon)) {
+                Debug.Log("Ray Hit");
+                Pose hitPose = s_Hits[0].pose;
+                SetFrameTransform(hitPose);
+            }
+        }
 
         #endregion SwipeLogic
 
@@ -404,7 +273,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void ChangeSpeed(string s) {
-        moveSpeed = float.Parse(s);
+            moveSpeed = float.Parse(s);
         }
 
         #endregion Test Dimension Panel
