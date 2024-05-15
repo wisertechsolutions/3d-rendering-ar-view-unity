@@ -370,8 +370,9 @@ MonoBehaviour:
   errorPanel: {fileID: 1638324744}
   tapToPlace: {fileID: 1937351270}
   lowerButton: {fileID: 624015839}
-  testMode: 0
-  raycastLogic: 0
+  m_ARPlaneMaterial: {fileID: 2100000, guid: 17f0c6105210cc545a1532afbb14889a, type: 2}
+  m_ARPlaneMaterial_DisableColor: {r: 0, g: 0, b: 0, a: 0}
+  m_ARPlaneMaterial_EnableColor: {r: 0, g: 0, b: 0, a: 0.15686275}
   _inputField_Width: {fileID: 640029462}
   _inputField_Height: {fileID: 509099337}
   _inputField_Unit: {fileID: 1953322053}
@@ -1760,7 +1761,7 @@ MonoBehaviour:
       - m_Target: {fileID: 196203426}
         m_TargetAssemblyTypeName: ViitorCloud.ARModelViewer.ARFramePlacementManager,
           ARModelViewerAssembly
-        m_MethodName: OnBackButtonReset
+        m_MethodName: OnButtonReset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

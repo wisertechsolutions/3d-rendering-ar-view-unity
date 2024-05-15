@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -25,6 +26,7 @@ namespace ViitorCloud.ARModelViewer {
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         private GameObject m_PlacedPrefab;
 
+
         //private UnityEvent placementUpdate;
 
         [SerializeField] private Transform mainCam;
@@ -33,14 +35,17 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private GameObject errorPanel;
         [SerializeField] private GameObject tapToPlace;
         [SerializeField] private GameObject lowerButton;
+
+        [Header("AR Material")]
+        [SerializeField] private Material m_ARPlaneMaterial;
+        [SerializeField] private Color m_ARPlaneMaterial_DisableColor;
+        [SerializeField] private Color m_ARPlaneMaterial_EnableColor;
+
         private int colorTempCount = 0;
-       
+
         private bool waitingLoaderIsOn;
         private Vector3 resetPosition;
         private Quaternion resetRotation;
-
-        [Header("Distance")]
-        [SerializeField] private bool raycastLogic;
 
         /// <summary>
         /// The prefab to instantiate on touch.
@@ -66,11 +71,6 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         private void Start() {
-            waitingLoaderIsOn = true;
-            arPlaneManager.planesChanged += OnPlanesChanged;
-
-            StartCoroutine(WaitingPanelHandler());
-            spawnedObject = null;
 
             if (mainCam == null) {
                 mainCam = Camera.main.transform;
@@ -78,18 +78,28 @@ namespace ViitorCloud.ARModelViewer {
             if (!Input.gyro.enabled) {
                 Input.gyro.enabled = true;
             }
+            arPlaneManager.planesChanged += OnPlanesChanged;
+
+            SetupInitial();
+        }
+
+        private void SetupInitial() {
+            waitingLoaderIsOn = true;
+            spawnedObject = null;
             planeDetectionCanvas.SetActive(true);
             tapToPlace.SetActive(false);
+            StartCoroutine(WaitingPanelHandler());
+            m_ARPlaneMaterial.color = m_ARPlaneMaterial_EnableColor;
         }
 
         private IEnumerator WaitingPanelHandler() {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             waitingPanel.SetActive(false);
             waitingLoaderIsOn = false;
         }
 
         void OnPlanesChanged(ARPlanesChangedEventArgs eventArgs) {
-            if (spawnedObject == null) {
+            if (spawnedObject == null && !waitingLoaderIsOn) {
                 if (arPlaneManager.trackables.count > 0) {
                     //Debug.Log("AR Plane Detected");
                     planeDetectionCanvas.SetActive(false);
@@ -104,7 +114,7 @@ namespace ViitorCloud.ARModelViewer {
 
 
         private void Update() {
-          
+
             TryPlaceObject();
         }
 
@@ -145,6 +155,11 @@ namespace ViitorCloud.ARModelViewer {
             resetPosition = spawnedObject.transform.position;
             resetRotation = spawnedObject.transform.rotation;
             SetFrameData();
+            Invoke(nameof(MakeARPlaneTransparent),1);
+        }
+
+        private void MakeARPlaneTransparent() {
+            m_ARPlaneMaterial.color = m_ARPlaneMaterial_DisableColor;
         }
         private void SetFrameTransform(Pose hitPose) {
             spawnedObject.transform.position = hitPose.position;
@@ -182,7 +197,30 @@ namespace ViitorCloud.ARModelViewer {
             CallPreviousSceneOfNative();
         }
 
-        public void OnBackButtonReset() {
+        public void OnButtonReset() {
+            //ResetPositionRottion();
+            RemoveFrame();
+        }
+
+        private void RemoveFrame() {
+            if (spawnedObject != null) {
+                //DestroyImmediate(spawnedObject);
+                //spawnedObject = null;
+                //RemoveAllDetectedPlanes();
+                ////Reopen UI
+                //SetupInitial();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+
+        //private void RemoveAllDetectedPlanes() {
+        //    arPlaneManager.SetTrackablesActive(false);
+        //    //foreach (var plane in arPlaneManager.trackables) {
+        //    //    DestroyImmediate(plane.gameObject);
+        //    //}
+        //}
+
+        private void ResetPositionRottion() {
             if (spawnedObject != null) {
                 spawnedObject.transform.position = resetPosition;
                 spawnedObject.transform.rotation = resetRotation;
