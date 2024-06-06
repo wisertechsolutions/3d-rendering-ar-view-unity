@@ -2194,7 +2194,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2203,7 +2207,7 @@ PrefabInstance:
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 628790006}
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2214,11 +2218,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnBackButtonPress
+      value: set_interactable
       objectReference: {fileID: 0}
     - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ViitorCloud.ARModelViewer.ARFramePlacementManager, ARModelViewerAssembly
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.UI.Selectable, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6158334885513131711, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
       propertyPath: m_Pivot.x
@@ -2314,6 +2326,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6158334885513131711, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
   m_PrefabInstance: {fileID: 628790004}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &628790006 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3683442384035697742, guid: a079f5160b1d005489fd192a89750cc7, type: 3}
+  m_PrefabInstance: {fileID: 628790004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &631055275
 GameObject:
   m_ObjectHideFlags: 0
@@ -6886,7 +6909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1937351271
 RectTransform:
   m_ObjectHideFlags: 0
