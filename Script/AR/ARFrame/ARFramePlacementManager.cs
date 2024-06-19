@@ -231,19 +231,7 @@ namespace ViitorCloud.ARModelViewer {
 
         private void CallPreviousSceneOfNative() {
 #if UNITY_ANDROID
-            // Get the current activity
-            //IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
-            //IntPtr jactivity = AndroidJNI.GetStaticObjectField(jclass, AndroidJNI.GetStaticFieldID(jclass, "currentActivity", "Landroid/app/Activity;"));
-
-            //// Get the finish() method and call it on the current activity
-            //IntPtr jmethod = AndroidJNI.GetMethodID(jclass, "finish", "()V");
-            //AndroidJNI.CallVoidMethod(jactivity, jmethod, new jvalue[] { });
-
-            //// Release references to avoid memory leaks
-            //AndroidJNI.DeleteLocalRef(jactivity);
-            //AndroidJNI.DeleteLocalRef(jclass);
             StartCoroutine(CloseActivity());
-
 #elif UNITY_IOS
             Application.Unload();
 #endif
@@ -252,19 +240,26 @@ namespace ViitorCloud.ARModelViewer {
             Debug.Log("-- close activity start--");
             arPlaneManager.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
+
+            CallBackFromNative();
+            //Application.Quit();
+            Debug.Log("-- close activity finished--");
+        }
+
+        private void FinishActivityNative() {
             //AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             //AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
             //currentActivity.Call("finish");
-            CallBackFromNative();
-            Debug.Log("-- close activity finished--");
         }
+     
         private void CallBackFromNative() {
-            // Find the Java class by its package name and class name
-            AndroidJavaClass androidJavaClass = new AndroidJavaClass("com.gallerie.dashboard.product.activity.ProductDetailsActivity");
-            AndroidJavaObject currentActivity = androidJavaClass.GetStatic<AndroidJavaObject>("currentActivity");
-
-            // Call the method on the Java object
-            currentActivity.Call("onUnityBackPressed");
+            using (AndroidJavaClass javaClass = new AndroidJavaClass("com.gallerie.Common.UnityCallBack")) {
+                Debug.Log(javaClass == null);
+                Debug.Log("Calling method" );
+                AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                javaClass.CallStatic("onBackPressedFromUnity", currentActivity);
+            }
         }
 
 
