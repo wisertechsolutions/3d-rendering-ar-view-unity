@@ -241,8 +241,8 @@ namespace ViitorCloud.ARModelViewer {
             arPlaneManager.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
 
-            CallBackFromNative();
-            //Application.Quit();
+            //CallBackFromNative();
+            Application.Quit();
             Debug.Log("-- close activity finished--");
         }
 
