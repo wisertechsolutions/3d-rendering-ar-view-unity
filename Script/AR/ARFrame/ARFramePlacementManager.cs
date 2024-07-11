@@ -112,7 +112,6 @@ namespace ViitorCloud.ARModelViewer {
 
         }
 
-
         private void Update() {
 
             TryPlaceObject();
@@ -241,8 +240,7 @@ namespace ViitorCloud.ARModelViewer {
             arPlaneManager.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
 
-            //CallBackFromNative();
-            Application.Quit();
+            CallBackFromNative();
             Debug.Log("-- close activity finished--");
         }
 
@@ -260,22 +258,13 @@ namespace ViitorCloud.ARModelViewer {
             //AndroidJNI.DeleteLocalRef(jclass);
         }
         private void CallBackFromNative() {
-            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            currentActivity.Call("onBackPressedFromUnity");
+            //AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            //AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            //currentActivity.Call("onBackPressedFromUnity");
+            //currentActivity.Call<bool>("moveTaskToBack", true);
+            Application.Quit();
+            //Application.Unload();//causing crash
         }
-     
-        //private void CallBackFromNative() {
-        //    using (AndroidJavaClass javaClass = new AndroidJavaClass("com.gallerie.Common.UnityCallBack")) {
-        //        Debug.Log(javaClass == null);
-        //        Debug.Log("Calling method" );
-        //        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        //        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        //        javaClass.Call("onBackPressedFromUnity", currentActivity);
-        //    }
-        //}
-
-
 
         #region SwipeLogic
 

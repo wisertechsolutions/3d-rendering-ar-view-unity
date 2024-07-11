@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,6 @@ using UnityEngine.SceneManagement;
 using ViitorCloud.API;
 using ViitorCloud.API.StandardTemplates;
 using ViitorCloud.ModelViewer;
-using static System.Net.WebRequestMethods;
 
 namespace ViitorCloud.ARModelViewer {
 
@@ -87,6 +87,60 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
             //GetURL();
+            //#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
+            GetDataFromJsonFile();
+#endif
+        }
+        private static string GetDownloadFolder() {
+            string[] temp = (Application.persistentDataPath.Replace("Android", "")).Split(new string[] { "//" }, System.StringSplitOptions.None);
+
+            return (temp[0] + "/Download");
+        }
+        //this method is only for android build
+        private void GetDataFromJsonFile() {
+            //string _data = ReadDataFromFile(Application.persistentDataPath + "/gallerieARView.txt");
+            string _data = ReadDataFromFile(GetDownloadFolder() + "/gallerieARView.txt");
+            if (_data == "") {
+                Debug.LogError("File is empty OR does not exist");
+                Application.Quit();
+                return;
+            }
+            NativeManager.instance.GetImageDownloadLink(_data);
+        }
+
+        [ContextMenu("Test")]
+        public void test() {
+            ImageData imageData = new ImageData();
+            imageData.url = Url;
+            imageData.width = w;
+            imageData.height = h;
+            imageData.unit = "in";
+            Debug.Log(JsonUtility.ToJson(imageData));
+            Debug.Log(Application.persistentDataPath + "/Data.json");
+            //Debug.Log(Environment.SpecialFolder.);
+
+        }
+
+        public string ReadDataFromFile(string filePath) {
+            string data = "";
+
+            // Check if the file exists
+            if (File.Exists(filePath)) {
+                try {
+                    // Read the contents of the file
+                    data = File.ReadAllText(filePath);
+
+                    // Delete the file after reading the data
+                    File.Delete(filePath);
+                } catch (System.Exception e) {
+                    Debug.LogError("Error reading file: " + e.Message);
+                }
+            } else {
+                Debug.LogWarning("File not found: " + filePath);
+            }
+
+            return data;
         }
 
         private void OnEnable() {
@@ -180,8 +234,8 @@ namespace ViitorCloud.ARModelViewer {
                 System.IO.File.WriteAllBytes(path, response);
 
                 Texture downloadedImageTexture;
-                
-                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path),out downloadedImageTexture);
+
+                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path), out downloadedImageTexture);
                 DataForAllScene.Instance.TextureForFrame = downloadedImageTexture;
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
@@ -202,7 +256,7 @@ namespace ViitorCloud.ARModelViewer {
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
             return sprite;
         }
-        
+
         #endregion Image Download
     }
 }
