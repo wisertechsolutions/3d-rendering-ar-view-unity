@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -87,62 +88,31 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
             //GetURL();
-            //#if UNITY_ANDROID && !UNITY_EDITOR
+
 #if UNITY_ANDROID
-            GetDataFromJsonFile();
+            GetDataFromAndroidIntent();
 #endif
         }
-        private static string GetDownloadFolder() {
-            string[] temp = (Application.persistentDataPath.Replace("Android", "")).Split(new string[] { "//" }, System.StringSplitOptions.None);
-
-            return (temp[0] + "/Download");
-        }
-        //this method is only for android build
-        private void GetDataFromJsonFile() {
-            //string _data = ReadDataFromFile(Application.persistentDataPath + "/gallerieARView.txt");
-            string _data = ReadDataFromFile(GetDownloadFolder() + "/gallerieARView.txt");
-            if (_data == "") {
-                Debug.LogError("File is empty OR does not exist");
-                Application.Quit();
-                return;
-            }
-            NativeManager.instance.GetImageDownloadLink(_data);
-        }
-
-        [ContextMenu("Test")]
-        public void test() {
-            ImageData imageData = new ImageData();
-            imageData.url = Url;
-            imageData.width = w;
-            imageData.height = h;
-            imageData.unit = "in";
-            Debug.Log(JsonUtility.ToJson(imageData));
-            Debug.Log(Application.persistentDataPath + "/Data.json");
-            //Debug.Log(Environment.SpecialFolder.);
-
-        }
-
-        public string ReadDataFromFile(string filePath) {
-            string data = "";
-
-            // Check if the file exists
-            if (File.Exists(filePath)) {
-                try {
-                    // Read the contents of the file
-                    data = File.ReadAllText(filePath);
-
-                    // Delete the file after reading the data
-                    File.Delete(filePath);
-                } catch (System.Exception e) {
-                    Debug.LogError("Error reading file: " + e.Message);
+    
+        private void GetDataFromAndroidIntent() {
+#if UNITY_ANDROID
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                AndroidJavaObject intent = currentActivity.Call<AndroidJavaObject>("getIntent");
+                if (intent != null) {
+                    string value = intent.Call<string>("getStringExtra", "imageData");
+                    Debug.Log("Received value from intent: " + value);
+                    if (value == "") {
+                        Debug.LogError("File is empty OR does not exist");
+                        Application.Quit();
+                        return;
+                    }
+                    NativeManager.instance.GetImageDownloadLink(value);
                 }
-            } else {
-                Debug.LogWarning("File not found: " + filePath);
             }
-
-            return data;
+#endif
         }
-
+    
         private void OnEnable() {
             uIManager.onModelDownloaded += Get3dObject;
         }
