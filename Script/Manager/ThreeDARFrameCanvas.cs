@@ -9,7 +9,6 @@ namespace ViitorCloud.ARModelViewer {
         [SerializeField] private Image imageFrame;
         [SerializeField] private Image frameImage;
 
-        //[SerializeField] private Image frameImageWhite;
         private float variationWhite = 80f;
 
         private Vector3 axis = new Vector3(0, 0, 1);
@@ -23,12 +22,6 @@ namespace ViitorCloud.ARModelViewer {
             float aspectratio = imageToDisplay.bounds.size.x / imageToDisplay.bounds.size.y;
             imageFrame.sprite = imageToDisplay;
             ResizeWithUnits(DataForAllScene.Instance.imageDimensions.x, DataForAllScene.Instance.imageDimensions.y, DataForAllScene.Instance.imageDimensionUnit);// resize
-
-            //Vector2 scale = new Vector2(frameImage.rectTransform.sizeDelta.x + variation, FrameHeightCalcLogic(imageToDisplay) + variation);
-            //frameImage.rectTransform.sizeDelta = scale;
-
-            //scale = new Vector2(frameImageWhite.rectTransform.sizeDelta.x - variationWhite, FrameHeightCalcLogic(imageToDisplay) - variationWhite);
-            //frameImageWhite.rectTransform.sizeDelta = scale - new Vector2(variationWhite, variationWhite);
 
             FrameColorChange(frameColor);
         }
@@ -82,31 +75,22 @@ namespace ViitorCloud.ARModelViewer {
             RectTransform rectTransform = bgFrame.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
 
-
-
-
-
             ResizeOutofBoundImage();
-            //StartCoroutine(ResizeOutofBoundImage());
         }
 
 
         private void ResizeOutofBoundImage() {
-            //screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-            
             RectTransform canvasRect = GetComponent<RectTransform>();
             RectTransform imageRect = bgFrame.GetComponent<RectTransform>();
             Bounds imageBounds = new Bounds(imageRect.position, imageRect.sizeDelta);
-            //Vector2 screensize = screenBounds.GetComponent<RectTransform>();
+            
             float image_aspectratio = imageBounds.size.x / imageBounds.size.y;
             //aspectratio
             if (imageRect.sizeDelta.x > canvasRect.sizeDelta.x) {
                 imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.x, canvasRect.sizeDelta.x / image_aspectratio);
-
             }
             if (imageRect.sizeDelta.y > canvasRect.sizeDelta.y) {
                 imageRect.sizeDelta = new Vector2(canvasRect.sizeDelta.y * image_aspectratio, canvasRect.sizeDelta.y);
-
             }
         }
 

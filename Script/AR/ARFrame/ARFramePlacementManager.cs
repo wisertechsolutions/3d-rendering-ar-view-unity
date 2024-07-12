@@ -26,9 +26,6 @@ namespace ViitorCloud.ARModelViewer {
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
         private GameObject m_PlacedPrefab;
 
-
-        //private UnityEvent placementUpdate;
-
         [SerializeField] private Transform mainCam;
         [SerializeField] private GameObject planeDetectionCanvas;
         [SerializeField] private GameObject waitingPanel;
@@ -66,10 +63,6 @@ namespace ViitorCloud.ARModelViewer {
             get; private set;
         }
 
-        private void Awake() {
-
-        }
-
         private void Start() {
 
             if (mainCam == null) {
@@ -101,7 +94,6 @@ namespace ViitorCloud.ARModelViewer {
         void OnPlanesChanged(ARPlanesChangedEventArgs eventArgs) {
             if (spawnedObject == null && !waitingLoaderIsOn) {
                 if (arPlaneManager.trackables.count > 0) {
-                    //Debug.Log("AR Plane Detected");
                     planeDetectionCanvas.SetActive(false);
                     tapToPlace.SetActive(true);
                 } else {
@@ -126,7 +118,6 @@ namespace ViitorCloud.ARModelViewer {
             }
             if (!MouseOverUILayerObject.IsPointerOverUIObject()) {
                 if (Input.touchCount > 0) {
-                    //Debug.Log("Touch detected");
                     if (Input.GetTouch(0).phase == TouchPhase.Began && spawnedObject == null) {
                         Vector2 touchPosition = Input.GetTouch(0).position;
                         if (arRaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon)) {
@@ -138,10 +129,8 @@ namespace ViitorCloud.ARModelViewer {
                             tapToPlace.SetActive(false);
                         }
                     } else {
-                        //repositioning of the object
                         Swipe();
                     }
-                    //placementUpdate.Invoke();
 
                 }
             }
@@ -198,27 +187,14 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void OnButtonReset() {
-            //ResetPositionRottion();
             RemoveFrame();
         }
 
         private void RemoveFrame() {
             if (spawnedObject != null) {
-                //DestroyImmediate(spawnedObject);
-                //spawnedObject = null;
-                //RemoveAllDetectedPlanes();
-                ////Reopen UI
-                //SetupInitial();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
-
-        //private void RemoveAllDetectedPlanes() {
-        //    arPlaneManager.SetTrackablesActive(false);
-        //    //foreach (var plane in arPlaneManager.trackables) {
-        //    //    DestroyImmediate(plane.gameObject);
-        //    //}
-        //}
 
         private void ResetPositionRottion() {
             if (spawnedObject != null) {
@@ -236,34 +212,9 @@ namespace ViitorCloud.ARModelViewer {
 #endif
         }
         public IEnumerator CloseActivity() {
-            Debug.Log("-- close activity start--");
             arPlaneManager.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
-
-            CallBackFromNative();
-            Debug.Log("-- close activity finished--");
-        }
-
-        private void FinishActivityNativeOLD() {
-            // Get the current activity
-            //IntPtr jclass = AndroidJNI.FindClass("com/unity3d/player/UnityPlayer");
-            //IntPtr jactivity = AndroidJNI.GetStaticObjectField(jclass, AndroidJNI.GetStaticFieldID(jclass, "currentActivity", "Landroid/app/Activity;"));
-
-            //// Get the finish() method and call it on the current activity
-            //IntPtr jmethod = AndroidJNI.GetMethodID(jclass, "finish", "()V");
-            //AndroidJNI.CallVoidMethod(jactivity, jmethod, new jvalue[] { });
-
-            //// Release references to avoid memory leaks
-            //AndroidJNI.DeleteLocalRef(jactivity);
-            //AndroidJNI.DeleteLocalRef(jclass);
-        }
-        private void CallBackFromNative() {
-            //AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            //AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            //currentActivity.Call("onBackPressedFromUnity");
-            //currentActivity.Call<bool>("moveTaskToBack", true);
             Application.Quit();
-            //Application.Unload();//causing crash
         }
 
         #region SwipeLogic

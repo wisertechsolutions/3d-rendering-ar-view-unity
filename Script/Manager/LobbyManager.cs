@@ -48,14 +48,8 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/jet_221fcea2e21bc68674cf779726f2e2b514c35f7d67f151040f6786754af51ea9.zip";
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else if (uRL_Type == URL_type.Image) {
-                    // return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
-                    // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
-                    //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
                     //return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
-                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
+                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; 
                     //return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
                 } else {
                     // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
@@ -143,7 +137,6 @@ namespace ViitorCloud.ARModelViewer {
             model.AddComponent<DontDestroyManager>();
             model.transform.position = new Vector3(1000, 1000, 1000); // Ravi
             DataForAllScene.Instance.model3d = model;
-            //objParent.ResetPositionAndChildAlignment();
             if (!ifTesting) {
                 Invoke(nameof(InvokeLoadScene), 1f);
             } else {
@@ -180,8 +173,6 @@ namespace ViitorCloud.ARModelViewer {
             if (no == 0) {
                 SceneManager.LoadScene("Main-AR");
             } else if (no == 1) {
-                //SceneManager.LoadScene("Main-ARFrame Backup ARCore");
-                //SceneManager.LoadScene("Main-ARFrame");
                 SceneManager.LoadScene("ARFrameShowcase");
             } else {
                 SceneManager.LoadScene("Main-NonAR");
