@@ -1,11 +1,12 @@
+using System;
 using System.IO;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ViitorCloud.API;
 using ViitorCloud.API.StandardTemplates;
 using ViitorCloud.ModelViewer;
-using static System.Net.WebRequestMethods;
 
 namespace ViitorCloud.ARModelViewer {
 
@@ -47,15 +48,9 @@ namespace ViitorCloud.ARModelViewer {
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/jet_221fcea2e21bc68674cf779726f2e2b514c35f7d67f151040f6786754af51ea9.zip";
                     //return "https://wazir-ai.s3.us-east-2.amazonaws.com/statue_0f56432b14d9899a1dc45770744f91f3c58ea1f6380ec786d9a9c6b69770165a.zip";
                 } else if (uRL_Type == URL_type.Image) {
-                    // return "https://drive.google.com/uc?export=download&id=1MR2ubZoP8udbqGj-bjQRX4f8cQ47KBSD"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1hH3Kvkzom6rllw37S7Fxqd5WXscXtq9b"; //Divya
-                    // return "https://gallerieapi.imgix.net/Product/3-61.webp"; //Divya
-                    //return "https://gallerieapi.imgix.net/Product/3-61.jpg"; //Divya //32BitDepth Converted Not Working
                     //return "https://3d-model-construction.s3.ap-south-1.amazonaws.com/frame_0000.png"; //Parth S3 Bucket
-                    //return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1lgHhQLV6vl92p8x62teyqHHGsfGtXObI"; //Divya
-                    // return "https://drive.google.com/uc?export=download&id=1JN4DwVgMvsMUjauGiK73yRFlhnTWMn9l"; //Divya
-                    return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
+                    return "https://drive.google.com/uc?export=download&id=1f82_wC78r58w3GGTT8fjyxe2Vn2gT6Nc"; 
+                    //return "https://gallerieapi.imgix.net/Product/04-09-2023-0215351-792285.jpeg";
                 } else {
                     // return "https://art-image-bucket.s3.amazonaws.com/artifacts3D/models/02.glb"; //Parth Link
                     //return "https://archive.org/download/paravti/paravti.glb";
@@ -87,8 +82,31 @@ namespace ViitorCloud.ARModelViewer {
                 }
             }
             //GetURL();
-        }
 
+#if UNITY_ANDROID
+            GetDataFromAndroidIntent();
+#endif
+        }
+    
+        private void GetDataFromAndroidIntent() {
+#if UNITY_ANDROID
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                AndroidJavaObject intent = currentActivity.Call<AndroidJavaObject>("getIntent");
+                if (intent != null) {
+                    string value = intent.Call<string>("getStringExtra", "imageData");
+                    Debug.Log("Received value from intent: " + value);
+                    if (value == "") {
+                        Debug.LogError("File is empty OR does not exist");
+                        Application.Quit();
+                        return;
+                    }
+                    NativeManager.instance.GetImageDownloadLink(value);
+                }
+            }
+#endif
+        }
+    
         private void OnEnable() {
             uIManager.onModelDownloaded += Get3dObject;
         }
@@ -119,7 +137,6 @@ namespace ViitorCloud.ARModelViewer {
             model.AddComponent<DontDestroyManager>();
             model.transform.position = new Vector3(1000, 1000, 1000); // Ravi
             DataForAllScene.Instance.model3d = model;
-            //objParent.ResetPositionAndChildAlignment();
             if (!ifTesting) {
                 Invoke(nameof(InvokeLoadScene), 1f);
             } else {
@@ -156,7 +173,7 @@ namespace ViitorCloud.ARModelViewer {
             if (no == 0) {
                 SceneManager.LoadScene("Main-AR");
             } else if (no == 1) {
-                SceneManager.LoadScene("Main-ARFrame");
+                SceneManager.LoadScene("ARFrameShowcase");
             } else {
                 SceneManager.LoadScene("Main-NonAR");
             }
@@ -177,7 +194,10 @@ namespace ViitorCloud.ARModelViewer {
                 string path = Application.persistentDataPath + "/tempImage" + name;
                 System.IO.File.WriteAllBytes(path, response);
 
-                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path));
+                Texture downloadedImageTexture;
+
+                Sprite downloadedImage = GetByteToSprite(System.IO.File.ReadAllBytes(path), out downloadedImageTexture);
+                DataForAllScene.Instance.TextureForFrame = downloadedImageTexture;
                 DataForAllScene.Instance.imageForFrame = downloadedImage;
                 Invoke(nameof(InvokeLoadScene), 1f);
             }, (errorMessage) => {
@@ -190,9 +210,10 @@ namespace ViitorCloud.ARModelViewer {
             //StartCoroutine(DownloadImageURL(imageURL));
         }
 
-        private Sprite GetByteToSprite(byte[] imageBytes) {
+        private Sprite GetByteToSprite(byte[] imageBytes, out Texture t) {
             Texture2D tex = new Texture2D(2, 2);
             tex.LoadImage(imageBytes);
+            t = tex;
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
             return sprite;
         }

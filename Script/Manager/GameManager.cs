@@ -78,6 +78,7 @@ namespace ViitorCloud.ARModelViewer {
         }
 
         public void OnBackButtonPress() {
+            Debug.Log("OnBackButtonPress");
             CallPreviousSceneOfNative();
         }
 

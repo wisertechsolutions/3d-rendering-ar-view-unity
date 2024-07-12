@@ -180,8 +180,6 @@ namespace ViitorCloud.ARModelViewer {
 #endif
         }
 
-        //_closeUnityAndReturnToiOS("Description of iOS on Back Button Clicked", "iOS Back Button Clicked");
-
 #if UNITY_IOS
     [DllImport("__Internal")]
 	extern static private void _closeUnityAndReturnToiOS(string description, string msg);

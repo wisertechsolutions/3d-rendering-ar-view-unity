@@ -2,6 +2,10 @@ using UnityEngine;
 namespace ViitorCloud.ARModelViewer {
 
     public class NativeManager : MonoBehaviour {
+        public static NativeManager instance;
+        private void Awake() {
+            instance = this;
+        }
         private void AfterUnityLoad() {
 #if UNITY_ANDROID && !UNITY_EDITOR
             AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
